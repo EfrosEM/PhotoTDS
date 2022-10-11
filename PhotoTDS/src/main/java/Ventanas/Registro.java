@@ -145,20 +145,20 @@ public class Registro {
 		panelEmail.add(txtEmail);
 		txtEmail.setColumns(20);
 		
-		JPanel panelNombreComp = new JPanel();
-		FlowLayout fl_panelNombreComp = (FlowLayout) panelNombreComp.getLayout();
-		fl_panelNombreComp.setAlignment(FlowLayout.RIGHT);
-		panelNombreComp.setPreferredSize(new Dimension(10, 5));
-		panelNombreComp.setBackground(Color.WHITE);
-		centro.add(panelNombreComp);
+		JPanel panelFullName = new JPanel();
+		FlowLayout fl_panelFullName = (FlowLayout) panelFullName.getLayout();
+		fl_panelFullName.setAlignment(FlowLayout.RIGHT);
+		panelFullName.setPreferredSize(new Dimension(10, 5));
+		panelFullName.setBackground(Color.WHITE);
+		centro.add(panelFullName);
 		
 		JLabel lblNewLabel_4 = new JLabel("Nombre completo: ");
-		panelNombreComp.add(lblNewLabel_4);
+		panelFullName.add(lblNewLabel_4);
 		
 		txtNombreCompleto = new JTextField();
 		txtNombreCompleto.setToolTipText("wfjgnwkejbnl");
 		txtNombreCompleto.setForeground(Color.DARK_GRAY);
-		panelNombreComp.add(txtNombreCompleto);
+		panelFullName.add(txtNombreCompleto);
 		txtNombreCompleto.setColumns(20);
 		
 		JPanel panelUsuario = new JPanel();
