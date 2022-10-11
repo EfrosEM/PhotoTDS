@@ -73,13 +73,13 @@ public class Registro {
 		separator.setForeground(Color.WHITE);
 		norte.add(separator);
 		
-		JPanel titulo = new JPanel();
-		titulo.setBackground(Color.WHITE);
-		norte.add(titulo);
+		JPanel panelTitulo = new JPanel();
+		panelTitulo.setBackground(Color.WHITE);
+		norte.add(panelTitulo);
 		
 		JLabel lbltitulo = new JLabel("PhotoTDS");
 		lbltitulo.setFont(new Font("Arial", Font.BOLD, 20));
-		titulo.add(lbltitulo);
+		panelTitulo.add(lbltitulo);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setSize(new Dimension(0, 500));
@@ -87,9 +87,9 @@ public class Registro {
 		separator_1.setForeground(Color.WHITE);
 		norte.add(separator_1);
 		
-		JPanel texto = new JPanel();
-		texto.setBackground(Color.WHITE);
-		norte.add(texto);
+		JPanel panelTexto = new JPanel();
+		panelTexto.setBackground(Color.WHITE);
+		norte.add(panelTexto);
 		
 		JTextArea txtrSiTeRegistras = new JTextArea();
 		txtrSiTeRegistras.setWrapStyleWord(true);
@@ -98,117 +98,117 @@ public class Registro {
 		txtrSiTeRegistras.setLineWrap(true);
 		txtrSiTeRegistras.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtrSiTeRegistras.setText("Si te registras podr\u00E1s compartir fotos y ver las fotos de tus amigos");
-		texto.add(txtrSiTeRegistras);
+		panelTexto.add(txtrSiTeRegistras);
 		
 		JPanel sur = new JPanel();
 		sur.setBackground(Color.WHITE);
 		frmRegistroUsuario.getContentPane().add(sur, BorderLayout.SOUTH);
 		sur.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.WHITE);
-		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
-		flowLayout.setAlignment(FlowLayout.RIGHT);
-		sur.add(panel_4);
+		JPanel panelBotonOk = new JPanel();
+		panelBotonOk.setBackground(Color.WHITE);
+		FlowLayout fl_panelBotonOk = (FlowLayout) panelBotonOk.getLayout();
+		fl_panelBotonOk.setAlignment(FlowLayout.RIGHT);
+		sur.add(panelBotonOk);
 		
 		JButton btnNewButton = new JButton("OK");
-		panel_4.add(btnNewButton);
+		panelBotonOk.add(btnNewButton);
 		
-		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(Color.WHITE);
-		sur.add(panel_8);
+		JPanel panelBotonCancel = new JPanel();
+		panelBotonCancel.setBackground(Color.WHITE);
+		sur.add(panelBotonCancel);
 		
 		JButton btnNewButton_1 = new JButton("Cancel");
-		panel_8.add(btnNewButton_1);
+		panelBotonCancel.add(btnNewButton_1);
 		
 		JPanel centro = new JPanel();
 		centro.setBackground(Color.WHITE);
 		frmRegistroUsuario.getContentPane().add(centro, BorderLayout.CENTER);
 		centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
 		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(10, 5));
-		panel.setMinimumSize(new Dimension(10, 5));
-		panel.setBackground(Color.WHITE);
-		centro.add(panel);
-		FlowLayout fl_panel = new FlowLayout(FlowLayout.RIGHT, 5, 5);
-		panel.setLayout(fl_panel);
+		JPanel panelEmail = new JPanel();
+		panelEmail.setPreferredSize(new Dimension(10, 5));
+		panelEmail.setMinimumSize(new Dimension(10, 5));
+		panelEmail.setBackground(Color.WHITE);
+		centro.add(panelEmail);
+		FlowLayout fl_panelEmail = new FlowLayout(FlowLayout.RIGHT, 5, 5);
+		panelEmail.setLayout(fl_panelEmail);
 		
 		JLabel lblNewLabel_3 = new JLabel("Email: ");
 		lblNewLabel_3.setToolTipText("");
-		panel.add(lblNewLabel_3);
+		panelEmail.add(lblNewLabel_3);
 		
 		txtEmail = new JTextField();
 		txtEmail.setPreferredSize(new Dimension(4, 20));
 		txtEmail.setToolTipText("");
 		txtEmail.setForeground(Color.DARK_GRAY);
-		panel.add(txtEmail);
+		panelEmail.add(txtEmail);
 		txtEmail.setColumns(20);
 		
-		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout_4 = (FlowLayout) panel_1.getLayout();
-		flowLayout_4.setAlignment(FlowLayout.RIGHT);
-		panel_1.setPreferredSize(new Dimension(10, 5));
-		panel_1.setBackground(Color.WHITE);
-		centro.add(panel_1);
+		JPanel panelNombreComp = new JPanel();
+		FlowLayout fl_panelNombreComp = (FlowLayout) panelNombreComp.getLayout();
+		fl_panelNombreComp.setAlignment(FlowLayout.RIGHT);
+		panelNombreComp.setPreferredSize(new Dimension(10, 5));
+		panelNombreComp.setBackground(Color.WHITE);
+		centro.add(panelNombreComp);
 		
 		JLabel lblNewLabel_4 = new JLabel("Nombre completo: ");
-		panel_1.add(lblNewLabel_4);
+		panelNombreComp.add(lblNewLabel_4);
 		
 		txtNombreCompleto = new JTextField();
 		txtNombreCompleto.setToolTipText("wfjgnwkejbnl");
 		txtNombreCompleto.setForeground(Color.DARK_GRAY);
-		panel_1.add(txtNombreCompleto);
+		panelNombreComp.add(txtNombreCompleto);
 		txtNombreCompleto.setColumns(20);
 		
-		JPanel panel_2 = new JPanel();
-		FlowLayout flowLayout_5 = (FlowLayout) panel_2.getLayout();
-		flowLayout_5.setAlignment(FlowLayout.RIGHT);
-		panel_2.setPreferredSize(new Dimension(10, 5));
-		panel_2.setBackground(Color.WHITE);
-		centro.add(panel_2);
+		JPanel panelUsuario = new JPanel();
+		FlowLayout fl_panelUsuario = (FlowLayout) panelUsuario.getLayout();
+		fl_panelUsuario.setAlignment(FlowLayout.RIGHT);
+		panelUsuario.setPreferredSize(new Dimension(10, 5));
+		panelUsuario.setBackground(Color.WHITE);
+		centro.add(panelUsuario);
 		
 		JLabel lblNewLabel_5 = new JLabel("Nombre de usuario: ");
-		panel_2.add(lblNewLabel_5);
+		panelUsuario.add(lblNewLabel_5);
 		
 		txtNombreDeUsuario = new JTextField();
 		txtNombreDeUsuario.setForeground(Color.DARK_GRAY);
-		panel_2.add(txtNombreDeUsuario);
+		panelUsuario.add(txtNombreDeUsuario);
 		txtNombreDeUsuario.setColumns(20);
 		
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_6 = (FlowLayout) panel_3.getLayout();
-		flowLayout_6.setAlignment(FlowLayout.RIGHT);
-		panel_3.setPreferredSize(new Dimension(10, 5));
-		panel_3.setBackground(Color.WHITE);
-		centro.add(panel_3);
+		JPanel panelContraseña = new JPanel();
+		FlowLayout fl_panelContraseña = (FlowLayout) panelContraseña.getLayout();
+		fl_panelContraseña.setAlignment(FlowLayout.RIGHT);
+		panelContraseña.setPreferredSize(new Dimension(10, 5));
+		panelContraseña.setBackground(Color.WHITE);
+		centro.add(panelContraseña);
 		
 		JLabel lblNewLabel_6 = new JLabel("Contrase\u00F1a: ");
-		panel_3.add(lblNewLabel_6);
+		panelContraseña.add(lblNewLabel_6);
 		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(20);
-		panel_3.add(passwordField);
+		panelContraseña.add(passwordField);
 		
 		JSeparator separator_7 = new JSeparator();
 		separator_7.setForeground(Color.WHITE);
 		centro.add(separator_7);
 		
-		JPanel panel_5 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_5.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel_5.setBackground(Color.WHITE);
-		centro.add(panel_5);
+		JPanel panelFecha = new JPanel();
+		FlowLayout fl_panelFecha = (FlowLayout) panelFecha.getLayout();
+		fl_panelFecha.setAlignment(FlowLayout.LEFT);
+		panelFecha.setBackground(Color.WHITE);
+		centro.add(panelFecha);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.WHITE);
-		panel_5.add(separator_2);
+		panelFecha.add(separator_2);
 		separator_2.setPreferredSize(new Dimension(3, 20));
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(Color.WHITE);
 		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_5.add(panel_9);
+		panelFecha.add(panel_9);
 		panel_9.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("Fecha de Nacimiento");
@@ -222,21 +222,21 @@ public class Registro {
 		JButton btnNewButton_2 = new JButton("New button");
 		panel_9.add(btnNewButton_2);
 		
-		JPanel panel_6 = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_6.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		panel_6.setBackground(Color.WHITE);
-		centro.add(panel_6);
+		JPanel panelAddFoto = new JPanel();
+		FlowLayout fl_panelAddFoto = (FlowLayout) panelAddFoto.getLayout();
+		fl_panelAddFoto.setAlignment(FlowLayout.LEFT);
+		panelAddFoto.setBackground(Color.WHITE);
+		centro.add(panelAddFoto);
 		
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setForeground(Color.WHITE);
 		separator_3.setPreferredSize(new Dimension(3, 20));
-		panel_6.add(separator_3);
+		panelAddFoto.add(separator_3);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_10.setBackground(Color.WHITE);
-		panel_6.add(panel_10);
+		panelAddFoto.add(panel_10);
 		
 		JLabel lblNewLabel_1 = new JLabel("A\u00F1adir foto del usuario (opcional)");
 		panel_10.add(lblNewLabel_1);
@@ -244,21 +244,21 @@ public class Registro {
 		JButton btnNewButton_3 = new JButton("New button");
 		panel_10.add(btnNewButton_3);
 		
-		JPanel panel_7 = new JPanel();
-		FlowLayout flowLayout_3 = (FlowLayout) panel_7.getLayout();
-		flowLayout_3.setAlignment(FlowLayout.LEFT);
-		panel_7.setBackground(Color.WHITE);
-		centro.add(panel_7);
+		JPanel panelAddPresentacion = new JPanel();
+		FlowLayout fl_panelAddPresentacion = (FlowLayout) panelAddPresentacion.getLayout();
+		fl_panelAddPresentacion.setAlignment(FlowLayout.LEFT);
+		panelAddPresentacion.setBackground(Color.WHITE);
+		centro.add(panelAddPresentacion);
 		
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setForeground(Color.WHITE);
 		separator_4.setPreferredSize(new Dimension(3, 20));
-		panel_7.add(separator_4);
+		panelAddPresentacion.add(separator_4);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBackground(Color.WHITE);
 		panel_11.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_7.add(panel_11);
+		panelAddPresentacion.add(panel_11);
 		
 		JLabel lblNewLabel_2 = new JLabel("A\u00F1adir presentacion (opcional)");
 		panel_11.add(lblNewLabel_2);
