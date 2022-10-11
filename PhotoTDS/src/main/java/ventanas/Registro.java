@@ -244,21 +244,21 @@ public class Registro {
 		JButton btnNewButton_3 = new JButton("New button");
 		panel_10.add(btnNewButton_3);
 		
-		JPanel panelAddPresentacion = new JPanel();
-		FlowLayout fl_panelAddPresentacion = (FlowLayout) panelAddPresentacion.getLayout();
-		fl_panelAddPresentacion.setAlignment(FlowLayout.LEFT);
-		panelAddPresentacion.setBackground(Color.WHITE);
-		centro.add(panelAddPresentacion);
+		JPanel panelAddPresent = new JPanel();
+		FlowLayout fl_panelAddPresent = (FlowLayout) panelAddPresent.getLayout();
+		fl_panelAddPresent.setAlignment(FlowLayout.LEFT);
+		panelAddPresent.setBackground(Color.WHITE);
+		centro.add(panelAddPresent);
 		
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setForeground(Color.WHITE);
 		separator_4.setPreferredSize(new Dimension(3, 20));
-		panelAddPresentacion.add(separator_4);
+		panelAddPresent.add(separator_4);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBackground(Color.WHITE);
 		panel_11.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelAddPresentacion.add(panel_11);
+		panelAddPresent.add(panel_11);
 		
 		JLabel lblNewLabel_2 = new JLabel("A\u00F1adir presentacion (opcional)");
 		panel_11.add(lblNewLabel_2);
