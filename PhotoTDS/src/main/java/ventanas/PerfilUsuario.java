@@ -17,6 +17,15 @@ import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
 public class PerfilUsuario {
 
@@ -60,6 +69,9 @@ public class PerfilUsuario {
 		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
 		
+		Component rigidArea_2 = Box.createRigidArea(new Dimension(10, 10));
+		panelNorte.add(rigidArea_2);
+		
 		JLabel lblNewLabel = new JLabel("PhotoTDS");
 		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 18));
 		panelNorte.add(lblNewLabel);
@@ -98,8 +110,14 @@ public class PerfilUsuario {
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(50, 30));
 		panelNorte.add(rigidArea_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
+		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		btnNewButton_2.setBackground(new Color(255, 255, 255));
+		btnNewButton_2.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/usuario (Personalizado).png")));
 		panelNorte.add(btnNewButton_2);
+		
+		Component rigidArea_3 = Box.createRigidArea(new Dimension(10, 10));
+		panelNorte.add(rigidArea_3);
 		
 		JPanel panelCentral = new JPanel();
 		frame.getContentPane().add(panelCentral, BorderLayout.CENTER);
