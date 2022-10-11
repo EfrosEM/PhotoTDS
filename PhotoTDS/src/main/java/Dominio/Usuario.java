@@ -13,8 +13,7 @@ public class Usuario {
 	private Foto fotoPerfil;
 	private boolean premium;
 	private ArrayList<Usuario> seguidores;
-	private ArrayList<Foto> fotos;
-	private ArrayList<Album> albumes;
+	private ArrayList<Publicacion> publicaciones;
 	
 	public Usuario(String nombre, String usuario, String email, String password, Date nacimiento, String descripcion, Foto fotoPerfil) {
 		this.nombre = nombre;
@@ -27,8 +26,7 @@ public class Usuario {
 		
 		premium = false;
 		seguidores = new ArrayList<Usuario>();
-		fotos = new ArrayList<Foto>();
-		albumes = new ArrayList<Album>();
+		publicaciones = new ArrayList<Publicacion>();
 	}
 	
 	public String getNombre() {
@@ -63,14 +61,10 @@ public class Usuario {
 		return new ArrayList<Usuario>(seguidores);
 	}
 	
-	public List<Foto> getFotos() {
-		return new ArrayList<Foto>(fotos);
+	public List<Publicacion> getPublicaciones() {
+		return new ArrayList<Publicacion>(publicaciones);
 	}
-	
-	public List<Album> getAlbumes() {
-		return new ArrayList<Album>(albumes);
-	}
-	
+
 	public boolean isPremium() {
 		return premium;
 	}
