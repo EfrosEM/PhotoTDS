@@ -10,19 +10,12 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.FlowLayout;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
+
 
 public class Login {
 
 	private JFrame frame;
-	private JTextField textFieldUser;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+;
 
 	/**
 	 * Launch the application.
