@@ -194,21 +194,21 @@ public class Registro {
 		separator_7.setForeground(Color.WHITE);
 		centro.add(separator_7);
 		
-		JPanel panelFecha = new JPanel();
-		FlowLayout fl_panelFecha = (FlowLayout) panelFecha.getLayout();
-		fl_panelFecha.setAlignment(FlowLayout.LEFT);
-		panelFecha.setBackground(Color.WHITE);
-		centro.add(panelFecha);
+		JPanel panelFechaNac = new JPanel();
+		FlowLayout fl_panelFechaNac = (FlowLayout) panelFechaNac.getLayout();
+		fl_panelFechaNac.setAlignment(FlowLayout.LEFT);
+		panelFechaNac.setBackground(Color.WHITE);
+		centro.add(panelFechaNac);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.WHITE);
-		panelFecha.add(separator_2);
+		panelFechaNac.add(separator_2);
 		separator_2.setPreferredSize(new Dimension(3, 20));
 		
 		JPanel panel_9 = new JPanel();
 		panel_9.setBackground(Color.WHITE);
 		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelFecha.add(panel_9);
+		panelFechaNac.add(panel_9);
 		panel_9.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("Fecha de Nacimiento");
