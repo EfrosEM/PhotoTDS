@@ -1,18 +1,25 @@
 package Dominio;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Foto {
 
 	private String ruta;
 	private int likes;
-	private ArrayList<String> comentarios;
+	private String descripcion;
+	private LocalDate fecha;
+	private Usuario user;
+	private ArrayList<Comentario> comentarios;
 	private ArrayList<Hashtag> hashtags;
 	
-	public Foto(String ruta) {
+	public Foto(String ruta, String descripcion, Usuario user) {
 		this.ruta = ruta;
 		this.likes = 0;
-		this.comentarios = new ArrayList<String>();
+		this.descripcion = descripcion;
+		this.user = user;
+		this.fecha = LocalDate.now();
+		this.comentarios = new ArrayList<Comentario>();
 		this.hashtags = new ArrayList<Hashtag>();
 	}
 
@@ -23,9 +30,21 @@ public class Foto {
 	public int getLikes() {
 		return likes;
 	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	
+	public Usuario getUser() {
+		return user;
+	}
 
-	public List<String> getComentarios() {
-		return new ArrayList<String>(comentarios);
+	public List<Comentario> getComentarios() {
+		return new ArrayList<Comentario>(comentarios);
 	}
 	
 	public List<Hashtag> getHashtags() {
