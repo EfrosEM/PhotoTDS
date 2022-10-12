@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Component;
 import javax.swing.Box;
+import java.awt.Toolkit;
 
 
 public class Login {
@@ -45,6 +46,7 @@ public class Login {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/recursos/camera.png")));
 		frame.setBounds(100, 100, 450, 380);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
