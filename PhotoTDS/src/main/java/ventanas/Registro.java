@@ -211,7 +211,7 @@ public class Registro {
 		panelFechaNac.add(panel_9);
 		panel_9.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("Fecha de Nacimiento");
+		JLabel lblNewLabel = new JLabel("Fecha de nacimiento");
 		panel_9.add(lblNewLabel);
 		
 		JSeparator separator_5 = new JSeparator();
