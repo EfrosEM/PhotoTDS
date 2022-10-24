@@ -22,12 +22,11 @@ import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
 
-public class Login extends JFrame{
+public class Login {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	protected JFrame frame;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField txtContrasea;

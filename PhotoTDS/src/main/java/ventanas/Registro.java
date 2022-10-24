@@ -1,7 +1,5 @@
 package ventanas;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -9,6 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import java.awt.Dimension;
@@ -17,36 +17,28 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+//import com.toedter.calendar.JCalendar;
+
 import javax.swing.JPasswordField;
 
-public class Registro {
+public class Registro extends JFrame{
 
-	private JFrame frmRegistroUsuario;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected JFrame frmRegistroUsuario;
 	private JTextField txtEmail;
 	private JTextField txtNombreCompleto;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField passwordField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Registro window = new Registro();
-					window.frmRegistroUsuario.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private Login loginWindow;
 	/**
 	 * Create the application.
 	 */
-	public Registro() {
+	public Registro(Login lw) {
+		this.loginWindow = lw;
 		initialize();
 	}
 
@@ -119,6 +111,13 @@ public class Registro {
 		sur.add(panelBotonCancel);
 		
 		JButton btnNewButton_1 = new JButton("Cancel");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				volverLogin();
+			}
+		});
 		panelBotonCancel.add(btnNewButton_1);
 		
 		JPanel centro = new JPanel();
@@ -213,7 +212,7 @@ public class Registro {
 		
 		JLabel lblNewLabel = new JLabel("Fecha de nacimiento");
 		panel_9.add(lblNewLabel);
-		
+
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setForeground(Color.WHITE);
 		separator_5.setPreferredSize(new Dimension(64, 2));
@@ -270,6 +269,12 @@ public class Registro {
 		
 		JButton btnNewButton_4 = new JButton("New button");
 		panel_11.add(btnNewButton_4);
+	
+	}
+	
+	private void volverLogin() {
+		frmRegistroUsuario.setVisible(false);
+		loginWindow.frame.setVisible(true);
 	}
 
 }
