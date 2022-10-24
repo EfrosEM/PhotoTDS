@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -20,9 +22,13 @@ import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
 
-public class Login {
+public class Login extends JFrame{
 
-	private JFrame frame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected JFrame frame;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField txtContrasea;
 
@@ -100,6 +106,13 @@ public class Login {
 		btnNewButton_1.setPreferredSize(new Dimension(325, 23));
 		btnNewButton_1.setMaximumSize(new Dimension(325, 23));
 		btnNewButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				abrirRegistro();
+			}
+		});
 		centro.add(btnNewButton_1);
 		
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
@@ -188,6 +201,12 @@ public class Login {
 		
 		JPanel norte = new JPanel();
 		frame.getContentPane().add(norte, BorderLayout.NORTH);
+	}
+	
+	private void abrirRegistro() {
+		frame.setVisible(false);
+		Registro r = new Registro(this);
+		r.frmRegistroUsuario.setVisible(true);
 	}
 
 }
