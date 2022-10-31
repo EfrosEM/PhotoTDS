@@ -20,6 +20,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		if (unicaInstancia == null) {
 			unicaInstancia = new AdaptadorUsuarioTDS();
 		}
+		
 		return unicaInstancia;
 	}
 	
