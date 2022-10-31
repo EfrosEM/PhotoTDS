@@ -2,7 +2,6 @@ package controlador;
 
 import dominio.CatalogoUsuarios;
 import dominio.Usuario;
-import persistencia.AdaptadorUsuarioTDS;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorUsuarioDAO;
 
