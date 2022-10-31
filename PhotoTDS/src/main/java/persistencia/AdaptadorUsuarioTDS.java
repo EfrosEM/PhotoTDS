@@ -14,7 +14,7 @@ import tds.driver.ServicioPersistencia;
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
 	private static ServicioPersistencia servidorPers;
-	private static AdaptadorUsuarioTDS unicaInstancia = null;
+	private static AdaptadorUsuarioTDS unicaInstancia;
 	
 	public static AdaptadorUsuarioTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {

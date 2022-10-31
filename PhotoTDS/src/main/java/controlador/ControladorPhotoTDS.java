@@ -9,7 +9,7 @@ public class ControladorPhotoTDS {
 
 	private CatalogoUsuarios catalogoUsuarios;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
-	private static ControladorPhotoTDS unicaInstancia = null;
+	private static ControladorPhotoTDS unicaInstancia;
 	
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -48,7 +48,7 @@ public class ControladorPhotoTDS {
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
 		try {
-			factoria = FactoriaDAO.getInstancia();
+			factoria = FactoriaDAO.getInstancia(FactoriaDAO.DAO_TDS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

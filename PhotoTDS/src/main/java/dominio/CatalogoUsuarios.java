@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import persistencia.AdaptadorUsuarioTDS;
 import persistencia.DAOException;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorUsuarioDAO;
@@ -12,7 +11,7 @@ import persistencia.IAdaptadorUsuarioDAO;
 public class CatalogoUsuarios {
 
 	private Map<String, Usuario> usuarios;
-	private static CatalogoUsuarios unicaInstancia = null;
+	private static CatalogoUsuarios unicaInstancia;
 	private FactoriaDAO dao;
 	private IAdaptadorUsuarioDAO adaptadorU;
 	
