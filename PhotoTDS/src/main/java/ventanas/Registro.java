@@ -97,14 +97,31 @@ public class Registro extends JFrame{
 		frmRegistroUsuario.getContentPane().add(sur, BorderLayout.SOUTH);
 		sur.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JPanel panelBotonOk = new JPanel();
-		panelBotonOk.setBackground(Color.WHITE);
-		FlowLayout fl_panelBotonOk = (FlowLayout) panelBotonOk.getLayout();
-		fl_panelBotonOk.setAlignment(FlowLayout.RIGHT);
-		sur.add(panelBotonOk);
+		JPanel panelBotonRegistrar = new JPanel();
+		panelBotonRegistrar.setBackground(Color.WHITE);
+		FlowLayout fl_panelBotonRegistrar = (FlowLayout) panelBotonRegistrar.getLayout();
+		fl_panelBotonRegistrar.setAlignment(FlowLayout.RIGHT);
+		sur.add(panelBotonRegistrar);
 		
-		JButton btnNewButton = new JButton("OK");
-		panelBotonOk.add(btnNewButton);
+		JButton btnNewButton = new JButton("Registrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nombre = txtNombreCompleto.getText();
+				String apellidos = txtNombreCompleto.getText();
+				String usuario = txtNombreDeUsuario.getText();
+				String password = String.valueOf(passwordField.getPassword());
+				String email = txtEmail.getText();
+				
+				boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email);
+				
+				if (isRegistered) {
+					volverLogin();
+				}
+			}
+		});
+		panelBotonRegistrar.add(btnNewButton);
 		
 		JPanel panelBotonCancel = new JPanel();
 		panelBotonCancel.setBackground(Color.WHITE);

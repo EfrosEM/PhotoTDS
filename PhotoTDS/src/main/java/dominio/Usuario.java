@@ -4,7 +4,10 @@ import java.util.*;
 
 public class Usuario {
 
+	private int codigo;
+	
 	private String nombre;
+	private String apellidos;
 	private String usuario;
 	private String email;
 	private String password;
@@ -15,14 +18,16 @@ public class Usuario {
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	
-	public Usuario(String nombre, String usuario, String email, String password, Date nacimiento, String descripcion, Foto fotoPerfil) {
+	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento, String descripcion, Foto fotoPerfil) {
 		this.nombre = nombre;
+		this.apellidos = apellidos;
 		this.usuario = usuario;
 		this.email = email;
 		this.password = password;
 		this.nacimiento = nacimiento;
 		this.descripcion = descripcion;
 		this.fotoPerfil = fotoPerfil;
+		this.codigo = 0;
 		
 		premium = false;
 		seguidores = new ArrayList<Usuario>();
@@ -33,6 +38,9 @@ public class Usuario {
 		return nombre;
 	}
 	
+	public String getApellidos() {
+		return apellidos;
+	}
 	public String getUsuario() {
 		return usuario;
 	}
@@ -67,6 +75,14 @@ public class Usuario {
 
 	public boolean isPremium() {
 		return premium;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	

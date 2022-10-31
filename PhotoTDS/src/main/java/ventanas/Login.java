@@ -14,12 +14,16 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.TextField;
+
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
+
+import controlador.ControladorPhotoTDS;
 
 
 public class Login {
@@ -29,7 +33,8 @@ public class Login {
 	 */
 	protected JFrame frame;
 	private JTextField txtNombreDeUsuario;
-	private JPasswordField txtContrasea;
+	private JPasswordField txtPassword;
+	private ControladorPhotoTDS controlador;
 
 	/**
 	 * Launch the application.
@@ -51,6 +56,7 @@ public class Login {
 	 * Create the application.
 	 */
 	public Login() {
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -165,12 +171,12 @@ public class Login {
 		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
 		panel_3.add(rigidArea_6);
 		
-		txtContrasea = new JPasswordField();
-		txtContrasea.setText("Contraseña");
-		txtContrasea.setForeground(Color.BLACK);
-		txtContrasea.setMaximumSize(new Dimension(2147483647, 70));
-		panel_3.add(txtContrasea);
-		txtContrasea.setColumns(10);
+		txtPassword = new JPasswordField();
+		txtPassword.setText("Contraseña");
+		txtPassword.setForeground(Color.BLACK);
+		txtPassword.setMaximumSize(new Dimension(2147483647, 70));
+		panel_3.add(txtPassword);
+		txtPassword.setColumns(10);
 		
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
 		panel_3.add(rigidArea_8);
@@ -190,6 +196,23 @@ public class Login {
 		btnNewButton.setPreferredSize(new Dimension(325, 40));
 		btnNewButton.setMinimumSize(new Dimension(200, 60));
 		btnNewButton.setMaximumSize(new Dimension(200, 60));
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String usuario = txtNombreDeUsuario.getText();
+				String password  = String.valueOf(txtPassword.getPassword());
+				boolean isLogged = controlador.loginUsuario(usuario, password);
+				
+				if (isLogged) {
+					System.out.println("Login correcto");
+				}
+				else {
+					System.out.println("Usuario/Contraseña incorrecta");
+				}
+				
+			}
+		});
 		panel.add(btnNewButton);
 		
 		JPanel este = new JPanel();
@@ -206,6 +229,10 @@ public class Login {
 		frame.setVisible(false);
 		Registro r = new Registro(this);
 		r.frmRegistroUsuario.setVisible(true);
+	}
+	
+	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email) {
+		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password);
 	}
 
 }
