@@ -29,17 +29,15 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	}
 	
 	public void registrarUsuario(Usuario u) {
-		boolean existe = true;
-		Entidad eUsuario;
+		Entidad eUsuario = null;
 		
+		System.out.println("Entra al adaptadorDAO");
 		try {
 			eUsuario = servidorPers.recuperarEntidad(u.getCodigo());
 		} catch (Exception e) {
-			existe = false;
 		}
 		
-		if (existe)
-			return;
+		if (eUsuario != null) return;
 		
 		//Aquí habría que registrar primero los atributos que son objetos
 		
