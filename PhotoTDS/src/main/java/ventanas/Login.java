@@ -235,4 +235,7 @@ public class Login {
 		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password);
 	}
 
+	public boolean existeUsuario(String usuario) {
+		return controlador.existeUsuario(usuario);
+	}
 }

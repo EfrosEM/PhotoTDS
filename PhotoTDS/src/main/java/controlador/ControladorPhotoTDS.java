@@ -45,6 +45,16 @@ public class ControladorPhotoTDS {
 		return false;
 	}
 	
+	public boolean existeUsuario(String usuario) {
+		Usuario u = catalogoUsuarios.getUsuario(usuario);
+		
+		if (u == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
 		try {
