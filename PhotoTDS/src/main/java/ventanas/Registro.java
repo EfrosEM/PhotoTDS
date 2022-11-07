@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import java.awt.Dimension;
@@ -18,10 +20,13 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import com.toedter.calendar.JDateChooser;
+
 //import com.toedter.calendar.JCalendar;
 
 import javax.swing.JPasswordField;
 import java.awt.Component;
+import javax.swing.JFileChooser;
 
 public class Registro extends JFrame{
 
@@ -35,6 +40,7 @@ public class Registro extends JFrame{
 	private JTextField txtApellidos;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField passwordField;
+	private JDateChooser dateChooser;
 	private Login loginWindow;
 	private JPasswordField passwordField_1;
 	private JLabel lblWarningEmail;
@@ -123,8 +129,9 @@ public class Registro extends JFrame{
 					String apellidos = txtApellidos.getText();
 					String password = String.valueOf(passwordField.getPassword());
 					String email = txtEmail.getText();
+					Date fecha = dateChooser.getDate();
 				
-					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email);
+					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email, fecha);
 				
 					if (isRegistered) {
 						volverLogin();
@@ -305,9 +312,9 @@ public class Registro extends JFrame{
 		separator_5.setPreferredSize(new Dimension(64, 2));
 		panel_9.add(separator_5);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		panel_9.add(btnNewButton_2);
-		
+		dateChooser = new JDateChooser();
+		panel_9.add(dateChooser);
+				
 		JPanel panelAddFoto = new JPanel();
 		FlowLayout fl_panelAddFoto = (FlowLayout) panelAddFoto.getLayout();
 		fl_panelAddFoto.setAlignment(FlowLayout.LEFT);
@@ -326,9 +333,6 @@ public class Registro extends JFrame{
 		
 		JLabel lblNewLabel_1 = new JLabel("A\u00F1adir foto del usuario (opcional)");
 		panel_10.add(lblNewLabel_1);
-		
-		JButton btnNewButton_3 = new JButton("New button");
-		panel_10.add(btnNewButton_3);
 		
 		JPanel panelAddPresent = new JPanel();
 		FlowLayout fl_panelAddPresent = (FlowLayout) panelAddPresent.getLayout();
@@ -354,8 +358,8 @@ public class Registro extends JFrame{
 		separator_6.setPreferredSize(new Dimension(8, 2));
 		panel_11.add(separator_6);
 		
-		JButton btnNewButton_4 = new JButton("New button");
-		panel_11.add(btnNewButton_4);
+		JTextArea textArea = new JTextArea();
+		panel_11.add(textArea);
 	
 	}
 	

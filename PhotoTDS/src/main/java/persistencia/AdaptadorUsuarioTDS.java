@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
 	private static ServicioPersistencia servidorPers;
 	private static AdaptadorUsuarioTDS unicaInstancia;
+	private SimpleDateFormat dateFormat;
 	
 	public static AdaptadorUsuarioTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -26,6 +28,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	
 	private AdaptadorUsuarioTDS() {
 		servidorPers = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 	
 	public void registrarUsuario(Usuario u) {
@@ -49,7 +52,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("apellidos", u.getApellidos()),
 						new Propiedad("email", u.getEmail()),
 						new Propiedad("usuario", u.getUsuario()),
-						new Propiedad("password", u.getPassword())
+						new Propiedad("password", u.getPassword()),
+						new Propiedad("fecha", dateFormat.format(u.getNacimiento()))
 				))
 		);
 		

@@ -1,5 +1,7 @@
 package controlador;
 
+import java.util.Date;
+
 import dominio.CatalogoUsuarios;
 import dominio.Usuario;
 import persistencia.FactoriaDAO;
@@ -24,12 +26,12 @@ public class ControladorPhotoTDS {
 		inicializarCatalogos();
 	}
 	
-	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password) {
+	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha) {
 		if (catalogoUsuarios.getUsuario(usuario) != null) {
 			return false;
 		}
 		
-		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, null, null, null);
+		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fecha, null, null);
 		adaptadorUsuario.registrarUsuario(u);
 		catalogoUsuarios.addUsuario(u);
 		return true;

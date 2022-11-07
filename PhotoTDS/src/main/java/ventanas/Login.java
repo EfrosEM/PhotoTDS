@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -231,8 +232,8 @@ public class Login {
 		r.frmRegistroUsuario.setVisible(true);
 	}
 	
-	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email) {
-		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password);
+	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email, Date fecha) {
+		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password, fecha);
 	}
 
 	public boolean existeUsuario(String usuario) {
