@@ -14,7 +14,7 @@ import tds.driver.ServicioPersistencia;
 
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 
-	private static ServicioPersistencia servidorPers;
+	private static ServicioPersistencia servPersistencia;
 	private static AdaptadorUsuarioTDS unicaInstancia;
 	private SimpleDateFormat dateFormat;
 	
@@ -27,7 +27,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	}
 	
 	private AdaptadorUsuarioTDS() {
-		servidorPers = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
+		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 	
@@ -36,7 +36,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		System.out.println("Entra al adaptadorDAO");
 		try {
-			eUsuario = servidorPers.recuperarEntidad(u.getCodigo());
+			eUsuario = servPersistencia.recuperarEntidad(u.getCodigo());
 		} catch (Exception e) {
 		}
 		
@@ -57,8 +57,15 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 				))
 		);
 		
-		eUsuario = servidorPers.registrarEntidad(eUsuario);
+		eUsuario = servPersistencia.registrarEntidad(eUsuario);
 		u.setCodigo(eUsuario.getId());
+	}
+	
+	public void borrarUsuario(Usuario u) {
+		Entidad eUsuario;
+		
+		eUsuario = servPersistencia.recuperarEntidad(u.getCodigo());
+		servPersistencia.borrarEntidad(eUsuario);
 	}
 	
 	public Usuario recuperarUsuario(int codigo) {
@@ -72,13 +79,13 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String usuario;
 		String password;
 		
-		eUsuario = servidorPers.recuperarEntidad(codigo);
+		eUsuario = servPersistencia.recuperarEntidad(codigo);
 		
-		nombre = servidorPers.recuperarPropiedadEntidad(eUsuario, "nombre");
-		apellidos = servidorPers.recuperarPropiedadEntidad(eUsuario, "apellidos");
-		email = servidorPers.recuperarPropiedadEntidad(eUsuario, "email");
-		usuario = servidorPers.recuperarPropiedadEntidad(eUsuario, "usuario");
-		password = servidorPers.recuperarPropiedadEntidad(eUsuario, "password");
+		nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
+		apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+		email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
+		usuario = servPersistencia.recuperarPropiedadEntidad(eUsuario, "usuario");
+		password = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
 		
 		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, null,null, null);
 		u.setCodigo(codigo);
@@ -90,7 +97,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	
 	public List<Usuario> recuperarTodosUsuarios(){
 		List<Usuario> usuarios = new LinkedList<Usuario>();
-		List<Entidad> eUsuarios = servidorPers.recuperarEntidades("usuario");
+		List<Entidad> eUsuarios = servPersistencia.recuperarEntidades("usuario");
 		
 		for (Entidad eUsuario : eUsuarios) {
 			usuarios.add(recuperarUsuario(eUsuario.getId()));
