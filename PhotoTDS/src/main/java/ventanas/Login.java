@@ -15,7 +15,6 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.TextField;
 
 import javax.swing.Box;
 import java.awt.Dimension;

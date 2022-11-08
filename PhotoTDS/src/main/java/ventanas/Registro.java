@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.Color;
 import javax.swing.JSeparator;
@@ -25,8 +24,6 @@ import com.toedter.calendar.JDateChooser;
 //import com.toedter.calendar.JCalendar;
 
 import javax.swing.JPasswordField;
-import java.awt.Component;
-import javax.swing.JFileChooser;
 
 public class Registro extends JFrame{
 
