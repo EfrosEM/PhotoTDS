@@ -1,7 +1,6 @@
 package ventanas;
 
 import java.awt.EventQueue;
-
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
@@ -258,6 +257,10 @@ public class PerfilUsuario {
 		JPanel panelSur = new JPanel();
 		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		@SuppressWarnings("rawtypes")
+		JList list = new JList();
+		panelSur.add(list);
 	}
 
 }
