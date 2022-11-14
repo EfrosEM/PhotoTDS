@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,6 +27,7 @@ import com.toedter.calendar.JDateChooser;
 //import com.toedter.calendar.JCalendar;
 
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 
 public class Registro extends JFrame{
@@ -377,8 +380,19 @@ public class Registro extends JFrame{
 		separator_6.setPreferredSize(new Dimension(8, 2));
 		panel_11.add(separator_6);
 		
-		JTextArea textArea = new JTextArea();
-		panel_11.add(textArea);
+		JButton btnPresentacion = new JButton("+");
+		btnPresentacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTextArea ta = new JTextArea(20, 20);
+				switch (JOptionPane.showConfirmDialog(null, new JScrollPane(ta), "Descripcion", 1)) {
+				    case JOptionPane.OK_OPTION:
+				        System.out.println(ta.getText());
+				        break;
+				}
+			}
+		});
+		panel_11.add(btnPresentacion);
 	
 	}
 	
