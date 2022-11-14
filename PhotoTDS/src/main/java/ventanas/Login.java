@@ -13,6 +13,8 @@ import javax.swing.BoxLayout;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import java.awt.Font;
 
@@ -208,7 +210,7 @@ public class Login {
 					System.out.println("Login correcto");
 				}
 				else {
-					System.out.println("Usuario/Contraseña incorrecta");
+					JOptionPane.showMessageDialog(frame, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}

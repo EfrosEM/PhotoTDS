@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Date;
 import java.awt.Color;
 import javax.swing.JSeparator;
@@ -24,6 +25,7 @@ import com.toedter.calendar.JDateChooser;
 //import com.toedter.calendar.JCalendar;
 
 import javax.swing.JPasswordField;
+import javax.swing.JFileChooser;
 
 public class Registro extends JFrame{
 
@@ -330,6 +332,26 @@ public class Registro extends JFrame{
 		
 		JLabel lblNewLabel_1 = new JLabel("A\u00F1adir foto del usuario (opcional)");
 		panel_10.add(lblNewLabel_1);
+		
+//		JFileChooser fileChooser = new JFileChooser();
+//		fileChooser.setVisible(false);
+		
+		JButton btnFileChooser = new JButton("+");
+		btnFileChooser.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int seleccion = fileChooser.showOpenDialog(panelAddFoto);
+				
+				if (seleccion == JFileChooser.APPROVE_OPTION) {
+					File fichero = fileChooser.getSelectedFile();
+					System.out.println(fichero.getAbsolutePath());
+				}
+			}
+		});
+		panel_10.add(btnFileChooser);
+//		panel_10.add(fileChooser);
 		
 		JPanel panelAddPresent = new JPanel();
 		FlowLayout fl_panelAddPresent = (FlowLayout) panelAddPresent.getLayout();
