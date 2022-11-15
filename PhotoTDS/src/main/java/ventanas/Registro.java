@@ -398,7 +398,7 @@ public class Registro extends JFrame{
 	
 	private void volverLogin() {
 		frmRegistroUsuario.setVisible(false);
-		loginWindow.frame.setVisible(true);
+		loginWindow.frmPhototds.setVisible(true);
 	}
 	
 	private void ocultarWarnings() {

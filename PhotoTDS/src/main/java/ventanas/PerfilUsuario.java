@@ -1,25 +1,19 @@
 package ventanas;
 
-import java.awt.EventQueue;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import java.awt.Component;
 import javax.swing.Box;
-import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
-import java.awt.Font;
-import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Panel;
 
 
 
@@ -65,7 +59,36 @@ public class PerfilUsuario {
 		
 		JPanel panelSur = new JPanel();
 		frmPhototds.getContentPane().add(panelSur, BorderLayout.SOUTH);
-		panelSur.setLayout(new GridLayout(1, 3, 0, 0));
+		panelSur.setLayout(new GridLayout());
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		tabbedPane.setForeground(Color.DARK_GRAY);
+		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panelSur.add(tabbedPane);
+		
+		JPanel panelFotos = new JPanel();
+		JPanel panelAlbumes = new JPanel();
+		
+		tabbedPane.addTab("FOTOS", null, panelFotos, null);
+		panelFotos.setLayout(new GridLayout(1, 3, 0, 0));
+		
+		JLabel lbl2 = new JLabel("New label");
+		panelFotos.add(lbl2);
+		JLabel lbl3 = new JLabel("New label");
+		panelFotos.add(lbl3);
+		JLabel lbl4 = new JLabel("New label");
+		panelFotos.add(lbl4);
+		
+		tabbedPane.addTab("ÁLBUMES", null, panelAlbumes, null);
+		panelAlbumes.setLayout(new GridLayout(1, 3, 0, 0));
+		
+		JLabel lbl5 = new JLabel("New label");
+		panelAlbumes.add(lbl5);
+		JLabel lbl6 = new JLabel("New label");
+		panelAlbumes.add(lbl6);
+		JLabel lbl7 = new JLabel("New label");
+		panelAlbumes.add(lbl7);
 		
 		JPanel panelNorte = new JPanel();
 		frmPhototds.getContentPane().add(panelNorte, BorderLayout.NORTH);
@@ -238,6 +261,7 @@ public class PerfilUsuario {
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_5.add(lblNewLabel_7);
 		
+		/*
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
 		panelCentral.add(panel_2, BorderLayout.SOUTH);
@@ -258,6 +282,6 @@ public class PerfilUsuario {
 		lblNewLabel_3.setForeground(Color.DARK_GRAY);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_2.add(lblNewLabel_3);
+		*/
 	}
-
 }

@@ -33,7 +33,7 @@ public class Login {
 	/**
 	 * 
 	 */
-	protected JFrame frame;
+	protected JFrame frmPhototds;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField txtPassword;
 	private ControladorPhotoTDS controlador;
@@ -46,7 +46,7 @@ public class Login {
 			public void run() {
 				try {
 					Login window = new Login();
-					window.frame.setVisible(true);
+					window.frmPhototds.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,15 +66,16 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/recursos/camera.png")));
-		frame.setBounds(100, 100, 408, 376);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmPhototds = new JFrame();
+		frmPhototds.setTitle("PhotoTDS");
+		frmPhototds.setResizable(false);
+		frmPhototds.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/recursos/camera.png")));
+		frmPhototds.setBounds(100, 100, 408, 376);
+		frmPhototds.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPhototds.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel Sur = new JPanel();
-		frame.getContentPane().add(Sur, BorderLayout.SOUTH);
+		frmPhototds.getContentPane().add(Sur, BorderLayout.SOUTH);
 		Sur.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_4 = new JPanel();
@@ -127,7 +128,7 @@ public class Login {
 		
 		JPanel Centro = new JPanel();
 		Centro.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		frame.getContentPane().add(Centro, BorderLayout.CENTER);
+		frmPhototds.getContentPane().add(Centro, BorderLayout.CENTER);
 		Centro.setLayout(new BoxLayout(Centro, BoxLayout.Y_AXIS));
 		
 		JPanel panel_1 = new JPanel();
@@ -210,7 +211,7 @@ public class Login {
 					System.out.println("Login correcto");
 				}
 				else {
-					JOptionPane.showMessageDialog(frame, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmPhototds, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -218,17 +219,17 @@ public class Login {
 		panel.add(btnNewButton);
 		
 		JPanel este = new JPanel();
-		frame.getContentPane().add(este, BorderLayout.EAST);
+		frmPhototds.getContentPane().add(este, BorderLayout.EAST);
 		
 		JPanel oeste = new JPanel();
-		frame.getContentPane().add(oeste, BorderLayout.WEST);
+		frmPhototds.getContentPane().add(oeste, BorderLayout.WEST);
 		
 		JPanel norte = new JPanel();
-		frame.getContentPane().add(norte, BorderLayout.NORTH);
+		frmPhototds.getContentPane().add(norte, BorderLayout.NORTH);
 	}
 	
 	private void abrirRegistro() {
-		frame.setVisible(false);
+		frmPhototds.setVisible(false);
 		Registro r = new Registro(this);
 		r.frmRegistroUsuario.setVisible(true);
 	}

@@ -22,7 +22,7 @@ import javax.swing.JList;
 
 public class Inicio {
 
-	private JFrame frame;
+	private JFrame frmPhototds;
 	private JTextField textField;
 
 	/**
@@ -33,7 +33,7 @@ public class Inicio {
 			public void run() {
 				try {
 					Inicio window = new Inicio();
-					window.frame.setVisible(true);
+					window.frmPhototds.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,15 +52,16 @@ public class Inicio {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
-		frame.setBounds(100, 100, 577, 629);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmPhototds = new JFrame();
+		frmPhototds.setTitle("PhotoTDS");
+		frmPhototds.setResizable(false);
+		frmPhototds.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
+		frmPhototds.setBounds(100, 100, 577, 629);
+		frmPhototds.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPhototds.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		frmPhototds.getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(10, 10));
@@ -148,7 +149,7 @@ public class Inicio {
 		panelNorte.add(rigidArea_3_1);
 		
 		JPanel panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		frmPhototds.getContentPane().add(panelCentro, BorderLayout.CENTER);
 		
 		@SuppressWarnings("rawtypes")
 		JList list = new JList();
