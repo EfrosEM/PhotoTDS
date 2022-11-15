@@ -25,7 +25,7 @@ import java.awt.Panel;
 
 public class PerfilUsuario {
 
-	private JFrame frame;
+	private JFrame frmPhototds;
 	private JTextField textField;
 
 	/**
@@ -36,7 +36,7 @@ public class PerfilUsuario {
 			public void run() {
 				try {
 					PerfilUsuario window = new PerfilUsuario();
-					window.frame.setVisible(true);
+					window.frmPhototds.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,15 +55,20 @@ public class PerfilUsuario {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
-		frame.setBounds(100, 100, 577, 629);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmPhototds = new JFrame();
+		frmPhototds.setTitle("PhotoTDS");
+		frmPhototds.setResizable(false);
+		frmPhototds.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
+		frmPhototds.setBounds(100, 100, 577, 629);
+		frmPhototds.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPhototds.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelSur = new JPanel();
+		frmPhototds.getContentPane().add(panelSur, BorderLayout.SOUTH);
+		panelSur.setLayout(new GridLayout(1, 3, 0, 0));
 		
 		JPanel panelNorte = new JPanel();
-		frame.getContentPane().add(panelNorte, BorderLayout.NORTH);
+		frmPhototds.getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
 		
 		Component rigidArea_2 = Box.createRigidArea(new Dimension(10, 10));
@@ -144,7 +149,7 @@ public class PerfilUsuario {
 		
 		JPanel panelCentral = new JPanel();
 		panelCentral.setBorder(new LineBorder(new Color(192, 192, 192)));
-		frame.getContentPane().add(panelCentral, BorderLayout.CENTER);
+		frmPhototds.getContentPane().add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
@@ -253,14 +258,6 @@ public class PerfilUsuario {
 		lblNewLabel_3.setForeground(Color.DARK_GRAY);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_2.add(lblNewLabel_3);
-		
-		JPanel panelSur = new JPanel();
-		frame.getContentPane().add(panelSur, BorderLayout.SOUTH);
-		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		@SuppressWarnings("rawtypes")
-		JList list = new JList();
-		panelSur.add(list);
 	}
 
 }
