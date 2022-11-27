@@ -54,7 +54,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("email", u.getEmail()),
 						new Propiedad("usuario", u.getUsuario()),
 						new Propiedad("password", u.getPassword()),
-						new Propiedad("fechaNacimiento", dateFormat.format(u.getNacimiento()))
+						new Propiedad("fechaNacimiento", dateFormat.format(u.getNacimiento())),
+						new Propiedad("descripcion", u.getDescripcion())
 				))
 		);
 		
@@ -90,6 +91,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "fechaNacimiento");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "fechaNacimiento", dateFormat.format(u.getNacimiento()));
 		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "descripcion");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "descripcion", u.getDescripcion());
+		
 	}
 	
 	public Usuario recuperarUsuario(int codigo) {
@@ -103,6 +107,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String usuario;
 		String password;
 		Date fechaNacimiento = null;
+		String descripcion;
 		
 		eUsuario = servPersistencia.recuperarEntidad(codigo);
 		
@@ -118,7 +123,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			e.printStackTrace();
 		}
 		
-		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, null, null);
+		descripcion = servPersistencia.recuperarPropiedadEntidad(eUsuario, "descripcion");
+		
+		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, descripcion, null);
 		u.setCodigo(codigo);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, u);

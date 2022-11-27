@@ -234,8 +234,8 @@ public class Login {
 		r.frmRegistroUsuario.setVisible(true);
 	}
 	
-	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email, Date fecha) {
-		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password, fecha);
+	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email, Date fecha, String descripcion) {
+		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password, fecha, descripcion);
 	}
 
 	public boolean existeUsuario(String usuario) {

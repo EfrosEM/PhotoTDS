@@ -26,12 +26,12 @@ public class ControladorPhotoTDS {
 		inicializarCatalogos();
 	}
 	
-	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha) {
+	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha, String descripcion) {
 		if (catalogoUsuarios.getUsuario(usuario) != null) {
 			return false;
 		}
 		
-		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fecha, null, null);
+		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fecha, descripcion, null);
 		adaptadorUsuario.registrarUsuario(u);
 		catalogoUsuarios.addUsuario(u);
 		return true;

@@ -51,6 +51,13 @@ public class Registro extends JFrame{
 	private JLabel lblWarningUsuario;
 	private JLabel lblWarningContraseña;
 	private JLabel lblWarningRepetirContraseña;
+	private JLabel lblWarningFechaNacimiento;
+	private JLabel lblWarningDescripcion;
+	
+	private String descripcion;
+	
+	private JTextArea ta = null;
+	private JScrollPane sp = null;
 	/**
 	 * Create the application.
 	 */
@@ -133,7 +140,7 @@ public class Registro extends JFrame{
 					String email = txtEmail.getText();
 					Date fecha = dateChooser.getDate();
 				
-					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email, fecha);
+					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email, fecha, descripcion);
 				
 					if (isRegistered) {
 						volverLogin();
@@ -316,6 +323,11 @@ public class Registro extends JFrame{
 		
 		dateChooser = new JDateChooser();
 		panel_9.add(dateChooser);
+		
+		lblWarningFechaNacimiento = new JLabel("*Campo vacío*");
+		lblWarningFechaNacimiento.setVisible(false);
+		lblWarningFechaNacimiento.setForeground(Color.RED);
+		panelFechaNac.add(lblWarningFechaNacimiento);
 				
 		JPanel panelAddFoto = new JPanel();
 		FlowLayout fl_panelAddFoto = (FlowLayout) panelAddFoto.getLayout();
@@ -381,18 +393,29 @@ public class Registro extends JFrame{
 		panel_11.add(separator_6);
 		
 		JButton btnPresentacion = new JButton("+");
+		
 		btnPresentacion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JTextArea ta = new JTextArea(20, 20);
-				switch (JOptionPane.showConfirmDialog(null, new JScrollPane(ta), "Descripcion", 1)) {
+				if (ta == null) {
+					ta = new JTextArea(20, 20);
+					sp = new JScrollPane(ta);
+				}
+				switch (JOptionPane.showConfirmDialog(null, sp, "Descripcion", 1)) {
 				    case JOptionPane.OK_OPTION:
-				        System.out.println(ta.getText());
+				        System.out.println(ta.getText().length());
+				        descripcion = ta.getText();
 				        break;
 				}
 			}
 		});
 		panel_11.add(btnPresentacion);
+		
+		lblWarningDescripcion = new JLabel("*Máximo 200 caracteres*");
+		lblWarningDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblWarningDescripcion.setVisible(false);
+		lblWarningDescripcion.setForeground(Color.RED);
+		panelAddPresent.add(lblWarningDescripcion);
 	
 	}
 	
@@ -407,6 +430,8 @@ public class Registro extends JFrame{
 		lblWarningUsuario.setVisible(false);
 		lblWarningContraseña.setVisible(false);
 		lblWarningRepetirContraseña.setVisible(false);
+		lblWarningFechaNacimiento.setVisible(false);
+		lblWarningDescripcion.setVisible(false);
 	}
 	
 	private boolean comprobarCampos() {
@@ -461,6 +486,16 @@ public class Registro extends JFrame{
 			lblWarningContraseña.setText("*No coinciden*");
 			lblWarningRepetirContraseña.setVisible(true);
 			lblWarningRepetirContraseña.setText("*No coinciden*");
+			b = false;
+		}
+		
+		if (dateChooser.getDate() == null) {
+			lblWarningFechaNacimiento.setVisible(true);
+			b = false;
+		}
+		
+		if (descripcion != null && descripcion.length() > 200) {
+			lblWarningDescripcion.setVisible(true);
 			b = false;
 		}
 		
