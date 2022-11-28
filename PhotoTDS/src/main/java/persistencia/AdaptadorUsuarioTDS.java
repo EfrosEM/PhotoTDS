@@ -35,7 +35,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	public void registrarUsuario(Usuario u) {
 		Entidad eUsuario = null;
 		
-		System.out.println("Entra al adaptadorDAO");
 		try {
 			eUsuario = servPersistencia.recuperarEntidad(u.getCodigo());
 		} catch (Exception e) {

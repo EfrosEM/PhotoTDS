@@ -9,8 +9,12 @@ public class Foto extends Publicacion{
 		this.ruta = ruta;	
 	}
 
+	public Foto(String ruta, String titulo, String descripcion) {
+		super(titulo, descripcion, null);
+		this.ruta = ruta;
+	}
 	public String getRuta() {
 		return ruta;
 	}
-
+	
 }

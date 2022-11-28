@@ -6,6 +6,8 @@ import java.util.List;
 
 public abstract class Publicacion {
 
+	private int codigo;
+	
 	private String titulo;
 	private LocalDate fecha;
 	private String descripcion;
@@ -13,7 +15,7 @@ public abstract class Publicacion {
 	private Usuario user;
 	private ArrayList<Hashtag> hashtags;
 	private ArrayList<Comentario> comentarios;
-	
+		
 	public Publicacion(String titulo, String descripcion, Usuario user, Hashtag...hashtag) {
 		this.titulo = titulo;
 		this.likes = 0;
@@ -26,6 +28,8 @@ public abstract class Publicacion {
 		for(Hashtag h : hashtag) {
 			hashtags.add(h);
 		}
+		
+		this.codigo = 0;
 	}
 
 	public String getTitulo() {
@@ -54,6 +58,18 @@ public abstract class Publicacion {
 	
 	public List<Hashtag> getHashtags() {
 		return new ArrayList<Hashtag>(hashtags);
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	public void setUser(Usuario u) {
+		this.user = u;
+	}
+	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	
 }
