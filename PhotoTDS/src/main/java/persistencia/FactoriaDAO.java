@@ -27,6 +27,7 @@ public abstract class FactoriaDAO {
 	protected FactoriaDAO() {}
 	
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
+	public abstract IAdaptadorFotoDAO getFotoDAO();
 	
 	
 	

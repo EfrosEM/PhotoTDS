@@ -6,4 +6,9 @@ public class TDSFactoriaDAO extends FactoriaDAO{
 	public IAdaptadorUsuarioDAO getUsuarioDAO() {
 		return AdaptadorUsuarioTDS.getUnicaInstancia();
 	}
+	
+	@Override
+	public IAdaptadorFotoDAO getFotoDAO() {
+		return AdaptadorFotoTDS.getUnicaInstancia();
+	}
 }
