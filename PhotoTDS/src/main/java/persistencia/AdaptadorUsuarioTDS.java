@@ -6,9 +6,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import beans.Entidad;
 import beans.Propiedad;
+import dominio.Foto;
+import dominio.Publicacion;
 import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
@@ -54,7 +57,11 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("usuario", u.getUsuario()),
 						new Propiedad("password", u.getPassword()),
 						new Propiedad("fechaNacimiento", dateFormat.format(u.getNacimiento())),
-						new Propiedad("descripcion", u.getDescripcion())
+						new Propiedad("descripcion", u.getDescripcion()),
+						new Propiedad("isPremium", u.isPremium().toString()),
+						new Propiedad("seguidores", obtenerCodigosSeguidores(u.getSeguidores())),
+						new Propiedad("publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones())),
+						new Propiedad("codigo", String.valueOf(u.getCodigo()))
 				))
 		);
 		
@@ -93,6 +100,18 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "descripcion");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "descripcion", u.getDescripcion());
 		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "isPremium");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "isPremium", u.isPremium().toString());
+		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "seguidores");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "seguidores", obtenerCodigosSeguidores(u.getSeguidores()));
+		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "publicaciones");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones()));
+		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "codigo");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "codigo", String.valueOf(u.getCodigo()));
+		
 	}
 	
 	public Usuario recuperarUsuario(int codigo) {
@@ -107,6 +126,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String password;
 		Date fechaNacimiento = null;
 		String descripcion;
+		Boolean isPremium;
+		
 		
 		eUsuario = servPersistencia.recuperarEntidad(codigo);
 		
@@ -123,11 +144,21 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eUsuario, "descripcion");
+		isPremium = Boolean.parseBoolean(servPersistencia.recuperarPropiedadEntidad(eUsuario, "isPremium"));
 		
 		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, descripcion, null);
 		u.setCodigo(codigo);
+		u.setPremium(isPremium);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, u);
+		
+		List<Usuario> seguidores = obtenerSeguidoresDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "seguidores"));
+		
+		for (Usuario seguidor : seguidores) {
+			u.addSeguidor(seguidor);
+		}
+		
+		// Falta la parte de las publicaciones
 		
 		return u;
 	}
@@ -142,4 +173,42 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		return usuarios;
 	}
+	
+	private String obtenerCodigosSeguidores(List<Usuario> seguidores) {
+		String codigosSeguidores = "";
+		
+		for (Usuario seguidor : seguidores) {
+			codigosSeguidores += seguidor.getCodigo() + " ";
+		}
+		
+		return codigosSeguidores;
+	}
+	
+	private String obtenerCodigosPublicaciones(List<Publicacion> publicaciones) {
+		String codigosPublicaciones = "";
+		
+		for (Publicacion publicacion : publicaciones) {
+			codigosPublicaciones += publicacion.getCodigo() + " ";
+		}
+		
+		return codigosPublicaciones;
+	}
+	
+	private List<Usuario> obtenerSeguidoresDesdeCodigo(String codigoSeguidores) {
+		List<Usuario> seguidores = new ArrayList<>();
+		
+		if (codigoSeguidores.equals("") || codigoSeguidores == null) {
+			return seguidores;
+		}
+		
+		StringTokenizer strTok = new StringTokenizer(codigoSeguidores, " ");
+		AdaptadorUsuarioTDS adaptadorUsuario = AdaptadorUsuarioTDS.getUnicaInstancia();
+		
+		while (strTok.hasMoreTokens()) {
+			seguidores.add(adaptadorUsuario.recuperarUsuario(Integer.valueOf(strTok.nextToken(codigoSeguidores))));
+		}
+		
+		return seguidores;
+	}
+	
 }

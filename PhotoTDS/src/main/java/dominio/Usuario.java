@@ -14,7 +14,7 @@ public class Usuario {
 	private Date nacimiento;
 	private String descripcion;
 	private Foto fotoPerfil;
-	private boolean premium;
+	private Boolean premium;
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	
@@ -73,7 +73,7 @@ public class Usuario {
 		return new ArrayList<Publicacion>(publicaciones);
 	}
 
-	public boolean isPremium() {
+	public Boolean isPremium() {
 		return premium;
 	}
 	
@@ -83,6 +83,14 @@ public class Usuario {
 	
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
+	}
+	
+	public void setPremium(Boolean prem) {
+		this.premium = prem;
+	}
+	
+	public void addSeguidor(Usuario seguidor) {
+		seguidores.add(seguidor);
 	}
 
 	
