@@ -30,12 +30,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
 
-public class Registro extends JFrame{
 
+public class Registro {
+
+	private static final String FOTO_PERFIL_DEFAULT = "C:\\Users\\alex_\\git\\Photo_TDS\\PhotoTDS\\src\\main\\java\\recursos\\defaultUser.png";
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	protected JFrame frmRegistroUsuario;
 	private JTextField txtEmail;
 	private JTextField txtNombre;
@@ -54,7 +55,8 @@ public class Registro extends JFrame{
 	private JLabel lblWarningFechaNacimiento;
 	private JLabel lblWarningDescripcion;
 	
-	private String descripcion;
+	private String descripcion = null;
+	private String fotoPerfil = FOTO_PERFIL_DEFAULT;
 	
 	private JTextArea ta = null;
 	private JScrollPane sp = null;
@@ -140,7 +142,7 @@ public class Registro extends JFrame{
 					String email = txtEmail.getText();
 					Date fecha = dateChooser.getDate();
 				
-					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email, fecha, descripcion);
+					boolean isRegistered = loginWindow.registrar(nombre, apellidos, usuario, password, email, fecha, descripcion, fotoPerfil);
 				
 					if (isRegistered) {
 						volverLogin();
@@ -361,7 +363,8 @@ public class Registro extends JFrame{
 				
 				if (seleccion == JFileChooser.APPROVE_OPTION) {
 					File fichero = fileChooser.getSelectedFile();
-					System.out.println(fichero.getAbsolutePath());
+					fotoPerfil = fichero.getAbsolutePath();
+					System.out.println(fotoPerfil);
 				}
 			}
 		});

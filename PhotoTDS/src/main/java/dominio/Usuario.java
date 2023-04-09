@@ -13,12 +13,12 @@ public class Usuario {
 	private String password;
 	private Date nacimiento;
 	private String descripcion;
-	private Foto fotoPerfil;
+	private String fotoPerfil;
 	private Boolean premium;
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	
-	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento, String descripcion, Foto fotoPerfil) {
+	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento, String descripcion, String fotoPerfil) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.usuario = usuario;
@@ -61,7 +61,7 @@ public class Usuario {
 		return descripcion;
 	}
 
-	public Foto getFotoPerfil() {
+	public String getFotoPerfil() {
 		return fotoPerfil;
 	}
 	

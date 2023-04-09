@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,33 +19,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import controlador.ControladorPhotoTDS;
+import dominio.Usuario;
+
 import javax.swing.JList;
 
 public class Inicio {
 
-	private JFrame frmPhototds;
-	private JTextField textField;
-
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio window = new Inicio();
-					window.frmPhototds.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	protected JFrame frmPhototds;
+	private JTextField textField;
+	private ControladorPhotoTDS controlador;
+
 
 	/**
 	 * Create the application.
 	 */
 	public Inicio() {
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -134,7 +129,22 @@ public class Inicio {
 		JButton btnNewButton_2 = new JButton("");
 		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
-		btnNewButton_2.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/usuario (Personalizado).png")));
+		
+		ImageIcon icon = new ImageIcon(controlador.getUsuarioActual().getFotoPerfil());
+		Image img = icon.getImage();
+		Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		btnNewButton_2.setIcon(otroicon);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frmPhototds.setVisible(false);
+				PerfilUsuario perfilUsuario = new PerfilUsuario();
+				perfilUsuario.frmPhototds.setVisible(true);
+				
+			}
+		});
 		panelNorte.add(btnNewButton_2);
 		
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(10, 10));
@@ -155,4 +165,5 @@ public class Inicio {
 		JList list = new JList();
 		panelCentro.add(list);
 	}
+	
 }

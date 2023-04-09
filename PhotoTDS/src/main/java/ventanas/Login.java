@@ -27,12 +27,8 @@ import javax.swing.border.LineBorder;
 
 import controlador.ControladorPhotoTDS;
 
-
 public class Login {
 
-	/**
-	 * 
-	 */
 	protected JFrame frmPhototds;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField txtPassword;
@@ -209,6 +205,7 @@ public class Login {
 				
 				if (isLogged) {
 					System.out.println("Login correcto");
+					abrirInicio();
 				}
 				else {
 					JOptionPane.showMessageDialog(frmPhototds, "Nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -234,11 +231,17 @@ public class Login {
 		r.frmRegistroUsuario.setVisible(true);
 	}
 	
-	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email, Date fecha, String descripcion) {
-		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password, fecha, descripcion);
+	public boolean registrar(String nombre, String apellidos, String usuario, String password, String email, Date fecha, String descripcion, String fotoPerfil) {
+		return controlador.registrarUsuario(nombre, apellidos, email, usuario, password, fecha, descripcion, fotoPerfil);
 	}
 
 	public boolean existeUsuario(String usuario) {
 		return controlador.existeUsuario(usuario);
+	}
+	
+	private void abrirInicio() {
+		frmPhototds.setVisible(false);
+		Inicio i = new Inicio();
+		i.frmPhototds.setVisible(true);
 	}
 }

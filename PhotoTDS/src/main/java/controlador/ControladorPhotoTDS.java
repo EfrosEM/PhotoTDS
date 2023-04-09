@@ -12,6 +12,7 @@ public class ControladorPhotoTDS {
 	private CatalogoUsuarios catalogoUsuarios;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private static ControladorPhotoTDS unicaInstancia;
+	private Usuario usuarioActual;
 	
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -26,12 +27,12 @@ public class ControladorPhotoTDS {
 		inicializarCatalogos();
 	}
 	
-	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha, String descripcion) {
+	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha, String descripcion, String fotoPerfil) {
 		if (catalogoUsuarios.getUsuario(usuario) != null) {
 			return false;
 		}
 		
-		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fecha, descripcion, null);
+		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fecha, descripcion, fotoPerfil);
 		adaptadorUsuario.registrarUsuario(u);
 		catalogoUsuarios.addUsuario(u);
 		return true;
@@ -41,6 +42,7 @@ public class ControladorPhotoTDS {
 		Usuario u = catalogoUsuarios.getUsuario(usuario);
 		
 		if (u != null && u.getPassword().equals(password)) {
+			this.usuarioActual = u;
 			return true;
 		}
 		
@@ -71,4 +73,9 @@ public class ControladorPhotoTDS {
 	private void inicializarCatalogos() {
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 	}
+
+	public Usuario getUsuarioActual() {
+		return usuarioActual;
+	}
+
 }

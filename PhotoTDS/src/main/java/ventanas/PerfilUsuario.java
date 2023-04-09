@@ -13,35 +13,27 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
+
+import controlador.ControladorPhotoTDS;
+
 import javax.swing.border.LineBorder;
 
 
 
 public class PerfilUsuario {
 
-	private JFrame frmPhototds;
+	protected JFrame frmPhototds;
 	private JTextField textField;
+	private ControladorPhotoTDS controlador;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PerfilUsuario window = new PerfilUsuario();
-					window.frmPhototds.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private JPanel panelFotos;
 
 	/**
 	 * Create the application.
 	 */
 	public PerfilUsuario() {
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -53,11 +45,12 @@ public class PerfilUsuario {
 		frmPhototds.setTitle("PhotoTDS");
 		frmPhototds.setResizable(false);
 		frmPhototds.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
-		frmPhototds.setBounds(100, 100, 577, 629);
+		frmPhototds.setBounds(100, 100, 800, 850); //577	629
 		frmPhototds.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPhototds.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setPreferredSize(new Dimension(10, 400));
 		frmPhototds.getContentPane().add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new GridLayout());
 		
@@ -67,21 +60,28 @@ public class PerfilUsuario {
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelSur.add(tabbedPane);
 		
-		JPanel panelFotos = new JPanel();
+		panelFotos = new JPanel();
+		panelFotos.setPreferredSize(new Dimension(800, 400));
 		JPanel panelAlbumes = new JPanel();
 		
 		tabbedPane.addTab("FOTOS", null, panelFotos, null);
-		panelFotos.setLayout(new GridLayout(1, 3, 0, 0));
+		panelFotos.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lbl2 = new JLabel("New label");
-		panelFotos.add(lbl2);
-		JLabel lbl3 = new JLabel("New label");
-		panelFotos.add(lbl3);
-		JLabel lbl4 = new JLabel("New label");
-		panelFotos.add(lbl4);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(790, 390));
+		panelFotos.add(scrollPane);
+		
+		JPanel panelFotos = new JPanel();
+		panelFotos.setPreferredSize(new Dimension(790, 700));
+		scrollPane.setViewportView(panelFotos);
+		panelFotos.setLayout(new GridLayout(0, 3, 3, 3));
+		for (int i = 0; i < 12; i++) {
+			//panelFotos.add(new JLabel("Hola"));
+			panelFotos.add(new JLabel(new ImageIcon(this.getClass().getResource("/recursos/nano.jpg")))); //.setSize(new Dimension(100, 100));
+		}
 		
 		tabbedPane.addTab("ÁLBUMES", null, panelAlbumes, null);
-		panelAlbumes.setLayout(new GridLayout(1, 3, 0, 0));
+		panelAlbumes.setLayout(new GridLayout(3, 3, 0, 0));
 		
 		JLabel lbl5 = new JLabel("New label");
 		panelAlbumes.add(lbl5);
@@ -164,18 +164,24 @@ public class PerfilUsuario {
 		JButton btnNewButton_2 = new JButton("");
 		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
-		btnNewButton_2.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/usuario (Personalizado).png")));
+		
+		btnNewButton_2.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 30, 30));
 		panelNorte.add(btnNewButton_2);
 		
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(10, 10));
 		panelNorte.add(rigidArea_3);
 		
 		JPanel panelCentral = new JPanel();
+		panelCentral.setMinimumSize(new Dimension(850, 500));
+		panelCentral.setPreferredSize(new Dimension(850, 200));
+		panelCentral.setMaximumSize(new Dimension(850, 300));
 		panelCentral.setBorder(new LineBorder(new Color(192, 192, 192)));
 		frmPhototds.getContentPane().add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(150, 50));
+		panel.setMaximumSize(new Dimension(200, 100));
 		panel.setBackground(Color.WHITE);
 		panelCentral.add(panel, BorderLayout.WEST);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -184,25 +190,32 @@ public class PerfilUsuario {
 		panel.add(rigidArea_7);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setAlignmentY(Component.TOP_ALIGNMENT);
 		lblNewLabel_4.setSize(new Dimension(5, 5));
 		lblNewLabel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblNewLabel_4.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/user.png")));
+		
+		lblNewLabel_4.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 135, 135));
 		panel.add(lblNewLabel_4);
 		
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
 		panel.add(rigidArea_8);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setPreferredSize(new Dimension(650, 400));
+		panel_1.setMaximumSize(new Dimension(650, 400));
 		panel_1.setBackground(Color.WHITE);
 		panelCentral.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
+		Component rigidArea_9_1 = Box.createRigidArea(new Dimension(20, 20));
+		panel_1.add(rigidArea_9_1);
+		
 		Panel panel_3 = new Panel();
-		panel_3.setMaximumSize(new Dimension(32767, 200));
+		panel_3.setMaximumSize(new Dimension(650, 100));
 		panel_1.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JLabel lblNewLabel_5 = new JLabel("Nombre de Usuario");
+		JLabel lblNewLabel_5 = new JLabel(controlador.getUsuarioActual().getUsuario());
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(lblNewLabel_5);
 		
@@ -216,12 +229,12 @@ public class PerfilUsuario {
 		panel_3.add(btnNewButton_3);
 		
 		Panel panel_4 = new Panel();
-		panel_4.setMaximumSize(new Dimension(32767, 200));
+		panel_4.setMaximumSize(new Dimension(650, 100));
 		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_1.add(panel_4);
 		
-		JLabel lblNewLabel_6 = new JLabel("0");
+		JLabel lblNewLabel_6 = new JLabel(String.valueOf(controlador.getUsuarioActual().getPublicaciones().size()));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_6);
 		
@@ -232,7 +245,7 @@ public class PerfilUsuario {
 		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
 		panel_4.add(rigidArea_10);
 		
-		JLabel lblNewLabel_9 = new JLabel("0");
+		JLabel lblNewLabel_9 = new JLabel(String.valueOf(controlador.getUsuarioActual().getSeguidores().size()));
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_9);
 		
@@ -252,12 +265,12 @@ public class PerfilUsuario {
 		panel_4.add(lblNewLabel_12);
 		
 		Panel panel_5 = new Panel();
-		panel_5.setMaximumSize(new Dimension(32767, 200));
+		panel_5.setMaximumSize(new Dimension(650, 100));
 		FlowLayout flowLayout_1 = (FlowLayout) panel_5.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panel_1.add(panel_5);
 		
-		JLabel lblNewLabel_7 = new JLabel("Nombre Completo");
+		JLabel lblNewLabel_7 = new JLabel(controlador.getUsuarioActual().getNombre() + " " + controlador.getUsuarioActual().getApellidos());
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_5.add(lblNewLabel_7);
 		
@@ -283,5 +296,18 @@ public class PerfilUsuario {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel_2.add(lblNewLabel_3);
 		*/
+	}
+	
+	public void añadirFotos() {
+		
+	}
+	
+	private ImageIcon redimensionarImagen(String imagen, int x, int y) {
+		ImageIcon icon = new ImageIcon(imagen);
+		Image img = icon.getImage();
+		Image otraimg = img.getScaledInstance(x, y, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		
+		return otroicon;
 	}
 }

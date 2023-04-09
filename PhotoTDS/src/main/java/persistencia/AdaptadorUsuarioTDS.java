@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 
 import beans.Entidad;
 import beans.Propiedad;
-import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
@@ -58,6 +57,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("password", u.getPassword()),
 						new Propiedad("fechaNacimiento", dateFormat.format(u.getNacimiento())),
 						new Propiedad("descripcion", u.getDescripcion()),
+						new Propiedad("fotoPerfil", u.getFotoPerfil()),
 						new Propiedad("isPremium", u.isPremium().toString()),
 						new Propiedad("seguidores", obtenerCodigosSeguidores(u.getSeguidores())),
 						new Propiedad("publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones())),
@@ -100,6 +100,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "descripcion");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "descripcion", u.getDescripcion());
 		
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, "fotoPerfil");
+		servPersistencia.anadirPropiedadEntidad(eUsuario, "fotoPerfil", u.getFotoPerfil());
+		
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "isPremium");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "isPremium", u.isPremium().toString());
 		
@@ -126,6 +129,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String password;
 		Date fechaNacimiento = null;
 		String descripcion;
+		String fotoPerfil;
 		Boolean isPremium;
 		
 		
@@ -144,9 +148,10 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eUsuario, "descripcion");
+		fotoPerfil = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fotoPerfil");
 		isPremium = Boolean.parseBoolean(servPersistencia.recuperarPropiedadEntidad(eUsuario, "isPremium"));
 		
-		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, descripcion, null);
+		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, descripcion, fotoPerfil);
 		u.setCodigo(codigo);
 		u.setPremium(isPremium);
 		
@@ -197,7 +202,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	private List<Usuario> obtenerSeguidoresDesdeCodigo(String codigoSeguidores) {
 		List<Usuario> seguidores = new ArrayList<>();
 		
-		if (codigoSeguidores.equals("") || codigoSeguidores == null) {
+		if (codigoSeguidores == null) {
 			return seguidores;
 		}
 		
