@@ -2,6 +2,11 @@ package ventanas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
+
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -9,12 +14,18 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Publicacion;
+import dominio.Foto;
 
 import javax.swing.border.LineBorder;
 
@@ -25,9 +36,12 @@ public class PerfilUsuario {
 	protected JFrame frmPhototds;
 	private JTextField textField;
 	private ControladorPhotoTDS controlador;
+	private AñadirFoto af;
+	private String rutaFoto;
 
 	
 	private JPanel panelFotos;
+	private JPanel panelAñadirFoto;
 
 	/**
 	 * Create the application.
@@ -75,10 +89,19 @@ public class PerfilUsuario {
 		panelFotos.setPreferredSize(new Dimension(790, 700));
 		scrollPane.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(0, 3, 3, 3));
-		for (int i = 0; i < 12; i++) {
+		int publicaciones = controlador.getUsuarioActual().getPublicaciones().size();
+		System.out.println("Publicaciones: " + publicaciones);
+		if (publicaciones > 0) {
+			for (Publicacion p : controlador.getUsuarioActual().getPublicaciones()) {
+				if (p instanceof Foto)
+					panelFotos.add(new JLabel(new ImageIcon(((Foto) p).getRuta()))).setSize(new Dimension(100, 100));;
+				
+			}
+		}
+		/*for (int i = 0; i < 12; i++) {
 			//panelFotos.add(new JLabel("Hola"));
 			panelFotos.add(new JLabel(new ImageIcon(this.getClass().getResource("/recursos/nano.jpg")))); //.setSize(new Dimension(100, 100));
-		}
+		}*/
 		
 		tabbedPane.addTab("ÁLBUMES", null, panelAlbumes, null);
 		panelAlbumes.setLayout(new GridLayout(3, 3, 0, 0));
@@ -110,9 +133,37 @@ public class PerfilUsuario {
 		btnNewButton.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton.setPreferredSize(new Dimension(25, 25));
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {				
+				JEditorPane editorPane = new JEditorPane();
+				af = new AñadirFoto(editorPane);
+				af.frmPhototds.setVisible(true);
+				 editorPane.setContentType("text/html");
+				 editorPane.setText("<h1>Agregar Foto</h1><p>Anímate a compartir una foto con tus amigos."
+				 		+ "<br> Puedes arrastrar el fichero aquí. </p>");
+				editorPane.setEditable(false);
+				editorPane.setDropTarget(new DropTarget() {
+				 public synchronized void drop(DropTargetDropEvent evt) {
+				 try {
+				 evt.acceptDrop(DnDConstants.ACTION_COPY);
+				 @SuppressWarnings("unchecked")
+				List<File> droppedFiles = (List<File>)evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+				 for (File file : droppedFiles) {
+					 rutaFoto = file.getPath();
+				 System.out.println(file.getPath());
+				 frmPhototds.dispose();
+					af.frmPhototds.dispose();
+					
+					PublicarFoto pb = new PublicarFoto(rutaFoto);
+					pb.publicarFoto.setVisible(true);}
+				 } catch (Exception ex) {
+				 ex.printStackTrace();
+				 }
+				 }
+				 });
 			}
+			
 		});
+		
 		btnNewButton.setMaximumSize(new Dimension(25, 25));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panelNorte.add(btnNewButton);

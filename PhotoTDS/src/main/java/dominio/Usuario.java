@@ -93,6 +93,9 @@ public class Usuario {
 		seguidores.add(seguidor);
 	}
 
+	public void addPublicacion(Publicacion p) {
+		publicaciones.add(p);
+	}
 	
 
 }

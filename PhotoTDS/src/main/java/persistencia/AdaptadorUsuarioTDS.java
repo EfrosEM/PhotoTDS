@@ -111,6 +111,16 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "publicaciones");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones()));
+		System.out.println("publicaciones modificadas: " + servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
+		for (Propiedad prop : eUsuario.getPropiedades()) {
+			if (prop.getNombre().equals("publicaciones")) {
+				String listaPublicaciones = obtenerCodigosPublicaciones(u.getPublicaciones());
+				System.out.println("publicaciones: " + listaPublicaciones);
+				prop.setValor(listaPublicaciones);
+				servPersistencia.modificarPropiedad(prop);
+			}
+		}
+		System.out.println("publicaciones modificadas: " + servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
 		
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, "codigo");
 		servPersistencia.anadirPropiedadEntidad(eUsuario, "codigo", String.valueOf(u.getCodigo()));
@@ -164,6 +174,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		// Falta la parte de las publicaciones
+		List<Publicacion> publicaciones = obtenerPublicacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
+		System.out.println("Numero de publicaiones: " + publicaciones.size());
+		for (Publicacion publicacion : publicaciones) {
+			System.out.println("Publicacion: " + publicacion.getCodigo());
+			u.addPublicacion(publicacion);
+		}
 		
 		return u;
 	}
@@ -174,6 +190,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		for (Entidad eUsuario : eUsuarios) {
 			usuarios.add(recuperarUsuario(eUsuario.getId()));
+			System.out.println("usuario: " + recuperarUsuario(eUsuario.getId()).getUsuario() + " con codigo: " + recuperarUsuario(eUsuario.getId()).getCodigo() + " con publicaciones: " + recuperarUsuario(eUsuario.getId()).getPublicaciones().size());
 		}
 		
 		return usuarios;
@@ -186,7 +203,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			codigosSeguidores += seguidor.getCodigo() + " ";
 		}
 		
-		return codigosSeguidores;
+		return codigosSeguidores.trim();
 	}
 	
 	private String obtenerCodigosPublicaciones(List<Publicacion> publicaciones) {
@@ -196,7 +213,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			codigosPublicaciones += publicacion.getCodigo() + " ";
 		}
 		
-		return codigosPublicaciones;
+		return codigosPublicaciones.trim();
 	}
 	
 	private List<Usuario> obtenerSeguidoresDesdeCodigo(String codigoSeguidores) {
@@ -210,10 +227,27 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		AdaptadorUsuarioTDS adaptadorUsuario = AdaptadorUsuarioTDS.getUnicaInstancia();
 		
 		while (strTok.hasMoreTokens()) {
-			seguidores.add(adaptadorUsuario.recuperarUsuario(Integer.valueOf(strTok.nextToken(codigoSeguidores))));
+			seguidores.add(adaptadorUsuario.recuperarUsuario(Integer.valueOf((String) strTok.nextElement())));
 		}
 		
 		return seguidores;
+	}
+	
+	private List<Publicacion> obtenerPublicacionesDesdeCodigo(String codigoPublicaciones) {
+		List<Publicacion> publicaciones = new ArrayList<>();
+		
+		if (codigoPublicaciones == null || codigoPublicaciones.equals("")) {
+			return publicaciones;
+		}
+		
+		StringTokenizer strTok = new StringTokenizer(codigoPublicaciones, " ");
+		AdaptadorFotoTDS adaptadorPublicacion = AdaptadorFotoTDS.getUnicaInstancia();
+		
+		while (strTok.hasMoreTokens()) {
+			publicaciones.add(adaptadorPublicacion.recuperarFoto(Integer.valueOf((String) strTok.nextElement())));
+		}
+		
+		return publicaciones;
 	}
 	
 }

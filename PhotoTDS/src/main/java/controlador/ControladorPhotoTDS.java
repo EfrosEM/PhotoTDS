@@ -2,9 +2,12 @@ package controlador;
 
 import java.util.Date;
 
+import dominio.CatalogoFotos;
 import dominio.CatalogoUsuarios;
+import dominio.Foto;
 import dominio.Usuario;
 import persistencia.FactoriaDAO;
+import persistencia.IAdaptadorFotoDAO;
 import persistencia.IAdaptadorUsuarioDAO;
 
 public class ControladorPhotoTDS {
@@ -13,6 +16,8 @@ public class ControladorPhotoTDS {
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private static ControladorPhotoTDS unicaInstancia;
 	private Usuario usuarioActual;
+	private CatalogoFotos catalogoFotos;
+	private IAdaptadorFotoDAO adaptadorFoto;
 	
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -59,6 +64,27 @@ public class ControladorPhotoTDS {
 		return true;
 	}
 	
+	public boolean registrarFoto(String ruta, String titulo, String descripcion, Usuario user, String...hashtags) {
+		
+		Foto f = new Foto(ruta, titulo, descripcion, user, hashtags);
+		adaptadorFoto.registrarFoto(f);
+		catalogoFotos.addFoto(f);
+		añadirFotoAUsuario(f);
+		System.out.println("Foto registrada: " + f.getCodigo());
+		return true;
+	}
+	
+	public void añadirFotoAUsuario(Foto f) {
+		System.out.println("Codigo de usuario actual: " + usuarioActual.getCodigo());
+		Usuario user = adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
+		System.out.println("Usuario: " + user.getUsuario() + " tiene " + user.getPublicaciones().size() + " publicaciones");
+		user.addPublicacion(f);
+		System.out.println("Usuario: " + user.getUsuario() + " tiene " + user.getPublicaciones().size() + " publicaciones");
+		adaptadorUsuario.modificarUsuario(user);
+		Usuario u = adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
+		System.out.println("Funciona?: " + u.getPublicaciones().size());
+	}
+	
 	private void inicializarAdaptadores() {
 		FactoriaDAO factoria = null;
 		try {
@@ -68,14 +94,16 @@ public class ControladorPhotoTDS {
 		}
 		
 		adaptadorUsuario = factoria.getUsuarioDAO();
+		adaptadorFoto = factoria.getFotoDAO();
 	}
 	
 	private void inicializarCatalogos() {
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+		catalogoFotos = CatalogoFotos.getUnicaInstancia();
 	}
 
 	public Usuario getUsuarioActual() {
-		return usuarioActual;
+		return adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
 	}
 
 }

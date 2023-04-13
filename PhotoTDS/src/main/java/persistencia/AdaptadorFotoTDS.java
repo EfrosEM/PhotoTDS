@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,6 +18,7 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 
 	private static ServicioPersistencia servPersistencia;
 	private static AdaptadorFotoTDS unicaInstancia;
+	private SimpleDateFormat dateFormat;
 	
 	public static AdaptadorFotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -49,7 +52,10 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 				new ArrayList<Propiedad>(Arrays.asList(
 						new Propiedad("ruta", f.getRuta()),
 						new Propiedad("titulo", f.getTitulo()),
-						new Propiedad("descripcion", f.getDescripcion())
+						new Propiedad("descripcion", f.getDescripcion()),
+						new Propiedad("likes", String.valueOf(f.getLikes())),
+						//new Propiedad("fecha", dateFormat.format(f.getFecha())),
+						new Propiedad("hastags", f.getHashtags().toString())
 				))
 		);
 		
@@ -78,6 +84,15 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		
 		servPersistencia.eliminarPropiedadEntidad(eFoto, "descripcion");
 		servPersistencia.anadirPropiedadEntidad(eFoto, "descripcion", f.getDescripcion());
+		
+		servPersistencia.eliminarPropiedadEntidad(eFoto, "likes");
+		servPersistencia.anadirPropiedadEntidad(eFoto, "likes", String.valueOf(f.getLikes()));
+		
+		//servPersistencia.eliminarPropiedadEntidad(eFoto, "fecha");
+		//servPersistencia.anadirPropiedadEntidad(eFoto, "fecha", dateFormat.format(f.getFecha()));
+		
+		servPersistencia.eliminarPropiedadEntidad(eFoto, "hastags");
+		servPersistencia.anadirPropiedadEntidad(eFoto, "hastags", f.getHashtags().toString());
 	}
 	
 	public Foto recuperarFoto(int codigo) {
@@ -88,24 +103,33 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		String ruta;
 		String titulo;
 		String descripcion;
+		int likes;
+		//LocalDate fecha = null;
 		
 		eFoto = servPersistencia.recuperarEntidad(codigo);
 		
 		ruta = servPersistencia.recuperarPropiedadEntidad(eFoto, "ruta");
 		titulo = servPersistencia.recuperarPropiedadEntidad(eFoto, "titulo");
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eFoto, "descripcion");
+		likes = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "likes"));
+		
+		/*try {
+			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eFoto, "fecha"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 				
-		Foto f = new Foto(ruta, titulo, descripcion);
+		Foto f = new Foto(ruta, titulo, descripcion, likes, null);
 		f.setCodigo(codigo);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, f);
 		
-		AdaptadorUsuarioTDS adaptadorUsuario = AdaptadorUsuarioTDS.getUnicaInstancia();
-		int codigoUsuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "usuario"));
-		Usuario u = adaptadorUsuario.recuperarUsuario(codigoUsuario);
-		
-		f.setUser(u);
-		
+		/*
+		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
+		int codigoFoto = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "foto"));
+		Foto f = adaptadorFoto.recuperarFoto(codigoFoto);
+		*/
+				
 		return f;
 	}
 	
@@ -115,6 +139,7 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		
 		for (Entidad eFoto : eFotos) {
 			fotos.add(recuperarFoto(eFoto.getId()));
+			System.out.println("foto: " + recuperarFoto(eFoto.getId()).getRuta() + " con codigo: " +  recuperarFoto(eFoto.getId()).getCodigo());
 		}
 		
 		return fotos;

@@ -13,20 +13,36 @@ public abstract class Publicacion {
 	private String descripcion;
 	private int likes;
 	private Usuario user;
-	private ArrayList<Hashtag> hashtags;
+	private ArrayList<String> hashtags;
 	private ArrayList<Comentario> comentarios;
 		
-	public Publicacion(String titulo, String descripcion, Usuario user, Hashtag...hashtag) {
+	public Publicacion(String titulo, String descripcion, Usuario user, String...hashtags) {
 		this.titulo = titulo;
 		this.likes = 0;
 		this.descripcion = descripcion;
 		this.user = user;
 		this.fecha = LocalDate.now();
 		this.comentarios = new ArrayList<Comentario>();
-		this.hashtags = new ArrayList<Hashtag>();
+		this.hashtags = new ArrayList<String>();
 		
-		for(Hashtag h : hashtag) {
-			hashtags.add(h);
+		for(String hastag : hashtags) {
+			this.hashtags.add(hastag);
+		}
+		
+		this.codigo = 0;
+	}
+	
+	public Publicacion(String titulo, String descripcion, Usuario user, int likes, LocalDate fecha, String...hashtags) {
+		this.titulo = titulo;
+		this.likes = likes;
+		this.descripcion = descripcion;
+		this.user = user;
+		this.fecha = fecha;
+		this.comentarios = new ArrayList<Comentario>();
+		this.hashtags = new ArrayList<String>();
+		
+		for(String hastag : hashtags) {
+			this.hashtags.add(hastag);
 		}
 		
 		this.codigo = 0;
@@ -56,8 +72,8 @@ public abstract class Publicacion {
 		return new ArrayList<Comentario>(comentarios);
 	}
 	
-	public List<Hashtag> getHashtags() {
-		return new ArrayList<Hashtag>(hashtags);
+	public List<String> getHashtags() {
+		return new ArrayList<String>(hashtags);
 	}
 	
 	public int getCodigo() {
