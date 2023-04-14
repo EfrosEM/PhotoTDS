@@ -118,9 +118,29 @@ public class Inicio {
 		rigidArea_5_1.setMaximumSize(new Dimension(10, 10));
 		panelNorte.add(rigidArea_5_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/lupa.png")));
-		panelNorte.add(lblNewLabel_1);
+		//JLabel lblNewLabel_1 = new JLabel("");
+		//lblNewLabel_1.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/lupa.png")));
+		//panelNorte.add(lblNewLabel_1);
+		
+		JButton lupa = new JButton("");
+		lupa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		lupa.setBackground(new Color(255, 255, 255));
+		
+		ImageIcon icon = new ImageIcon(Inicio.class.getResource("/recursos/lupa.png"));
+		Image img = icon.getImage();
+		Image otraimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		lupa.setIcon(otroicon);
+		lupa.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BusquedaUsuarios bu = new BusquedaUsuarios(textField.getText());
+				bu.busquedaUsuarios.setVisible(true);
+			}
+		});
+		
+		panelNorte.add(lupa);
 		
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(50, 30));
 		rigidArea_1.setPreferredSize(new Dimension(50, 40));
@@ -130,11 +150,11 @@ public class Inicio {
 		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
 		
-		ImageIcon icon = new ImageIcon(controlador.getUsuarioActual().getFotoPerfil());
-		Image img = icon.getImage();
-		Image otraimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_DEFAULT);
-		ImageIcon otroicon = new ImageIcon(otraimg);
-		btnNewButton_2.setIcon(otroicon);
+		ImageIcon ic = new ImageIcon(controlador.getUsuarioActual().getFotoPerfil());
+		Image im = ic.getImage();
+		Image oim = im.getScaledInstance(30, 30, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon oic = new ImageIcon(oim);
+		btnNewButton_2.setIcon(oic);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			
 			@Override
