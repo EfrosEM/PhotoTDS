@@ -159,7 +159,7 @@ public class Inicio {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frmPhototds.setVisible(false);
+				frmPhototds.dispose();
 				PerfilUsuario perfilUsuario = new PerfilUsuario();
 				perfilUsuario.frmPhototds.setVisible(true);
 				

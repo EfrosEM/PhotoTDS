@@ -33,7 +33,7 @@ import javax.swing.JFileChooser;
 
 public class Registro {
 
-	private static final String FOTO_PERFIL_DEFAULT = "C:\\Users\\alex_\\git\\Photo_TDS\\PhotoTDS\\src\\main\\java\\recursos\\defaultUser.png";
+	private static final File FOTO_PERFIL_DEFAULT = new File("src/main/java/recursos/defaultUser.png");
 	/**
 	 * 
 	 */
@@ -56,7 +56,7 @@ public class Registro {
 	private JLabel lblWarningDescripcion;
 	
 	private String descripcion = null;
-	private String fotoPerfil = FOTO_PERFIL_DEFAULT;
+	private String fotoPerfil = FOTO_PERFIL_DEFAULT.getAbsolutePath();
 	
 	private JTextArea ta = null;
 	private JScrollPane sp = null;
@@ -72,6 +72,7 @@ public class Registro {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frmRegistroUsuario = new JFrame();
 		frmRegistroUsuario.setResizable(false);
 		frmRegistroUsuario.setBackground(Color.WHITE);
@@ -423,7 +424,7 @@ public class Registro {
 	}
 	
 	private void volverLogin() {
-		frmRegistroUsuario.setVisible(false);
+		frmRegistroUsuario.dispose();
 		loginWindow.frmPhototds.setVisible(true);
 	}
 	
