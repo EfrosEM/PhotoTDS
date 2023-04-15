@@ -41,6 +41,10 @@ public class CatalogoUsuarios {
 		usuarios.put(u.getUsuario(), u);
 	}
 	
+	public void removeUsuario(String username) {
+		usuarios.remove(username);
+	}
+	
 	private void cargarCatalogo() throws DAOException {
 		List<Usuario> usuariosBD = adaptadorU.recuperarTodosUsuarios();
 		

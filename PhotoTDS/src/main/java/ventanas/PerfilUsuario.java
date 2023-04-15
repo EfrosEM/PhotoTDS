@@ -378,8 +378,8 @@ public class PerfilUsuario {
 
 	private void abrirEditar() {
 
-		frmPhototds.setVisible(false);
-		EditarPerfil editarPerfil = new EditarPerfil(this);
+		frmPhototds.dispose();;
+		EditarPerfil editarPerfil = new EditarPerfil();
 		editarPerfil.frmEditarPerfil.setVisible(true);
 	}
 

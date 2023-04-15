@@ -240,7 +240,7 @@ public class Login {
 	}
 	
 	private void abrirInicio() {
-		frmPhototds.setVisible(false);
+		frmPhototds.dispose();;
 		Inicio i = new Inicio();
 		i.frmPhototds.setVisible(true);
 	}

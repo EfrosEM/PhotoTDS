@@ -43,6 +43,23 @@ public class ControladorPhotoTDS {
 		return true;
 	}
 	
+	public void modificarUsuario(String nombre, String apellidos, String email, String usuario, String password, Date fecha, String descripcion, String fotoPerfil) {
+		Usuario u = getUsuarioActual();
+		catalogoUsuarios.removeUsuario(u.getUsuario());
+		
+		u.setNombre(nombre);
+		u.setApellidos(apellidos);
+		u.setEmail(email);
+		u.setUsuario(usuario);
+		u.setPassword(password);
+		u.setNacimiento(fecha);
+		u.setDescripcion(descripcion);
+		u.setFotoPerfil(fotoPerfil);
+		
+		adaptadorUsuario.modificarUsuario(u);
+		catalogoUsuarios.addUsuario(u);
+	}
+	
 	public boolean loginUsuario(String usuario, String password) {
 		Usuario u = catalogoUsuarios.getUsuario(usuario);
 		
