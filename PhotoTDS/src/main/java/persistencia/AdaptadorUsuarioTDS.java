@@ -79,51 +79,49 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	public void modificarUsuario(Usuario u) {
 		Entidad eUsuario = servPersistencia.recuperarEntidad(u.getCodigo());
 		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "nombre");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "nombre", u.getNombre());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "apellidos");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "apellidos", u.getApellidos());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "email");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "email", u.getEmail());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "usuario");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "usuario", u.getUsuario());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "password");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "password", u.getPassword());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "fechaNacimiento");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "fechaNacimiento", dateFormat.format(u.getNacimiento()));
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "descripcion");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "descripcion", u.getDescripcion());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "fotoPerfil");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "fotoPerfil", u.getFotoPerfil());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "isPremium");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "isPremium", u.isPremium().toString());
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "seguidores");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "seguidores", obtenerCodigosSeguidores(u.getSeguidores()));
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "publicaciones");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones()));
-		System.out.println("publicaciones modificadas: " + servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
 		for (Propiedad prop : eUsuario.getPropiedades()) {
-			if (prop.getNombre().equals("publicaciones")) {
-				String listaPublicaciones = obtenerCodigosPublicaciones(u.getPublicaciones());
-				System.out.println("publicaciones: " + listaPublicaciones);
-				prop.setValor(listaPublicaciones);
-				servPersistencia.modificarPropiedad(prop);
-			}
+			
+			if (prop.getNombre().equals("nombre")) {
+				prop.setValor(u.getNombre());
+				
+			} else if (prop.getNombre().equals("apellidos")) {
+				prop.setValor(u.getApellidos());
+				
+			} else if (prop.getNombre().equals("email")) {
+				prop.setValor(u.getEmail());
+				
+			}  else if (prop.getNombre().equals("usuario")) {
+				prop.setValor(u.getUsuario());
+				
+			}  else if (prop.getNombre().equals("password")) {
+				prop.setValor(u.getPassword());
+				
+			}  else if (prop.getNombre().equals("fechaNacimiento")) {
+				prop.setValor(dateFormat.format(u.getNacimiento()));
+				
+			}  else if (prop.getNombre().equals("descripcion")) {
+				prop.setValor(u.getDescripcion());
+				
+			}  else if (prop.getNombre().equals("fotoPerfil")) {
+				prop.setValor(u.getFotoPerfil());
+				
+			} else if (prop.getNombre().equals("isPremium")) {
+				prop.setValor(u.isPremium().toString());
+				
+			} else if (prop.getNombre().equals("seguidores")) {
+				prop.setValor(obtenerCodigosSeguidores(u.getSeguidores()));
+				
+			} else if (prop.getNombre().equals("publicaciones")) {
+				prop.setValor(obtenerCodigosPublicaciones(u.getPublicaciones()));
+				
+			} else if (prop.getNombre().equals("fotoPerfil")) {
+				prop.setValor(String.valueOf(u.getCodigo()));
+				
+			} 
+			
+			servPersistencia.modificarPropiedad(prop);
+			
 		}
-		System.out.println("publicaciones modificadas: " + servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
-		
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, "codigo");
-		servPersistencia.anadirPropiedadEntidad(eUsuario, "codigo", String.valueOf(u.getCodigo()));
 		
 	}
 	
