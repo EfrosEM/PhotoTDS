@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -21,7 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
-import dominio.Usuario;
 
 import javax.swing.JList;
 

@@ -1,29 +1,20 @@
 package ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
 
-import controlador.ControladorPhotoTDS;
 
-import javax.swing.ImageIcon;
 
 import dominio.Usuario;
 import persistencia.AdaptadorUsuarioTDS;
@@ -103,6 +94,7 @@ public class BusquedaUsuarios {
 		inicio.dispose();
 	}
 	
+	@SuppressWarnings("unused")
 	private static ListCellRenderer<? super Usuario> createListRenderer() {
 		return null;
 		/*return new DefaultListCellRenderer() {

@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
@@ -40,6 +38,7 @@ public class PerfilUsuario {
 	private Usuario usuario;
 
 	private JPanel panelFotos;
+	@SuppressWarnings("unused")
 	private JPanel panelAñadirFoto;
 	private JLabel seguidores;
 
@@ -155,6 +154,7 @@ public class PerfilUsuario {
 		btnNewButton.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton.setPreferredSize(new Dimension(25, 25));
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("serial")
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
 				af = new AñadirFoto(editorPane);

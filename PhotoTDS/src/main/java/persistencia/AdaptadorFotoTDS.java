@@ -1,7 +1,6 @@
 package persistencia;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -10,7 +9,6 @@ import java.util.List;
 import beans.Entidad;
 import beans.Propiedad;
 import dominio.Foto;
-import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
@@ -18,6 +16,7 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 
 	private static ServicioPersistencia servPersistencia;
 	private static AdaptadorFotoTDS unicaInstancia;
+	@SuppressWarnings("unused")
 	private SimpleDateFormat dateFormat;
 	
 	public static AdaptadorFotoTDS getUnicaInstancia() {

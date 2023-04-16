@@ -1,30 +1,24 @@
 package ventanas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controlador.ControladorPhotoTDS;
-import dominio.Foto;
-
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
-
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import controlador.ControladorPhotoTDS;
 
 public class PublicarFoto {
 
