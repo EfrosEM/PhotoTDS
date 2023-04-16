@@ -29,6 +29,9 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JFileChooser;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Insets;
 
 
 public class Registro {
@@ -245,7 +248,7 @@ public class Registro {
 		panelUsuario.setBackground(Color.WHITE);
 		centro.add(panelUsuario);
 		
-		lblWarningUsuario = new JLabel("");
+		lblWarningUsuario = new JLabel("*Campo vacío*");
 		lblWarningUsuario.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblWarningUsuario.setVisible(false);
 		lblWarningUsuario.setForeground(Color.RED);
@@ -266,7 +269,7 @@ public class Registro {
 		panelContraseña.setBackground(Color.WHITE);
 		centro.add(panelContraseña);
 		
-		lblWarningContraseña = new JLabel("");
+		lblWarningContraseña = new JLabel("*Campo vacío*");
 		lblWarningContraseña.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblWarningContraseña.setVisible(false);
 		lblWarningContraseña.setForeground(Color.RED);
@@ -286,7 +289,7 @@ public class Registro {
 		panelRepetirContraseña.setBackground(Color.WHITE);
 		centro.add(panelRepetirContraseña);
 		
-		lblWarningRepetirContraseña = new JLabel("");
+		lblWarningRepetirContraseña = new JLabel("*Campo vacío*");
 		lblWarningRepetirContraseña.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblWarningRepetirContraseña.setVisible(false);
 		lblWarningRepetirContraseña.setForeground(Color.RED);
@@ -298,6 +301,9 @@ public class Registro {
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setColumns(20);
 		panelRepetirContraseña.add(passwordField_1);
+		
+		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
+		centro.add(rigidArea);
 		
 		JPanel panelFechaNac = new JPanel();
 		FlowLayout fl_panelFechaNac = (FlowLayout) panelFechaNac.getLayout();
@@ -311,20 +317,24 @@ public class Registro {
 		separator_2.setPreferredSize(new Dimension(3, 20));
 		
 		JPanel panel_9 = new JPanel();
+		panel_9.setPreferredSize(new Dimension(250, 35));
+		panel_9.setSize(new Dimension(200, 100));
 		panel_9.setBackground(Color.WHITE);
 		panel_9.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelFechaNac.add(panel_9);
-		panel_9.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_9.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("Fecha de nacimiento");
 		panel_9.add(lblNewLabel);
-
-		JSeparator separator_5 = new JSeparator();
-		separator_5.setForeground(Color.WHITE);
-		separator_5.setPreferredSize(new Dimension(64, 2));
-		panel_9.add(separator_5);
+		
+		JSeparator separator_4_3 = new JSeparator();
+		separator_4_3.setPreferredSize(new Dimension(10, 10));
+		separator_4_3.setForeground(Color.WHITE);
+		panel_9.add(separator_4_3);
 		
 		dateChooser = new JDateChooser();
+		dateChooser.setPreferredSize(new Dimension(95, 20));
+		dateChooser.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		panel_9.add(dateChooser);
 		
 		lblWarningFechaNacimiento = new JLabel("*Campo vacío*");
@@ -344,6 +354,9 @@ public class Registro {
 		panelAddFoto.add(separator_3);
 		
 		JPanel panel_10 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_10.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panel_10.setPreferredSize(new Dimension(250, 35));
 		panel_10.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_10.setBackground(Color.WHITE);
 		panelAddFoto.add(panel_10);
@@ -355,6 +368,9 @@ public class Registro {
 //		fileChooser.setVisible(false);
 		
 		JButton btnFileChooser = new JButton("+");
+		btnFileChooser.setMargin(new Insets(0, 0, 0, 0));
+		btnFileChooser.setPreferredSize(new Dimension(25, 25));
+		btnFileChooser.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		btnFileChooser.addActionListener(new ActionListener() {
 			
 			@Override
@@ -369,6 +385,11 @@ public class Registro {
 				}
 			}
 		});
+		
+		JSeparator separator_4_3_1 = new JSeparator();
+		separator_4_3_1.setPreferredSize(new Dimension(10, 10));
+		separator_4_3_1.setForeground(Color.WHITE);
+		panel_10.add(separator_4_3_1);
 		panel_10.add(btnFileChooser);
 //		panel_10.add(fileChooser);
 		
@@ -384,6 +405,9 @@ public class Registro {
 		panelAddPresent.add(separator_4);
 		
 		JPanel panel_11 = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panel_11.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		panel_11.setPreferredSize(new Dimension(250, 35));
 		panel_11.setBackground(Color.WHITE);
 		panel_11.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelAddPresent.add(panel_11);
@@ -391,12 +415,10 @@ public class Registro {
 		JLabel lblNewLabel_2 = new JLabel("A\u00F1adir presentacion (opcional)");
 		panel_11.add(lblNewLabel_2);
 		
-		JSeparator separator_6 = new JSeparator();
-		separator_6.setForeground(Color.WHITE);
-		separator_6.setPreferredSize(new Dimension(8, 2));
-		panel_11.add(separator_6);
-		
 		JButton btnPresentacion = new JButton("+");
+		btnPresentacion.setMargin(new Insets(0, 0, 0, 0));
+		btnPresentacion.setPreferredSize(new Dimension(25, 25));
+		btnPresentacion.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		btnPresentacion.addActionListener(new ActionListener() {
 			@Override
@@ -413,6 +435,11 @@ public class Registro {
 				}
 			}
 		});
+		
+		JSeparator separator_4_1 = new JSeparator();
+		separator_4_1.setPreferredSize(new Dimension(23, 10));
+		separator_4_1.setForeground(Color.WHITE);
+		panel_11.add(separator_4_1);
 		panel_11.add(btnPresentacion);
 		
 		lblWarningDescripcion = new JLabel("*Máximo 200 caracteres*");

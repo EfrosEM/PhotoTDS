@@ -135,7 +135,7 @@ public class Inicio {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BusquedaUsuarios bu = new BusquedaUsuarios(textField.getText());
+				BusquedaUsuarios bu = new BusquedaUsuarios(textField.getText(), frmPhototds);
 				bu.busquedaUsuarios.setVisible(true);
 			}
 		});
@@ -160,7 +160,7 @@ public class Inicio {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmPhototds.dispose();
-				PerfilUsuario perfilUsuario = new PerfilUsuario();
+				PerfilUsuario perfilUsuario = new PerfilUsuario(controlador.getUsuarioActual());
 				perfilUsuario.frmPhototds.setVisible(true);
 				
 			}

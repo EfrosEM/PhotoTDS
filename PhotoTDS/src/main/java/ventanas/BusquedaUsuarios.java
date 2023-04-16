@@ -34,6 +34,7 @@ public class BusquedaUsuarios {
 	private AdaptadorUsuarioTDS adaptadorUsuarioTDS;
 	private String token;
 	private BusquedaUsuariosRenderer renderer;
+	private JFrame inicio;
 
 
 	/**
@@ -43,7 +44,7 @@ public class BusquedaUsuarios {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BusquedaUsuarios frame = new BusquedaUsuarios("");
+					BusquedaUsuarios frame = new BusquedaUsuarios("", null);
 					frame.busquedaUsuarios.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,10 +56,11 @@ public class BusquedaUsuarios {
 	/**
 	 * Create the frame.
 	 */
-	public BusquedaUsuarios(String token) {
+	public BusquedaUsuarios(String token, JFrame inicio) {
 		this.token = token;
+		this.inicio = inicio;
 		adaptadorUsuarioTDS = AdaptadorUsuarioTDS.getUnicaInstancia();
-		renderer = new BusquedaUsuariosRenderer();
+		renderer = new BusquedaUsuariosRenderer(this);
 		initialize();
 	}
 	
@@ -94,6 +96,11 @@ public class BusquedaUsuarios {
 		
 		
 		return lista;
+	}
+	
+	public void cerrar() {
+		busquedaUsuarios.dispose();
+		inicio.dispose();
 	}
 	
 	private static ListCellRenderer<? super Usuario> createListRenderer() {

@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
 import dominio.Publicacion;
+import dominio.Usuario;
 import dominio.Foto;
 
 import javax.swing.border.LineBorder;
@@ -36,6 +37,7 @@ public class PerfilUsuario {
 	private ControladorPhotoTDS controlador;
 	private AñadirFoto af;
 	private String rutaFoto;
+	private Usuario usuario;
 
 	private JPanel panelFotos;
 	private JPanel panelAñadirFoto;
@@ -43,8 +45,9 @@ public class PerfilUsuario {
 	/**
 	 * Create the application.
 	 */
-	public PerfilUsuario() {
+	public PerfilUsuario(Usuario usuario) {
 		controlador = ControladorPhotoTDS.getUnicaInstancia();
+		this.usuario = usuario;
 		initialize();
 	}
 
@@ -87,10 +90,10 @@ public class PerfilUsuario {
 		panelFotos.setPreferredSize(new Dimension(790, 700));
 		scrollPane.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(0, 3, 3, 3));
-		int publicaciones = controlador.getUsuarioActual().getPublicaciones().size();
+		int publicaciones = usuario.getPublicaciones().size();
 		System.out.println("Publicaciones: " + publicaciones);
 		if (publicaciones > 0) {
-			for (Publicacion p : controlador.getUsuarioActual().getPublicaciones()) {
+			for (Publicacion p : usuario.getPublicaciones()) {
 				if (p instanceof Foto)
 					panelFotos.add(new JLabel(new ImageIcon(((Foto) p).getRuta()))).setSize(new Dimension(100, 100));
 				;
@@ -236,7 +239,7 @@ public class PerfilUsuario {
 		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
 
-		btnNewButton_2.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 30, 30));
+		btnNewButton_2.setIcon(redimensionarImagen(usuario.getFotoPerfil(), 30, 30));
 		panelNorte.add(btnNewButton_2);
 
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(10, 10));
@@ -265,7 +268,7 @@ public class PerfilUsuario {
 		lblNewLabel_4.setSize(new Dimension(5, 5));
 		lblNewLabel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
 
-		lblNewLabel_4.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 135, 135));
+		lblNewLabel_4.setIcon(redimensionarImagen(usuario.getFotoPerfil(), 135, 135));
 		panel.add(lblNewLabel_4);
 
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
@@ -286,7 +289,7 @@ public class PerfilUsuario {
 		panel_1.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		JLabel lblNewLabel_5 = new JLabel(controlador.getUsuarioActual().getUsuario());
+		JLabel lblNewLabel_5 = new JLabel(usuario.getUsuario());
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(lblNewLabel_5);
 
@@ -298,6 +301,19 @@ public class PerfilUsuario {
 		btnNewButton_3.setForeground(Color.WHITE);
 		btnNewButton_3.setBackground(new Color(51, 153, 255));
 		panel_3.add(btnNewButton_3);
+		
+		JButton btnNewButton_3_1 = new JButton("Seguir");
+		btnNewButton_3_1.setForeground(Color.WHITE);
+		btnNewButton_3_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnNewButton_3_1.setBackground(new Color(51, 153, 255));
+		panel_3.add(btnNewButton_3_1);
+		
+		if (usuario.getUsuario().equals(controlador.getUsuarioActual().getUsuario())) {
+			btnNewButton_3_1.setVisible(false);
+		}
+		else {
+			btnNewButton_3.setVisible(false);
+		}
 
 		btnNewButton_3.addActionListener(new ActionListener() {
 
@@ -316,7 +332,7 @@ public class PerfilUsuario {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_1.add(panel_4);
 
-		JLabel lblNewLabel_6 = new JLabel(String.valueOf(controlador.getUsuarioActual().getPublicaciones().size()));
+		JLabel lblNewLabel_6 = new JLabel(String.valueOf(usuario.getPublicaciones().size()));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_6);
 
@@ -327,7 +343,7 @@ public class PerfilUsuario {
 		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
 		panel_4.add(rigidArea_10);
 
-		JLabel lblNewLabel_9 = new JLabel(String.valueOf(controlador.getUsuarioActual().getSeguidores().size()));
+		JLabel lblNewLabel_9 = new JLabel(String.valueOf(usuario.getSeguidores().size()));
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_9);
 
@@ -353,7 +369,7 @@ public class PerfilUsuario {
 		panel_1.add(panel_5);
 
 		JLabel lblNewLabel_7 = new JLabel(
-				controlador.getUsuarioActual().getNombre() + " " + controlador.getUsuarioActual().getApellidos());
+				controlador.getUsuarioActual().getNombre() + " " + usuario.getApellidos());
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_5.add(lblNewLabel_7);
 

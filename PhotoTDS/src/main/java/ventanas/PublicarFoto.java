@@ -109,7 +109,7 @@ public class PublicarFoto {
 		        
 		        if (isAñadida) {
 		        	publicarFoto.dispose();
-		        	PerfilUsuario pu = new PerfilUsuario();
+		        	PerfilUsuario pu = new PerfilUsuario(controlador.getUsuarioActual());
 		        	pu.frmPhototds.setVisible(true);
 		        }
 			}

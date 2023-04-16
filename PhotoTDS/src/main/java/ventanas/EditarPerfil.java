@@ -70,12 +70,14 @@ public class EditarPerfil {
 	private void initialize() {
 
 		frmEditarPerfil = new JFrame();
+		frmEditarPerfil.setSize(new Dimension(342, 484));
+		frmEditarPerfil.setPreferredSize(new Dimension(450, 500));
 		frmEditarPerfil.setResizable(false);
 		frmEditarPerfil.setBackground(Color.WHITE);
 		frmEditarPerfil.setTitle("Editar Perfil");
 		frmEditarPerfil.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(EditarPerfil.class.getResource("/Recursos/image.png")));
-		frmEditarPerfil.setBounds(100, 100, 450, 570); // 376 y 538
+		frmEditarPerfil.setBounds(100, 100, 449, 570); // 376 y 538
 		frmEditarPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel sur = new JPanel();
@@ -365,7 +367,7 @@ public class EditarPerfil {
 
 	private void volverPerfil() {
 		frmEditarPerfil.dispose();
-		PerfilUsuario perfilUsuario = new PerfilUsuario();
+		PerfilUsuario perfilUsuario = new PerfilUsuario(controlador.getUsuarioActual());
 		perfilUsuario.frmPhototds.setVisible(true);
 	}
 
