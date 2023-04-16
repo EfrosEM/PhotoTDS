@@ -332,6 +332,17 @@ public class PerfilUsuario {
 				btnNewButton_3_2.setVisible(false);
 				btnNewButton_3_1.setVisible(true);
 			}
+			
+			btnNewButton_2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					frmPhototds.dispose();
+					PerfilUsuario perfilUsuario = new PerfilUsuario(controlador.getUsuarioActual());
+					perfilUsuario.frmPhototds.setVisible(true);
+				}
+			});
+			
 		}
 		
 		
