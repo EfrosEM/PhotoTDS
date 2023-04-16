@@ -59,6 +59,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("descripcion", u.getDescripcion()),
 						new Propiedad("fotoPerfil", u.getFotoPerfil()),
 						new Propiedad("isPremium", u.isPremium().toString()),
+						new Propiedad("seguidos", String.valueOf(u.getSeguidos())),
 						new Propiedad("seguidores", obtenerCodigosSeguidores(u.getSeguidores())),
 						new Propiedad("publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones())),
 						new Propiedad("codigo", String.valueOf(u.getCodigo()))
@@ -108,13 +109,16 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			} else if (prop.getNombre().equals("isPremium")) {
 				prop.setValor(u.isPremium().toString());
 				
+			} else if (prop.getNombre().equals("seguidos")) {
+				prop.setValor(String.valueOf(u.getSeguidos()));
+				
 			} else if (prop.getNombre().equals("seguidores")) {
 				prop.setValor(obtenerCodigosSeguidores(u.getSeguidores()));
 				
 			} else if (prop.getNombre().equals("publicaciones")) {
 				prop.setValor(obtenerCodigosPublicaciones(u.getPublicaciones()));
 				
-			} else if (prop.getNombre().equals("fotoPerfil")) {
+			} else if (prop.getNombre().equals("codigo")) {
 				prop.setValor(String.valueOf(u.getCodigo()));
 				
 			} 
@@ -139,6 +143,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String descripcion;
 		String fotoPerfil;
 		Boolean isPremium;
+		int seguidos;
 		
 		
 		eUsuario = servPersistencia.recuperarEntidad(codigo);
@@ -158,10 +163,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eUsuario, "descripcion");
 		fotoPerfil = servPersistencia.recuperarPropiedadEntidad(eUsuario, "fotoPerfil");
 		isPremium = Boolean.parseBoolean(servPersistencia.recuperarPropiedadEntidad(eUsuario, "isPremium"));
+		seguidos = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "seguidos"));
 		
 		Usuario u = new Usuario(nombre, usuario, apellidos, email, password, fechaNacimiento, descripcion, fotoPerfil);
 		u.setCodigo(codigo);
 		u.setPremium(isPremium);
+		u.setSeguidos(seguidos);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, u);
 		
@@ -171,7 +178,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			u.addSeguidor(seguidor);
 		}
 		
-		// Falta la parte de las publicaciones
 		List<Publicacion> publicaciones = obtenerPublicacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
 		System.out.println("Numero de publicaiones: " + publicaciones.size());
 		for (Publicacion publicacion : publicaciones) {

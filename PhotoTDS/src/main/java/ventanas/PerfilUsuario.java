@@ -41,6 +41,7 @@ public class PerfilUsuario {
 
 	private JPanel panelFotos;
 	private JPanel panelAñadirFoto;
+	private JLabel seguidores;
 
 	/**
 	 * Create the application.
@@ -239,7 +240,7 @@ public class PerfilUsuario {
 		btnNewButton_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
 
-		btnNewButton_2.setIcon(redimensionarImagen(usuario.getFotoPerfil(), 30, 30));
+		btnNewButton_2.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 30, 30));
 		panelNorte.add(btnNewButton_2);
 
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(10, 10));
@@ -350,6 +351,9 @@ public class PerfilUsuario {
 			public void actionPerformed(ActionEvent e) {
 				usuario.addSeguidor(controlador.getUsuarioActual());
 				controlador.getUsuarioActual().addSeguidos();
+				controlador.modificarUsuario(usuario);
+				controlador.modificarUsuario(controlador.getUsuarioActual());
+				seguidores.setText(String.valueOf(usuario.getSeguidores().size()));
 				btnNewButton_3_1.setVisible(false);
 				btnNewButton_3_2.setVisible(true);
 			}
@@ -361,6 +365,9 @@ public class PerfilUsuario {
 			public void actionPerformed(ActionEvent e) {
 				usuario.removeSeguidor(controlador.getUsuarioActual());
 				controlador.getUsuarioActual().removeSeguidos();
+				controlador.modificarUsuario(usuario);
+				controlador.modificarUsuario(controlador.getUsuarioActual());
+				seguidores.setText(String.valueOf(usuario.getSeguidores().size()));
 				btnNewButton_3_1.setVisible(true);
 				btnNewButton_3_2.setVisible(false);
 			}
@@ -383,9 +390,9 @@ public class PerfilUsuario {
 		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
 		panel_4.add(rigidArea_10);
 
-		JLabel lblNewLabel_9 = new JLabel(String.valueOf(usuario.getSeguidores().size()));
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel_4.add(lblNewLabel_9);
+		seguidores = new JLabel(String.valueOf(usuario.getSeguidores().size()));
+		seguidores.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel_4.add(seguidores);
 
 		JLabel lblNewLabel_10 = new JLabel("Seguidores");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -447,4 +454,5 @@ public class PerfilUsuario {
 
 		return otroicon;
 	}
+
 }

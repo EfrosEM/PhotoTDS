@@ -124,6 +124,10 @@ public class Usuario {
 		this.premium = prem;
 	}
 	
+	public void setSeguidos(int seguidos) {
+		this.seguidos = seguidos;
+	}
+	
 	public void addSeguidor(Usuario seguidor) {
 		seguidores.add(seguidor);
 	}

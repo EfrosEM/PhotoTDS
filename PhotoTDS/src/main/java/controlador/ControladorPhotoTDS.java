@@ -60,6 +60,12 @@ public class ControladorPhotoTDS {
 		catalogoUsuarios.addUsuario(u);
 	}
 	
+	public void modificarUsuario(Usuario user) {
+		catalogoUsuarios.removeUsuario(user.getUsuario());
+		adaptadorUsuario.modificarUsuario(user);
+		catalogoUsuarios.addUsuario(user);
+	}
+	
 	public boolean loginUsuario(String usuario, String password) {
 		Usuario u = catalogoUsuarios.getUsuario(usuario);
 		
