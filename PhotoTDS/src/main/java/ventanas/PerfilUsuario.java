@@ -308,12 +308,32 @@ public class PerfilUsuario {
 		btnNewButton_3_1.setBackground(new Color(51, 153, 255));
 		panel_3.add(btnNewButton_3_1);
 		
+		JButton btnNewButton_3_2 = new JButton("Dejar de seguir");
+		btnNewButton_3_2.setForeground(Color.WHITE);
+		btnNewButton_3_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnNewButton_3_2.setBackground(SystemColor.desktop);
+		panel_3.add(btnNewButton_3_2);
+		
+		
+		
 		if (usuario.getUsuario().equals(controlador.getUsuarioActual().getUsuario())) {
 			btnNewButton_3_1.setVisible(false);
+			btnNewButton_3_2.setVisible(false);
+			
 		}
 		else {
 			btnNewButton_3.setVisible(false);
+			if (usuario.esSeguidor(controlador.getUsuarioActual().getUsuario())) {
+				btnNewButton_3_2.setVisible(true);
+				btnNewButton_3_1.setVisible(false);
+			}
+			else {
+				btnNewButton_3_2.setVisible(false);
+				btnNewButton_3_1.setVisible(true);
+			}
 		}
+		
+		
 
 		btnNewButton_3.addActionListener(new ActionListener() {
 
@@ -324,7 +344,27 @@ public class PerfilUsuario {
 			}
 		});
 
-		// TODO
+		btnNewButton_3_1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				usuario.addSeguidor(controlador.getUsuarioActual());
+				controlador.getUsuarioActual().addSeguidos();
+				btnNewButton_3_1.setVisible(false);
+				btnNewButton_3_2.setVisible(true);
+			}
+		});
+		
+		btnNewButton_3_2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				usuario.removeSeguidor(controlador.getUsuarioActual());
+				controlador.getUsuarioActual().removeSeguidos();
+				btnNewButton_3_1.setVisible(true);
+				btnNewButton_3_2.setVisible(false);
+			}
+		});
 
 		Panel panel_4 = new Panel();
 		panel_4.setMaximumSize(new Dimension(650, 100));
@@ -354,7 +394,7 @@ public class PerfilUsuario {
 		Component rigidArea_11 = Box.createRigidArea(new Dimension(20, 20));
 		panel_4.add(rigidArea_11);
 
-		JLabel lblNewLabel_11 = new JLabel("0");
+		JLabel lblNewLabel_11 = new JLabel(String.valueOf(usuario.getSeguidos()));
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_4.add(lblNewLabel_11);
 

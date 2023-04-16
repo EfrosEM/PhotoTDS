@@ -15,6 +15,7 @@ public class Usuario {
 	private String descripcion;
 	private String fotoPerfil;
 	private Boolean premium;
+	private int seguidos;
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	
@@ -28,6 +29,7 @@ public class Usuario {
 		this.descripcion = descripcion;
 		this.fotoPerfil = fotoPerfil;
 		this.codigo = 0;
+		this.seguidos = 0;
 		
 		premium = false;
 		seguidores = new ArrayList<Usuario>();
@@ -125,10 +127,39 @@ public class Usuario {
 	public void addSeguidor(Usuario seguidor) {
 		seguidores.add(seguidor);
 	}
+	
+	public void removeSeguidor(Usuario seguidor) {
+		seguidores.remove(seguidor);
+	}
 
 	public void addPublicacion(Publicacion p) {
 		publicaciones.add(p);
 	}
+
+	public boolean esSeguidor(String user) {
+		
+		for (Usuario seguidor: seguidores) {
+			if (seguidor.getUsuario().equals(user)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void addSeguidos() {
+		seguidos++;
+	}
+	
+	public void removeSeguidos() {
+		if(seguidos>0)
+			seguidos--;
+	}
+
+	public int getSeguidos() {
+		return seguidos;
+	}
+
 	
 
 }
