@@ -2,7 +2,6 @@ package ventanas;
 
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.util.regex.Matcher;
