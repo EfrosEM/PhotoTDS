@@ -36,7 +36,7 @@ import java.awt.Insets;
 
 public class Registro {
 
-	private static final File FOTO_PERFIL_DEFAULT = new File("src/main/java/recursos/defaultUser.png");
+	private static final File FOTO_PERFIL_DEFAULT = new File("src/main/java/recursos/user.png");
 	/**
 	 * 
 	 */

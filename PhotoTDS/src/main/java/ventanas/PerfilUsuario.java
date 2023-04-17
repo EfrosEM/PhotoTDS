@@ -1,32 +1,39 @@
 package ventanas;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDropEvent;
-
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Panel;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
-import dominio.Foto;
-
-import javax.swing.border.LineBorder;
+import javax.swing.ScrollPaneConstants;
 
 public class PerfilUsuario {
 
@@ -34,7 +41,6 @@ public class PerfilUsuario {
 	private JTextField textField;
 	private ControladorPhotoTDS controlador;
 	private AñadirFoto af;
-	private String rutaFoto;
 	private Usuario usuario;
 
 	private JPanel panelFotos;
@@ -60,7 +66,7 @@ public class PerfilUsuario {
 		frmPhototds.setResizable(false);
 		frmPhototds.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
-		frmPhototds.setBounds(100, 100, 800, 850); // 577 629
+		frmPhototds.setBounds(100, 100, 586, 663); // 577 629
 		frmPhototds.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPhototds.getContentPane().setLayout(new BorderLayout(0, 0));
 
@@ -83,20 +89,23 @@ public class PerfilUsuario {
 		panelFotos.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(790, 390));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setPreferredSize(new Dimension(560, 390));
 		panelFotos.add(scrollPane);
 
 		JPanel panelFotos = new JPanel();
-		panelFotos.setPreferredSize(new Dimension(790, 700));
+		panelFotos.setPreferredSize(new Dimension(560, 700));
 		scrollPane.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(0, 3, 3, 3));
 		int publicaciones = usuario.getPublicaciones().size();
 		System.out.println("Publicaciones: " + publicaciones);
 		if (publicaciones > 0) {
 			for (Publicacion p : usuario.getPublicaciones()) {
-				if (p instanceof Foto)
-					panelFotos.add(new JLabel(new ImageIcon(((Foto) p).getRuta()))).setSize(new Dimension(100, 100));
-				;
+				if (p instanceof Foto) {
+					String rutaFoto = ((Foto) p).getRuta();
+					JLabel foto = new JLabel(new ImageIcon(rutaFoto));
+					panelFotos.add(foto).setSize(new Dimension(100, 50));
+				}
 
 			}
 		}
@@ -154,36 +163,11 @@ public class PerfilUsuario {
 		btnNewButton.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		btnNewButton.setPreferredSize(new Dimension(25, 25));
 		btnNewButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("serial")
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				af = new AñadirFoto(editorPane);
+				af = new AñadirFoto(editorPane, frmPhototds);
 				af.frmPhototds.setVisible(true);
-				editorPane.setContentType("text/html");
-				editorPane.setText("<h1>Agregar Foto</h1><p>Anímate a compartir una foto con tus amigos."
-						+ "<br> Puedes arrastrar el fichero aquí. </p>");
-				editorPane.setEditable(false);
-				editorPane.setDropTarget(new DropTarget() {
-					public synchronized void drop(DropTargetDropEvent evt) {
-						try {
-							evt.acceptDrop(DnDConstants.ACTION_COPY);
-							@SuppressWarnings("unchecked")
-							List<File> droppedFiles = (List<File>) evt.getTransferable()
-									.getTransferData(DataFlavor.javaFileListFlavor);
-							for (File file : droppedFiles) {
-								rutaFoto = file.getPath();
-								System.out.println(file.getPath());
-								frmPhototds.dispose();
-								af.frmPhototds.dispose();
-
-								PublicarFoto pb = new PublicarFoto(rutaFoto);
-								pb.publicarFoto.setVisible(true);
-							}
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					}
-				});
+				
 			}
 
 		});
@@ -289,6 +273,9 @@ public class PerfilUsuario {
 		panel_3.setMaximumSize(new Dimension(650, 100));
 		panel_1.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
+		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
+		panel_3.add(rigidArea_6);
 
 		JLabel lblNewLabel_5 = new JLabel(usuario.getUsuario());
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -389,6 +376,9 @@ public class PerfilUsuario {
 		FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel_1.add(panel_4);
+		
+		Component rigidArea_12 = Box.createRigidArea(new Dimension(20, 20));
+		panel_4.add(rigidArea_12);
 
 		JLabel lblNewLabel_6 = new JLabel(String.valueOf(usuario.getPublicaciones().size()));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -425,9 +415,12 @@ public class PerfilUsuario {
 		FlowLayout flowLayout_1 = (FlowLayout) panel_5.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panel_1.add(panel_5);
+		
+		Component rigidArea_13 = Box.createRigidArea(new Dimension(20, 20));
+		panel_5.add(rigidArea_13);
 
 		JLabel lblNewLabel_7 = new JLabel(
-				controlador.getUsuarioActual().getNombre() + " " + usuario.getApellidos());
+				usuario.getNombre() + " " + usuario.getApellidos());
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_5.add(lblNewLabel_7);
 

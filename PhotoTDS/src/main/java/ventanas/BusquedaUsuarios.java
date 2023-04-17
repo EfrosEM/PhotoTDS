@@ -27,23 +27,6 @@ public class BusquedaUsuarios {
 	private BusquedaUsuariosRenderer renderer;
 	private JFrame inicio;
 
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BusquedaUsuarios frame = new BusquedaUsuarios("", null);
-					frame.busquedaUsuarios.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -61,7 +44,7 @@ public class BusquedaUsuarios {
 		busquedaUsuarios.setResizable(false);
 		busquedaUsuarios.setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
 		busquedaUsuarios.setBounds(100, 100, 300, 300);
-		busquedaUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		busquedaUsuarios.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		busquedaUsuarios.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel panel = new JPanel();
