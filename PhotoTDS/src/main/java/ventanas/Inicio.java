@@ -77,7 +77,7 @@ public class Inicio {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				AñadirFoto af = new AñadirFoto(editorPane, null);
+				AñadirFoto af = new AñadirFoto(editorPane, null, controlador.getUsuarioActual());
 				af.frmPhototds.setVisible(true);
 				
 			}
@@ -95,6 +95,10 @@ public class Inicio {
 		btnNewButton_1.setMaximumSize(new Dimension(25, 25));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				CrearAlbum dialog = new CrearAlbum(null, controlador.getUsuarioActual());
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
 			}
 		});
 

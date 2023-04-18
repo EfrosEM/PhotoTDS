@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+
+import dominio.Usuario;
+
 import java.awt.FlowLayout;
 
 public class AñadirFoto {
@@ -19,6 +22,7 @@ public class AñadirFoto {
 	 */
 	protected JFrame frmPhototds;
 	private JFrame perfil;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -26,9 +30,11 @@ public class AñadirFoto {
 
 	/**
 	 * Create the frame.
+	 * @param usuario 
 	 */
-	public AñadirFoto(JEditorPane editorPane, JFrame perfil) {
+	public AñadirFoto(JEditorPane editorPane, JFrame perfil, Usuario usuario) {
 		this.perfil = perfil;
+		this.user = usuario;
 		initialize(editorPane);
 	}
 	
@@ -59,7 +65,7 @@ public class AñadirFoto {
 						System.out.println(file.getPath());
 						frmPhototds.dispose();
 
-						PublicarFoto pb = new PublicarFoto(ruta, perfil);
+						PublicarFoto pb = new PublicarFoto(ruta, perfil, user);
 						pb.publicarFoto.setVisible(true);
 					}
 				} catch (Exception ex) {

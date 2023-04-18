@@ -19,6 +19,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ import controlador.ControladorPhotoTDS;
 import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
+
 import javax.swing.ScrollPaneConstants;
 
 public class PerfilUsuario {
@@ -105,6 +107,9 @@ public class PerfilUsuario {
 					String rutaFoto = ((Foto) p).getRuta();
 					JLabel foto = new JLabel(new ImageIcon(rutaFoto));
 					panelFotos.add(foto).setSize(new Dimension(100, 50));
+				
+					
+					foto.addMouseListener(new PopMenuFotoListener());
 				}
 
 			}
@@ -165,7 +170,7 @@ public class PerfilUsuario {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				af = new AñadirFoto(editorPane, frmPhototds);
+				af = new AñadirFoto(editorPane, frmPhototds, usuario);
 				af.frmPhototds.setVisible(true);
 				
 			}
@@ -184,6 +189,10 @@ public class PerfilUsuario {
 		btnNewButton_1.setMaximumSize(new Dimension(25, 25));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				CrearAlbum dialog = new CrearAlbum(frmPhototds, usuario);
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
 			}
 		});
 
@@ -458,5 +467,10 @@ public class PerfilUsuario {
 
 		return otroicon;
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
 
 }

@@ -15,5 +15,12 @@ public class Album extends Publicacion{
 	public List<Foto> getFotos() {
 		return new ArrayList<Foto>(fotos);
 	}
+	
+	public void addLikes() {
+		for (Foto foto : fotos) {
+			foto.addLike();
+		}
+	}
+
 
 }

@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Usuario;
 
 public class PublicarFoto {
 
@@ -26,16 +27,19 @@ public class PublicarFoto {
 	private ControladorPhotoTDS controlador;
 	private String imagen;
 	private JFrame perfil;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
 	 */
 	/**
 	 * Create the frame.
+	 * @param user 
 	 */
-	public PublicarFoto(String imagen, JFrame perfil) {
+	public PublicarFoto(String imagen, JFrame perfil, Usuario user) {
 		this.imagen = imagen;
 		this.perfil = perfil;
+		this.user = user;
 		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
@@ -46,8 +50,8 @@ public class PublicarFoto {
 		publicarFoto.setResizable(false);
 		publicarFoto.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
-		publicarFoto.setBounds(100, 100, 879, 396);
-		publicarFoto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		publicarFoto.setBounds(100, 100, 879, 437);
+		publicarFoto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		publicarFoto.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		JPanel panelFoto = new JPanel();
@@ -107,7 +111,7 @@ public class PublicarFoto {
 				if (isAñadida) {
 					publicarFoto.dispose();
 
-					if (perfil != null) {
+					if (perfil != null && user.getUsuario().equals(controlador.getUsuarioActual().getUsuario())) {
 						perfil.dispose();
 						PerfilUsuario pu = new PerfilUsuario(controlador.getUsuarioActual());
 						pu.frmPhototds.setVisible(true);
@@ -118,6 +122,13 @@ public class PublicarFoto {
 		panel_1.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Cancel");
+		btnNewButton_1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				publicarFoto.dispose();
+			}
+		});
 		panel_1.add(btnNewButton_1);
 
 	}

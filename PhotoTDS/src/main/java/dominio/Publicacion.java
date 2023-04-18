@@ -88,4 +88,8 @@ public abstract class Publicacion {
 		this.codigo = codigo;
 	}
 	
+	public void addLike() {
+		likes++;
+	}
+	
 }
