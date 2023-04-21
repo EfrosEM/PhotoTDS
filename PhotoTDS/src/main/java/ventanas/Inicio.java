@@ -77,7 +77,7 @@ public class Inicio {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				AñadirFoto af = new AñadirFoto(editorPane, null, controlador.getUsuarioActual());
+				AñadirFoto af = new AñadirFoto(editorPane, null, controlador.getUsuarioActual(), null);
 				af.frmPhototds.setVisible(true);
 				
 			}

@@ -163,6 +163,18 @@ public class Usuario {
 	public int getSeguidos() {
 		return seguidos;
 	}
+	
+	public boolean comprobarNombreAlbum(String nombre) {
+		
+		for (Publicacion publicacion : publicaciones) {
+			if (publicacion instanceof Album) {
+				if (publicacion.getTitulo().equals(nombre)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	
 

@@ -7,13 +7,17 @@ public class Album extends Publicacion{
 
 	private ArrayList<Foto> fotos;
 
-	public Album(String titulo, String descripcion, Usuario user, String...hashtag) {
-		super(titulo, descripcion, user, hashtag);
+	public Album(String titulo, Usuario user, String...hashtag) {
+		super(titulo, null, user, hashtag);
 		this.fotos = new ArrayList<Foto>();
 	}
 
 	public List<Foto> getFotos() {
 		return new ArrayList<Foto>(fotos);
+	}
+	
+	public void addFoto(Foto f) {
+		fotos.add(f);
 	}
 	
 	public void addLikes() {

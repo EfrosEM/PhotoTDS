@@ -23,6 +23,7 @@ public class AñadirFoto {
 	protected JFrame frmPhototds;
 	private JFrame perfil;
 	private Usuario user;
+	private String nombreAlbum;
 
 	/**
 	 * Launch the application.
@@ -32,9 +33,10 @@ public class AñadirFoto {
 	 * Create the frame.
 	 * @param usuario 
 	 */
-	public AñadirFoto(JEditorPane editorPane, JFrame perfil, Usuario usuario) {
+	public AñadirFoto(JEditorPane editorPane, JFrame perfil, Usuario usuario, String nombreAlbum) {
 		this.perfil = perfil;
 		this.user = usuario;
+		this.nombreAlbum = nombreAlbum;
 		initialize(editorPane);
 	}
 	
@@ -65,7 +67,7 @@ public class AñadirFoto {
 						System.out.println(file.getPath());
 						frmPhototds.dispose();
 
-						PublicarFoto pb = new PublicarFoto(ruta, perfil, user);
+						PublicarFoto pb = new PublicarFoto(ruta, perfil, user, nombreAlbum);
 						pb.publicarFoto.setVisible(true);
 					}
 				} catch (Exception ex) {

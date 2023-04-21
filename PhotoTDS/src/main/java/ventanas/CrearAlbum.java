@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controlador.ControladorPhotoTDS;
 import dominio.Usuario;
 
 import javax.swing.JLabel;
@@ -29,6 +30,7 @@ public class CrearAlbum extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField_1;
 	private JLabel lblNewLabel_error;
+	private ControladorPhotoTDS controlador = ControladorPhotoTDS.getUnicaInstancia();
 
 	/**
 	 * Create the dialog.
@@ -81,10 +83,11 @@ public class CrearAlbum extends JDialog {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						Boolean valido = comprobarNombre(textField_1.getText());
+						String nombreAlbum = textField_1.getText();
+						Boolean valido = controlador.getUsuarioActual().comprobarNombreAlbum(nombreAlbum);
 						if (valido){
 							JEditorPane editorPane = new JEditorPane();
-							AñadirFoto af = new AñadirFoto(editorPane, perfil, usuario);
+							AñadirFoto af = new AñadirFoto(editorPane, perfil, usuario, nombreAlbum);
 							af.frmPhototds.setVisible(true);
 						}
 					}
@@ -111,10 +114,5 @@ public class CrearAlbum extends JDialog {
 		this.dispose();
 	}
 	
-
-	private Boolean comprobarNombre(String text) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 }

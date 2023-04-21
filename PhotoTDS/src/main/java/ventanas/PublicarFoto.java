@@ -28,6 +28,7 @@ public class PublicarFoto {
 	private String imagen;
 	private JFrame perfil;
 	private Usuario user;
+	private String nombreAlbum;
 
 	/**
 	 * Launch the application.
@@ -36,7 +37,7 @@ public class PublicarFoto {
 	 * Create the frame.
 	 * @param user 
 	 */
-	public PublicarFoto(String imagen, JFrame perfil, Usuario user) {
+	public PublicarFoto(String imagen, JFrame perfil, Usuario user, String nombreAlbum) {
 		this.imagen = imagen;
 		this.perfil = perfil;
 		this.user = user;
@@ -103,6 +104,10 @@ public class PublicarFoto {
 				while (matcher.find()) {
 					hastags.add(matcher.group());
 					System.out.println("Hashtag encontrado: " + matcher.group());
+				}
+				
+				if (nombreAlbum != null) {
+					//TODO
 				}
 
 				boolean isAñadida = controlador.registrarFoto(imagen, "Publicacion", comentario,

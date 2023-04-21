@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Album;
 import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
@@ -111,6 +112,9 @@ public class PerfilUsuario {
 					
 					foto.addMouseListener(new PopMenuFotoListener());
 				}
+				if (p instanceof Album) {
+					
+				}
 
 			}
 		}
@@ -170,7 +174,7 @@ public class PerfilUsuario {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				af = new AñadirFoto(editorPane, frmPhototds, usuario);
+				af = new AñadirFoto(editorPane, frmPhototds, usuario, null);
 				af.frmPhototds.setVisible(true);
 				
 			}
