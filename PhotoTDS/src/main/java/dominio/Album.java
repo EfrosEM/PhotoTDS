@@ -11,6 +11,11 @@ public class Album extends Publicacion{
 		super(titulo, null, user, hashtag);
 		this.fotos = new ArrayList<Foto>();
 	}
+	
+	public Album(String titulo, String...hashtag) {
+		super(titulo, null, null, hashtag);
+		this.fotos = new ArrayList<Foto>();
+	}
 
 	public List<Foto> getFotos() {
 		return new ArrayList<Foto>(fotos);

@@ -72,26 +72,31 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 	public void modificarFoto(Foto f) {
 		Entidad eFoto = servPersistencia.recuperarEntidad(f.getCodigo());
 		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "usuario");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "usuario", String.valueOf(f.getUser().getCodigo()));
-		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "ruta");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "ruta", f.getRuta());
-		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "titulo");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "titulo", f.getTitulo());
-		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "descripcion");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "descripcion", f.getDescripcion());
-		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "likes");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "likes", String.valueOf(f.getLikes()));
-		
-		//servPersistencia.eliminarPropiedadEntidad(eFoto, "fecha");
-		//servPersistencia.anadirPropiedadEntidad(eFoto, "fecha", dateFormat.format(f.getFecha()));
-		
-		servPersistencia.eliminarPropiedadEntidad(eFoto, "hastags");
-		servPersistencia.anadirPropiedadEntidad(eFoto, "hastags", f.getHashtags().toString());
+		for (Propiedad prop : eFoto.getPropiedades()) {
+			
+			if (prop.getNombre().equals("usuario")) {
+				prop.setValor(String.valueOf(f.getUser().getCodigo()));
+				
+			} else if (prop.getNombre().equals("ruta")) {
+				prop.setValor(f.getRuta());
+				
+			} else if (prop.getNombre().equals("titulo")) {
+				prop.setValor(f.getTitulo());
+				
+			}  else if (prop.getNombre().equals("descripcion")) {
+				prop.setValor(f.getDescripcion());
+				
+			}  else if (prop.getNombre().equals("likes")) {
+				prop.setValor(String.valueOf(f.getLikes()));
+				
+			} else if (prop.getNombre().equals("hastags")) {
+				prop.setValor(f.getHashtags().toString());
+				
+			} 
+			
+			servPersistencia.modificarPropiedad(prop);
+			
+		}
 	}
 	
 	public Foto recuperarFoto(int codigo) {

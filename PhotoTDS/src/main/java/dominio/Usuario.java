@@ -169,11 +169,11 @@ public class Usuario {
 		for (Publicacion publicacion : publicaciones) {
 			if (publicacion instanceof Album) {
 				if (publicacion.getTitulo().equals(nombre)) {
-					return true;
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	
