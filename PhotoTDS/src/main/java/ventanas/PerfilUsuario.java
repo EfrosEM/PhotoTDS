@@ -14,7 +14,11 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,7 +29,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -36,7 +39,7 @@ import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
 
-import javax.swing.ScrollPaneConstants;
+import java.awt.CardLayout;
 
 public class PerfilUsuario {
 
@@ -45,11 +48,18 @@ public class PerfilUsuario {
 	private ControladorPhotoTDS controlador;
 	private AñadirFoto af;
 	private Usuario usuario;
-
-	private JPanel panelFotos;
 	@SuppressWarnings("unused")
 	private JPanel panelAñadirFoto;
 	private JLabel seguidores;
+	private JPanel panelPublicaciones;
+	private JPanel panelFotos;
+	private JPanel panelAlbumes;
+	private CardLayout cardlayout;
+	private JScrollPane scrollPane_Fotos;
+	private JScrollPane scrollPane_Albumes;
+	private JButton botonFotos;
+	private JButton botonAlbumes;
+	
 
 	/**
 	 * Create the application.
@@ -76,65 +86,72 @@ public class PerfilUsuario {
 		JPanel panelSur = new JPanel();
 		panelSur.setPreferredSize(new Dimension(10, 400));
 		frmPhototds.getContentPane().add(panelSur, BorderLayout.SOUTH);
-		panelSur.setLayout(new GridLayout());
-
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		tabbedPane.setForeground(Color.DARK_GRAY);
-		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panelSur.add(tabbedPane);
-
-		panelFotos = new JPanel();
-		panelFotos.setPreferredSize(new Dimension(800, 400));
-		JPanel panelAlbumes = new JPanel();
-
-		tabbedPane.addTab("FOTOS", null, panelFotos, null);
-		panelFotos.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setPreferredSize(new Dimension(560, 390));
-		panelFotos.add(scrollPane);
-
-		JPanel panelFotos = new JPanel();
-		panelFotos.setPreferredSize(new Dimension(560, 700));
-		scrollPane.setViewportView(panelFotos);
-		panelFotos.setLayout(new GridLayout(0, 3, 3, 3));
-		int publicaciones = usuario.getPublicaciones().size();
-		System.out.println("Publicaciones: " + publicaciones);
-		if (publicaciones > 0) {
-			for (Publicacion p : usuario.getPublicaciones()) {
-				if (p instanceof Foto) {
-					String rutaFoto = ((Foto) p).getRuta();
-					JLabel foto = new JLabel(new ImageIcon(rutaFoto));
-					panelFotos.add(foto).setSize(new Dimension(100, 50));
-				
-					
-					foto.addMouseListener(new PopMenuFotoListener());
-				}
-				if (p instanceof Album) {
-					
-				}
-
+		FlowLayout fl_panelSur = new FlowLayout(FlowLayout.CENTER, 5, 5);
+		panelSur.setLayout(fl_panelSur);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBorder(null);
+		panel_6.setPreferredSize(new Dimension(580, 30));
+		panelSur.add(panel_6);
+		
+		botonFotos = new JButton("FOTOS");
+		botonFotos.setFont(new Font("Tahoma", Font.BOLD, 12));
+		botonFotos.setContentAreaFilled(false);
+		botonFotos.setOpaque(false);
+		botonFotos.setBorder(null);
+		botonFotos.setBorderPainted(false);
+		panel_6.add(botonFotos);
+		botonFotos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				botonFotos.setFont(new Font(botonFotos.getFont().getName(), Font.BOLD, botonFotos.getFont().getSize()));
+				botonAlbumes.setFont(new Font(botonFotos.getFont().getName(), Font.PLAIN, botonFotos.getFont().getSize()));
+				cardlayout.show(panelPublicaciones, "panelFotos");
 			}
-		}
-		/*
-		 * for (int i = 0; i < 12; i++) { //panelFotos.add(new JLabel("Hola"));
-		 * panelFotos.add(new JLabel(new
-		 * ImageIcon(this.getClass().getResource("/recursos/nano.jpg"))));
-		 * //.setSize(new Dimension(100, 100)); }
-		 */
-
-		tabbedPane.addTab("ÁLBUMES", null, panelAlbumes, null);
-		panelAlbumes.setLayout(new GridLayout(3, 3, 0, 0));
-
-		JLabel lbl5 = new JLabel("New label");
-		panelAlbumes.add(lbl5);
-		JLabel lbl6 = new JLabel("New label");
-		panelAlbumes.add(lbl6);
-		JLabel lbl7 = new JLabel("New label");
-		panelAlbumes.add(lbl7);
-
+		});
+		
+		Component rigidArea_2_1 = Box.createRigidArea(new Dimension(10, 10));
+		rigidArea_2_1.setPreferredSize(new Dimension(30, 10));
+		panel_6.add(rigidArea_2_1);
+		
+		botonAlbumes = new JButton("ÁLBUMES");
+		botonAlbumes.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		botonAlbumes.setOpaque(false);
+		botonAlbumes.setBorder(null);
+		botonAlbumes.setContentAreaFilled(false);
+		botonAlbumes.setBorderPainted(false);
+		panel_6.add(botonAlbumes);
+		botonAlbumes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				botonFotos.setFont(new Font(botonFotos.getFont().getName(), Font.PLAIN, botonFotos.getFont().getSize()));
+				botonAlbumes.setFont(new Font(botonFotos.getFont().getName(), Font.BOLD, botonFotos.getFont().getSize()));
+				cardlayout.show(panelPublicaciones, "panelAlbumes");
+				
+			}
+		});
+		
+		panelPublicaciones = new JPanel();
+		panelSur.add(panelPublicaciones);
+		panelPublicaciones.setLayout(new CardLayout(0, 0));
+		
+		scrollPane_Fotos = new JScrollPane();
+		scrollPane_Fotos.setSize(new Dimension(400, 400));
+		scrollPane_Fotos.setPreferredSize(new Dimension(580, 400));
+		panelPublicaciones.add(scrollPane_Fotos, "panelFotos");
+		
+		scrollPane_Albumes = new JScrollPane();
+		scrollPane_Albumes.setSize(new Dimension(400, 400));
+		scrollPane_Albumes.setPreferredSize(new Dimension(580, 400));
+		panelPublicaciones.add(scrollPane_Albumes, "panelAlbumes");
+		
+		cardlayout = (CardLayout) panelPublicaciones.getLayout(); 
+		cargarFotos();
+		cargarAlbumes();
+		cardlayout.show(panelPublicaciones, "panelFotos");
+		
 		JPanel panelNorte = new JPanel();
 		frmPhototds.getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new BoxLayout(panelNorte, BoxLayout.X_AXIS));
@@ -436,24 +453,6 @@ public class PerfilUsuario {
 				usuario.getNombre() + " " + usuario.getApellidos());
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_5.add(lblNewLabel_7);
-
-		/*
-		 * JPanel panel_2 = new JPanel(); panel_2.setBackground(Color.WHITE);
-		 * panelCentral.add(panel_2, BorderLayout.SOUTH);
-		 * 
-		 * JButton lblNewLabel_2 = new JButton("FOTOS");
-		 * lblNewLabel_2.setBackground(Color.WHITE); lblNewLabel_2.setBorder(null);
-		 * lblNewLabel_2.setForeground(Color.DARK_GRAY); lblNewLabel_2.setFont(new
-		 * Font("Tahoma", Font.PLAIN, 15)); panel_2.add(lblNewLabel_2);
-		 * 
-		 * Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		 * panel_2.add(rigidArea_6);
-		 * 
-		 * JButton lblNewLabel_3 = new JButton("ÁLBUMES");
-		 * lblNewLabel_3.setBackground(Color.WHITE); lblNewLabel_3.setBorder(null);
-		 * lblNewLabel_3.setForeground(Color.DARK_GRAY); lblNewLabel_3.setFont(new
-		 * Font("Tahoma", Font.PLAIN, 15)); panel_2.add(lblNewLabel_3);
-		 */
 	}
 
 	private void abrirEditar() {
@@ -474,6 +473,114 @@ public class PerfilUsuario {
 	
 	public Usuario getUsuario() {
 		return usuario;
+	}
+	
+	private int getNumFotos() {
+		int numFotos = 0;
+		for (Publicacion p: usuario.getPublicaciones()) {
+			if (p instanceof Foto) {
+				numFotos++;
+			} 
+		}
+		
+		return numFotos;
+	}
+	
+	private int getNumAlbumes() {
+		int numAlbumes = 0;
+		for (Publicacion p: usuario.getPublicaciones()) {
+			if (p instanceof Album) {
+				numAlbumes++;
+			}
+		}
+		
+		return numAlbumes;
+	}
+	
+	private void cargarFotos() {
+		int numFotos = getNumFotos();
+		
+		int filas = 0;
+		if (numFotos % 3 == 0) {
+			filas = numFotos / 3;
+		} else {
+			filas = numFotos / 3 + 1;
+		}
+		
+		panelFotos = new JPanel();
+		panelFotos.setPreferredSize(new Dimension(200, 10));
+		scrollPane_Fotos.setViewportView(panelFotos);
+		panelFotos.setLayout(new GridLayout(filas, 3, 1, 1));
+		
+		System.out.println("Fotos: " + numFotos);
+		if (numFotos > 0) {
+			for (Publicacion p : usuario.getPublicaciones()) {
+				if (p instanceof Foto) {
+					BufferedImage image = null;
+					try {
+						image = ImageIO.read(new File(((Foto) p).getRuta()));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+					ImageIcon icon = new ImageIcon(scaledImage);
+					JLabel label = new JLabel(icon);
+					panelFotos.add(label);
+				
+					
+					label.addMouseListener(new PopMenuFotoListener());
+				}
+			}
+		}
+		
+		for (int i = numFotos; i < 3 * filas; i++) {
+			panelFotos.add(new JLabel());
+		}
+
+	}
+	
+	private void cargarAlbumes() {		
+		int numAlbumes = getNumAlbumes();
+		
+		int filas = 0;
+		if (numAlbumes % 3 == 0) {
+			filas = numAlbumes / 3;
+		} else {
+			filas = numAlbumes / 3 + 1;
+		}
+		
+		panelAlbumes = new JPanel();
+		panelAlbumes.setPreferredSize(new Dimension(200, 10));
+		scrollPane_Albumes.setViewportView(panelAlbumes);
+		panelAlbumes.setLayout(new GridLayout(filas, 3, 1, 1));
+		
+		System.out.println("Albumes: " + numAlbumes);
+		if (numAlbumes > 0) {
+			for (Publicacion p : usuario.getPublicaciones()) {
+				if (p instanceof Album) {
+					BufferedImage image = null;
+					try {
+						image = ImageIO.read(new File(((Foto) p).getRuta()));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+					ImageIcon icon = new ImageIcon(scaledImage);
+					JLabel label = new JLabel(icon);
+					panelAlbumes.add(label);
+				
+					
+					label.addMouseListener(new PopMenuFotoListener());
+				}
+			}
+		}
+		
+		for (int i = numAlbumes; i < 3 * filas; i++) {
+			panelAlbumes.add(new JLabel());
+		}
+
 	}
 
 
