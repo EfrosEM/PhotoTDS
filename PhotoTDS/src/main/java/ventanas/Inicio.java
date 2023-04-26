@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -22,8 +24,18 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Publicacion;
+import persistencia.AdaptadorFotoTDS;
+import dominio.CatalogoFotos;
+import dominio.Comentario;
+import dominio.Foto;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
 
 public class Inicio {
 
@@ -33,12 +45,15 @@ public class Inicio {
 	protected JFrame frmPhototds;
 	private JTextField textField;
 	private ControladorPhotoTDS controlador;
+	private AdaptadorFotoTDS adaptadorFoto;
+	private String com;
 
 	/**
 	 * Create the application.
 	 */
 	public Inicio() {
 		controlador = ControladorPhotoTDS.getUnicaInstancia();
+		adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -205,10 +220,108 @@ public class Inicio {
 
 		JPanel panelCentro = new JPanel();
 		frmPhototds.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setSize(new Dimension(570, 400));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setPreferredSize(new Dimension(570, 550));
+		panelCentro.add(scrollPane);
+		
+		JPanel panelPublicaciones = new JPanel();
+		panelPublicaciones.setSize(new Dimension(550, 400));
+		panelPublicaciones.setPreferredSize(new Dimension(550, 2000));
+		scrollPane.setViewportView(panelPublicaciones);
+		panelPublicaciones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		// Prueba con fotos solo del usuario, hay que cambiarlo
+		List<Publicacion> fotosUsuario = controlador.getUsuarioActual().getPublicaciones();
+		
+		for (Publicacion foto : fotosUsuario) {
+			if (foto instanceof Foto) {
+				JPanel panelPublicacion = new JPanel();
+				panelPublicacion.setBackground(Color.WHITE);
+				panelPublicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+				panelPublicacion.setPreferredSize(new Dimension(555, 80));
+				panelPublicacion.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+				
+				JPanel panelFoto = new JPanel();
+				panelFoto.setPreferredSize(new Dimension(170, 70));
+				panelPublicacion.add(panelFoto);
+				
+				JLabel lblFoto = new JLabel("");
+				lblFoto.setAlignmentY(Component.TOP_ALIGNMENT);
+				lblFoto.setSize(new Dimension(5, 5));
+				lblFoto.setBorder(new LineBorder(new Color(0, 0, 0)));
 
-		@SuppressWarnings("rawtypes")
-		JList list = new JList();
-		panelCentro.add(list);
+				lblFoto.setIcon(redimensionarImagen(((Foto) foto).getRuta(), 160, 60));
+				panelFoto.add(lblFoto);
+				
+				JPanel panelInteract = new JPanel();
+				panelInteract.setBackground(Color.WHITE);
+				FlowLayout flowLayout = (FlowLayout) panelInteract.getLayout();
+				flowLayout.setVgap(10);
+				flowLayout.setAlignment(FlowLayout.LEFT);
+				panelInteract.setPreferredSize(new Dimension(240, 70));
+				panelPublicacion.add(panelInteract);
+				
+				JButton btnLikes = new JButton("Like");
+				panelInteract.add(btnLikes);
+				btnLikes.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						foto.addLike();
+						adaptadorFoto.modificarFoto((Foto)foto);
+					}
+				});
+				
+				JButton btnComentario = new JButton("Comentario");
+				panelInteract.add(btnComentario);
+				btnComentario.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						com = JOptionPane.showInputDialog("Escribe un comentario");
+						Comentario comentario = new Comentario(com, controlador.getUsuarioActual());
+						foto.addComentario(comentario);
+					}
+				});
+				
+				JLabel lblLikes = new JLabel(String.valueOf(foto.getLikes()));
+				panelInteract.add(lblLikes);
+				
+				JLabel lblMeGusta = new JLabel("Me gusta");
+				lblMeGusta.setFont(new Font("Tahoma", Font.ITALIC, 11));
+				panelInteract.add(lblMeGusta);
+				
+				JLabel lblFotoUsuario = new JLabel("");
+				lblFotoUsuario.setAlignmentY(Component.TOP_ALIGNMENT);
+				lblFotoUsuario.setSize(new Dimension(5, 5));
+				lblFotoUsuario.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+				lblFotoUsuario.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 20, 20));
+				panelInteract.add(lblFotoUsuario);
+				
+				JLabel lblNombreUsuario = new JLabel(controlador.getUsuarioActual().getUsuario());
+				panelInteract.add(lblNombreUsuario);
+				
+				panelPublicaciones.add(panelPublicacion);
+			}
+			
+		}
+		
+		
+		
+		
+	}
+	
+	private ImageIcon redimensionarImagen(String imagen, int x, int y) {
+		ImageIcon icon = new ImageIcon(imagen);
+		Image img = icon.getImage();
+		Image otraimg = img.getScaledInstance(x, y, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+
+		return otroicon;
 	}
 
 }

@@ -96,4 +96,8 @@ public abstract class Publicacion {
 		hashtags.add(hashtag);
 	}
 	
+	public void addComentario(Comentario comentario) {
+		comentarios.add(comentario);
+	}
+	
 }
