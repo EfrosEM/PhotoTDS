@@ -32,12 +32,11 @@ public abstract class Publicacion {
 		this.codigo = 0;
 	}
 	
-	public Publicacion(String titulo, String descripcion, Usuario user, int likes, LocalDate fecha, String...hashtags) {
-		this.titulo = titulo;
-		this.likes = likes;
+	public Publicacion(String descripcion, Usuario user, String...hashtag) {
+		this.likes = 0;
 		this.descripcion = descripcion;
 		this.user = user;
-		this.fecha = fecha;
+		this.fecha = LocalDate.now();
 		this.comentarios = new ArrayList<Comentario>();
 		this.hashtags = new ArrayList<String>();
 		
@@ -45,6 +44,36 @@ public abstract class Publicacion {
 			this.hashtags.add(hastag);
 		}
 		
+		this.codigo = 0;	
+	}
+	
+	public Publicacion(String descripcion, int likes, LocalDate fecha) {
+		this.likes = likes;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.comentarios = new ArrayList<Comentario>();
+		this.hashtags = new ArrayList<String>();
+		
+		this.codigo = 0;
+	}
+	
+	public Publicacion(String titulo, Usuario user, LocalDate fecha, String...hashtag) {
+		this.titulo = titulo;
+		this.user = user;
+		this.fecha = fecha;
+		this.hashtags = new ArrayList<String>();
+
+		for(String hastag : hashtags) {
+			this.hashtags.add(hastag);
+		}
+		
+		this.codigo = 0;
+		
+	}
+	
+	public Publicacion(String titulo, LocalDate fecha) {
+		this.titulo = titulo;
+		this.fecha = fecha;
 		this.codigo = 0;
 	}
 

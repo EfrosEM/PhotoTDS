@@ -1,14 +1,18 @@
 package persistencia;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import beans.Entidad;
 import beans.Propiedad;
 import dominio.Foto;
+import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
@@ -50,11 +54,11 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		eFoto.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(
 						new Propiedad("ruta", f.getRuta()),
-						new Propiedad("titulo", f.getTitulo()),
 						new Propiedad("descripcion", f.getDescripcion()),
 						new Propiedad("likes", String.valueOf(f.getLikes())),
-						//new Propiedad("fecha", dateFormat.format(f.getFecha())),
-						new Propiedad("hastags", f.getHashtags().toString())
+						new Propiedad("fecha", f.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+						new Propiedad("hastags", obtenerCodigoHastags(f.getHashtags())),
+						new Propiedad("usuario", String.valueOf(f.getUser().getCodigo()))
 				))
 		);
 		
@@ -79,11 +83,11 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 				
 			} else if (prop.getNombre().equals("ruta")) {
 				prop.setValor(f.getRuta());
+		
+			} else if (prop.getNombre().equals("fecha")) {
+				prop.setValor(f.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 				
-			} else if (prop.getNombre().equals("titulo")) {
-				prop.setValor(f.getTitulo());
-				
-			}  else if (prop.getNombre().equals("descripcion")) {
+			} else if (prop.getNombre().equals("descripcion")) {
 				prop.setValor(f.getDescripcion());
 				
 			}  else if (prop.getNombre().equals("likes")) {
@@ -91,7 +95,6 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 				
 			} else if (prop.getNombre().equals("hastags")) {
 				prop.setValor(f.getHashtags().toString());
-				
 			} 
 			
 			servPersistencia.modificarPropiedad(prop);
@@ -104,35 +107,40 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 			return (Foto) PoolDAO.getUnicaInstancia().getObjeto(codigo);
 		
 		Entidad eFoto = new Entidad();
+		Usuario usuario = null;
 		String ruta;
-		String titulo;
 		String descripcion;
 		int likes;
-		//LocalDate fecha = null;
+		LocalDate fecha = null;
+		List<String> hashtags = null;
+
 		
 		eFoto = servPersistencia.recuperarEntidad(codigo);
 		
 		ruta = servPersistencia.recuperarPropiedadEntidad(eFoto, "ruta");
-		titulo = servPersistencia.recuperarPropiedadEntidad(eFoto, "titulo");
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eFoto, "descripcion");
 		likes = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "likes"));
 		
-		/*try {
+		try {
 			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eFoto, "fecha"));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 				
-		Foto f = new Foto(ruta, titulo, descripcion, likes, null);
+		Foto f = new Foto(ruta, descripcion, likes, fecha);
 		f.setCodigo(codigo);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, f);
 		
-		/*
-		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
-		int codigoFoto = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "foto"));
-		Foto f = adaptadorFoto.recuperarFoto(codigoFoto);
-		*/
+		AdaptadorUsuarioTDS adaptadorUsuario = AdaptadorUsuarioTDS.getUnicaInstancia();
+		int codigoUsuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "usuario"));
+		usuario = adaptadorUsuario.recuperarUsuario(codigoUsuario);
+		f.setUser(usuario);
+		
+		hashtags = obtenerHastagsDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eFoto, "hashtags"));
+		for (String hashtag : hashtags) {
+			f.addHastag(hashtag);
+		}
 				
 		return f;
 	}
@@ -147,6 +155,32 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		}
 		
 		return fotos;
+	}
+	
+	private String obtenerCodigoHastags(List<String> hastags) {
+		String codigoHastags = "";
+		
+		for (String hastag : hastags) {
+			codigoHastags += hastag + " ";
+		}
+		
+		return codigoHastags.trim();
+	}
+	
+	private List<String> obtenerHastagsDesdeCodigo(String codigoHastags) {
+		List<String> hastags = new ArrayList<>();
+		
+		if (codigoHastags == null || codigoHastags.equals("")) {
+			return hastags;
+		}
+		
+		StringTokenizer strTok = new StringTokenizer(codigoHastags, " ");
+		
+		while (strTok.hasMoreTokens()) {
+			hastags.add((String) strTok.nextElement());
+		}
+		
+		return hastags;
 	}
 }
 

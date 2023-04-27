@@ -10,6 +10,8 @@ import java.util.StringTokenizer;
 
 import beans.Entidad;
 import beans.Propiedad;
+import dominio.Album;
+import dominio.Foto;
 import dominio.Publicacion;
 import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
@@ -45,6 +47,22 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		if (eUsuario != null) return;
 		
 		//Aquí habría que registrar primero los atributos que son objetos
+		AdaptadorUsuarioTDS adaptadorU = AdaptadorUsuarioTDS.getUnicaInstancia();
+		for (Usuario user : u.getSeguidores()) {
+			adaptadorU.registrarUsuario(user);
+		}
+		
+		AdaptadorFotoTDS adaptadorF = AdaptadorFotoTDS.getUnicaInstancia();
+		AdaptadorAlbumTDS adaptadorA = AdaptadorAlbumTDS.getUnicaInstancia();
+		for (Publicacion publicacion : u.getPublicaciones()) {
+			if (publicacion instanceof Foto) {
+				adaptadorF.registrarFoto((Foto) publicacion);
+			}
+			
+			if (publicacion instanceof Album) {
+				adaptadorA.registrarAlbum((Album) publicacion);
+			}
+		}
 		
 		eUsuario = new Entidad();
 		eUsuario.setNombre("usuario");
@@ -144,6 +162,8 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		String fotoPerfil;
 		Boolean isPremium;
 		int seguidos;
+		List<Usuario> seguidores = null;
+		List<Publicacion> publicaciones = null;
 		
 		
 		eUsuario = servPersistencia.recuperarEntidad(codigo);
@@ -172,13 +192,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, u);
 		
-		List<Usuario> seguidores = obtenerSeguidoresDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "seguidores"));
-		
+		seguidores = obtenerSeguidoresDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "seguidores"));
 		for (Usuario seguidor : seguidores) {
 			u.addSeguidor(seguidor);
 		}
 		
-		List<Publicacion> publicaciones = obtenerPublicacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
+		publicaciones = obtenerPublicacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
 		System.out.println("Numero de publicaiones: " + publicaciones.size());
 		for (Publicacion publicacion : publicaciones) {
 			System.out.println("Publicacion: " + publicacion.getCodigo());

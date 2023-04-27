@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -9,6 +11,8 @@ import java.util.StringTokenizer;
 import beans.Entidad;
 import beans.Propiedad;
 import dominio.Album;
+import dominio.Foto;
+import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
@@ -43,15 +47,20 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 		AdaptadorUsuarioTDS adaptadorU = AdaptadorUsuarioTDS.getUnicaInstancia();
 		adaptadorU.registrarUsuario(a.getUser());
 		
+		AdaptadorFotoTDS adaptadorF = AdaptadorFotoTDS.getUnicaInstancia();
+		for (Foto foto : a.getFotos()) {
+			adaptadorF.registrarFoto(foto);
+		}
+		
 		eAlbum = new Entidad();
 		eAlbum.setNombre("album");
 		eAlbum.setPropiedades(
 				new ArrayList<Propiedad>(Arrays.asList(
 						new Propiedad("titulo", a.getTitulo()),
-						new Propiedad("descripcion", a.getDescripcion()),
-						//new Propiedad("fecha", dateFormat.format(a.getFecha())),
-						new Propiedad("hastags", obtenerCodigoHastags(a.getHashtags()))
-						// Falta registrar Albumes
+						new Propiedad("fecha", a.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+						new Propiedad("hastags", obtenerCodigoHastags(a.getHashtags())),
+						new Propiedad("usuario", String.valueOf(a.getUser().getCodigo())),
+						new Propiedad("fotos", obtenerCodigosFotos(a.getFotos()))
 				))
 		);
 		
@@ -77,13 +86,15 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 			} else if (prop.getNombre().equals("titulo")) {
 				prop.setValor(a.getTitulo());
 				
-			}  else if (prop.getNombre().equals("descripcion")) {
-				prop.setValor(a.getDescripcion());
-				
+			} else if (prop.getNombre().equals("fecha")) {
+				prop.setValor(a.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+									
 			} else if (prop.getNombre().equals("hastags")) {
 				prop.setValor(obtenerCodigoHastags(a.getHashtags()));
 				
-			} 
+			} else if (prop.getNombre().equals("fotos")) {
+				prop.setValor(obtenerCodigosFotos(a.getFotos()));
+			}
 			
 			servPersistencia.modificarPropiedad(prop);
 			
@@ -95,37 +106,42 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 			return (Album) PoolDAO.getUnicaInstancia().getObjeto(codigo);
 		
 		Entidad eAlbum = new Entidad();
+		Usuario usuario = null;
 		String titulo;
-		//LocalDate fecha = null;
+		LocalDate fecha = null;
+		List<String> hashtags = null;
+		List<Foto> fotos = null;
 		
 		eAlbum = servPersistencia.recuperarEntidad(codigo);
 		
 		titulo = servPersistencia.recuperarPropiedadEntidad(eAlbum, "titulo");
 		
-		/*try {
+		try {
 			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eAlbum, "fecha"));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 				
-		Album a = new Album(titulo);
+		Album a = new Album(titulo, fecha);
 		a.setCodigo(codigo);
 		
 		PoolDAO.getUnicaInstancia().addObjeto(codigo, a);
 		
 		AdaptadorUsuarioTDS adaptadorUsuario = AdaptadorUsuarioTDS.getUnicaInstancia();
-		a.setUser(adaptadorUsuario.recuperarUsuario(Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eAlbum, "usuario"))));
+		int codigoUsuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eAlbum, "usuario"));
+		usuario = adaptadorUsuario.recuperarUsuario(codigoUsuario);
+		a.setUser(usuario);
 		
-		List<String> hastags = obtenerHastagsDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eAlbum, "hashtags"));
-		for (String hastag : hastags) {
-			a.addHastag(hastag);
+		hashtags = obtenerHastagsDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eAlbum, "hashtags"));
+		for (String hashtag : hashtags) {
+			a.addHastag(hashtag);
 		}
 		
-		/*
-		AdaptadorAlbumTDS adaptadorAlbum = AdaptadorAlbumTDS.getUnicaInstancia();
-		int codigoAlbum = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eAlbum, "album"));
-		Album a = adaptadorAlbum.recuperarAlbum(codigoAlbum);
-		*/
+		fotos = obtenerFotosDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eAlbum, "fotos"));
+		for (Foto foto : fotos) {
+			a.addFoto(foto);
+		}
+		
 				
 		return a;
 	}
@@ -166,6 +182,33 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 		}
 		
 		return hastags;
+	}
+	
+	private String obtenerCodigosFotos(List<Foto> fotos) {
+		String codigosFotos = "";
+		
+		for (Foto foto : fotos) {
+			codigosFotos += foto.getCodigo() + " ";
+		}
+		
+		return codigosFotos.trim();
+	}
+	
+	private List<Foto> obtenerFotosDesdeCodigo(String codigoFotos) {
+		List<Foto> fotos = new ArrayList<>();
+		
+		if (codigoFotos == null || codigoFotos.equals("")) {
+			return fotos;
+		}
+		
+		StringTokenizer strTok = new StringTokenizer(codigoFotos, " ");
+		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
+		
+		while (strTok.hasMoreTokens()) {
+			fotos.add(adaptadorFoto.recuperarFoto(Integer.valueOf((String) strTok.nextElement())));
+		}
+		
+		return fotos;
 	}
 
 }
