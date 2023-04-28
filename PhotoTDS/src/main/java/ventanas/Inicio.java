@@ -47,6 +47,7 @@ public class Inicio {
 	private ControladorPhotoTDS controlador;
 	private AdaptadorFotoTDS adaptadorFoto;
 	private String com;
+	private JLabel lblLikes;
 
 	/**
 	 * Create the application.
@@ -272,6 +273,7 @@ public class Inicio {
 					public void actionPerformed(ActionEvent e) {
 						foto.addLike();
 						adaptadorFoto.modificarFoto((Foto)foto);
+						lblLikes.setText(String.valueOf(foto.getLikes()));
 					}
 				});
 				
@@ -287,7 +289,7 @@ public class Inicio {
 					}
 				});
 				
-				JLabel lblLikes = new JLabel(String.valueOf(foto.getLikes()));
+				lblLikes = new JLabel(String.valueOf(foto.getLikes()));
 				panelInteract.add(lblLikes);
 				
 				JLabel lblMeGusta = new JLabel("Me gusta");

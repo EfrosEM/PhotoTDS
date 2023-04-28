@@ -47,6 +47,7 @@ public abstract class Publicacion {
 		this.codigo = 0;	
 	}
 	
+	// Constructor para FOTO
 	public Publicacion(String descripcion, int likes, LocalDate fecha) {
 		this.likes = likes;
 		this.descripcion = descripcion;
@@ -57,11 +58,13 @@ public abstract class Publicacion {
 		this.codigo = 0;
 	}
 	
+	// Constructor para FOTO
 	public Publicacion(String titulo, Usuario user, LocalDate fecha, String...hashtag) {
 		this.titulo = titulo;
 		this.user = user;
 		this.fecha = fecha;
 		this.hashtags = new ArrayList<String>();
+		this.comentarios = new ArrayList<Comentario>();
 
 		for(String hastag : hashtags) {
 			this.hashtags.add(hastag);

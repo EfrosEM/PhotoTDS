@@ -110,7 +110,7 @@ public class PublicarFoto {
 					//TODO
 				}
 
-				boolean isAñadida = controlador.registrarFoto(imagen, "Publicacion", comentario,
+				boolean isAñadida = controlador.registrarFoto(imagen, comentario,
 						controlador.getUsuarioActual(), hastags.toArray(new String[0]));
 
 				if (isAñadida) {

@@ -1,5 +1,6 @@
 package controlador;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import dominio.CatalogoFotos;
@@ -87,9 +88,9 @@ public class ControladorPhotoTDS {
 		return true;
 	}
 	
-	public boolean registrarFoto(String ruta, String titulo, String descripcion, Usuario user, String...hashtags) {
-		
-		Foto f = new Foto(ruta, titulo, descripcion, user, hashtags);
+	public boolean registrarFoto(String ruta, String descripcion, Usuario user, String...hashtags) {
+		LocalDate fecha = LocalDate.now();
+		Foto f = new Foto(ruta, descripcion, user, fecha, hashtags);
 		adaptadorFoto.registrarFoto(f);
 		catalogoFotos.addFoto(f);
 		añadirFotoAUsuario(f);
