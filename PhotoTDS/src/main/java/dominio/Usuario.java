@@ -1,5 +1,6 @@
 package dominio;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Usuario {
@@ -18,6 +19,7 @@ public class Usuario {
 	private int seguidos;
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
+	private ArrayList<Notificacion> notificaciones;
 	
 	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento, String descripcion, String fotoPerfil) {
 		this.nombre = nombre;
@@ -34,6 +36,7 @@ public class Usuario {
 		premium = false;
 		seguidores = new ArrayList<Usuario>();
 		publicaciones = new ArrayList<Publicacion>();
+		notificaciones = new ArrayList<Notificacion>();
 	}
 	
 	public String getNombre() {
@@ -128,6 +131,10 @@ public class Usuario {
 		this.seguidos = seguidos;
 	}
 	
+	public List<Notificacion> getNotificaciones() {
+		return new ArrayList<Notificacion>(notificaciones);
+	}
+	
 	public void addSeguidor(Usuario seguidor) {
 		seguidores.add(seguidor);
 	}
@@ -138,6 +145,10 @@ public class Usuario {
 
 	public void addPublicacion(Publicacion p) {
 		publicaciones.add(p);
+	}
+	
+	public void addNotificacion (Notificacion notificacion) {
+		notificaciones.add(notificacion);
 	}
 
 	public boolean esSeguidor(String user) {
@@ -174,6 +185,14 @@ public class Usuario {
 			}
 		}
 		return true;
+	}
+	
+	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
+		LocalDate fecha = LocalDate.now();
+		Foto foto = new Foto(ruta, descripcion, user, fecha, hashtags);
+		publicaciones.add(foto);
+		
+		return foto;
 	}
 
 	

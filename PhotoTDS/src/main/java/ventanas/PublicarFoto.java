@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,8 +110,8 @@ public class PublicarFoto {
 				if (nombreAlbum != null) {
 					//TODO
 				}
-
-				boolean isAñadida = controlador.registrarFoto(imagen, comentario,
+				
+				boolean isAñadida = controlador.registrarFoto(imagen, comentario, LocalDate.now(),
 						controlador.getUsuarioActual(), hastags.toArray(new String[0]));
 
 				if (isAñadida) {

@@ -8,10 +8,16 @@ public class Notificacion {
 	private Publicacion publicacion;
 	private Usuario user;
 	
+	private int codigo;
+	
 	public Notificacion(Usuario user, Publicacion publicacion) {
 		this.user = user;
 		this.publicacion = publicacion;
 		fecha = LocalDate.now();
+	}
+	
+	public Notificacion(LocalDate fecha) {
+		this.fecha = fecha;
 	}
 
 	public LocalDate getFecha() {
@@ -24,6 +30,22 @@ public class Notificacion {
 
 	public Usuario getUser() {
 		return user;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	public void setUser(Usuario u) {
+		this.user = u;
+	}
+	
+	public void setPublicacion(Foto f) {
+		this.publicacion = f;
+	}
+	
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	
 	

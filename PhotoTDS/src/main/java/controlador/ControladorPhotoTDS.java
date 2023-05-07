@@ -2,13 +2,16 @@ package controlador;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import dominio.CatalogoFotos;
 import dominio.CatalogoUsuarios;
 import dominio.Foto;
+import dominio.Notificacion;
 import dominio.Usuario;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorFotoDAO;
+import persistencia.IAdaptadorNotificacionDAO;
 import persistencia.IAdaptadorUsuarioDAO;
 
 public class ControladorPhotoTDS {
@@ -19,6 +22,7 @@ public class ControladorPhotoTDS {
 	private Usuario usuarioActual;
 	private CatalogoFotos catalogoFotos;
 	private IAdaptadorFotoDAO adaptadorFoto;
+	private IAdaptadorNotificacionDAO adaptadorNotificacion;
 	
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -88,25 +92,24 @@ public class ControladorPhotoTDS {
 		return true;
 	}
 	
-	public boolean registrarFoto(String ruta, String descripcion, Usuario user, String...hashtags) {
-		LocalDate fecha = LocalDate.now();
-		Foto f = new Foto(ruta, descripcion, user, fecha, hashtags);
-		adaptadorFoto.registrarFoto(f);
-		catalogoFotos.addFoto(f);
-		añadirFotoAUsuario(f);
-		System.out.println("Foto registrada: " + f.getCodigo());
-		return true;
-	}
-	
-	public void añadirFotoAUsuario(Foto f) {
-		System.out.println("Codigo de usuario actual: " + usuarioActual.getCodigo());
-		Usuario user = adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
-		System.out.println("Usuario: " + user.getUsuario() + " tiene " + user.getPublicaciones().size() + " publicaciones");
-		user.addPublicacion(f);
-		System.out.println("Usuario: " + user.getUsuario() + " tiene " + user.getPublicaciones().size() + " publicaciones");
+	public boolean registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
+		Foto foto = usuarioActual.registrarFoto(ruta, descripcion, fechaSubida, user, hashtags);
+		adaptadorFoto.registrarFoto(foto);
+		catalogoFotos.addFoto(foto);
 		adaptadorUsuario.modificarUsuario(user);
-		Usuario u = adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
-		System.out.println("Funciona?: " + u.getPublicaciones().size());
+		
+		List<Usuario> seguidores = usuarioActual.getSeguidores();
+		Notificacion notificacion = new Notificacion(user, foto);
+		adaptadorNotificacion.registrarNotificacion(notificacion);
+		for (Usuario seguidor : seguidores) {
+			seguidor.addNotificacion(notificacion);
+			adaptadorUsuario.modificarUsuario(seguidor);
+			System.out.println("Usuario: " + seguidor.getUsuario() + "actualizado con las notificaciones:");
+			for (Notificacion n : seguidor.getNotificaciones()) {
+				System.out.println(n.getCodigo());
+			}
+		}
+		return true;
 	}
 	
 	private void inicializarAdaptadores() {
@@ -119,6 +122,7 @@ public class ControladorPhotoTDS {
 		
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorFoto = factoria.getFotoDAO();
+		adaptadorNotificacion = factoria.getNotificacionDAO();
 	}
 	
 	private void inicializarCatalogos() {

@@ -40,6 +40,7 @@ import dominio.Publicacion;
 import dominio.Usuario;
 
 import java.awt.CardLayout;
+import javax.swing.ScrollPaneConstants;
 
 public class PerfilUsuario {
 
@@ -134,12 +135,14 @@ public class PerfilUsuario {
 		});
 		
 		panelPublicaciones = new JPanel();
+		panelPublicaciones.setPreferredSize(new Dimension(575, 360));
 		panelSur.add(panelPublicaciones);
 		panelPublicaciones.setLayout(new CardLayout(0, 0));
 		
 		scrollPane_Fotos = new JScrollPane();
+		scrollPane_Fotos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane_Fotos.setSize(new Dimension(400, 400));
-		scrollPane_Fotos.setPreferredSize(new Dimension(580, 400));
+		scrollPane_Fotos.setPreferredSize(new Dimension(575, 360));
 		panelPublicaciones.add(scrollPane_Fotos, "panelFotos");
 		
 		scrollPane_Albumes = new JScrollPane();
@@ -508,7 +511,7 @@ public class PerfilUsuario {
 		}
 		
 		panelFotos = new JPanel();
-		panelFotos.setPreferredSize(new Dimension(200, 10));
+		panelFotos.setPreferredSize(new Dimension(560, 450));
 		scrollPane_Fotos.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(filas, 3, 1, 1));
 		

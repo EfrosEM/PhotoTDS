@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.Box;
@@ -29,6 +30,7 @@ import persistencia.AdaptadorFotoTDS;
 import dominio.CatalogoFotos;
 import dominio.Comentario;
 import dominio.Foto;
+import dominio.Notificacion;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -95,7 +97,7 @@ public class Inicio {
 				JEditorPane editorPane = new JEditorPane();
 				AñadirFoto af = new AñadirFoto(editorPane, null, controlador.getUsuarioActual(), null);
 				af.frmPhototds.setVisible(true);
-				
+
 			}
 
 		});
@@ -111,7 +113,7 @@ public class Inicio {
 		btnNewButton_1.setMaximumSize(new Dimension(25, 25));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				CrearAlbum dialog = new CrearAlbum(null, controlador.getUsuarioActual());
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
@@ -214,109 +216,105 @@ public class Inicio {
 		});
 		panelNorte.add(btnNewButton_2_1);
 
-		
-
 		Component rigidArea_3_1 = Box.createRigidArea(new Dimension(10, 10));
 		panelNorte.add(rigidArea_3_1);
 
 		JPanel panelCentro = new JPanel();
 		frmPhototds.getContentPane().add(panelCentro, BorderLayout.CENTER);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setSize(new Dimension(570, 400));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setPreferredSize(new Dimension(570, 550));
 		panelCentro.add(scrollPane);
-		
+
 		JPanel panelPublicaciones = new JPanel();
 		panelPublicaciones.setSize(new Dimension(550, 400));
 		panelPublicaciones.setPreferredSize(new Dimension(550, 2000));
 		scrollPane.setViewportView(panelPublicaciones);
 		panelPublicaciones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		// Prueba con fotos solo del usuario, hay que cambiarlo
-		List<Publicacion> fotosUsuario = controlador.getUsuarioActual().getPublicaciones();
-		
-		for (Publicacion foto : fotosUsuario) {
-			if (foto instanceof Foto) {
-				JPanel panelPublicacion = new JPanel();
-				panelPublicacion.setBackground(Color.WHITE);
-				panelPublicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
-				panelPublicacion.setPreferredSize(new Dimension(555, 80));
-				panelPublicacion.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-				
-				JPanel panelFoto = new JPanel();
-				panelFoto.setPreferredSize(new Dimension(170, 70));
-				panelPublicacion.add(panelFoto);
-				
-				JLabel lblFoto = new JLabel("");
-				lblFoto.setAlignmentY(Component.TOP_ALIGNMENT);
-				lblFoto.setSize(new Dimension(5, 5));
-				lblFoto.setBorder(new LineBorder(new Color(0, 0, 0)));
+		List<Notificacion> notificaciones = controlador.getUsuarioActual().getNotificaciones();
+		Collections.reverse(notificaciones);
 
-				lblFoto.setIcon(redimensionarImagen(((Foto) foto).getRuta(), 160, 60));
-				panelFoto.add(lblFoto);
-				
-				JPanel panelInteract = new JPanel();
-				panelInteract.setBackground(Color.WHITE);
-				FlowLayout flowLayout = (FlowLayout) panelInteract.getLayout();
-				flowLayout.setVgap(10);
-				flowLayout.setAlignment(FlowLayout.LEFT);
-				panelInteract.setPreferredSize(new Dimension(240, 70));
-				panelPublicacion.add(panelInteract);
-				
-				JButton btnLikes = new JButton("Like");
-				panelInteract.add(btnLikes);
-				btnLikes.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						foto.addLike();
-						adaptadorFoto.modificarFoto((Foto)foto);
-						lblLikes.setText(String.valueOf(foto.getLikes()));
-					}
-				});
-				
-				JButton btnComentario = new JButton("Comentario");
-				panelInteract.add(btnComentario);
-				btnComentario.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						com = JOptionPane.showInputDialog("Escribe un comentario");
-						Comentario comentario = new Comentario(com, controlador.getUsuarioActual());
-						foto.addComentario(comentario);
-					}
-				});
-				
-				lblLikes = new JLabel(String.valueOf(foto.getLikes()));
-				panelInteract.add(lblLikes);
-				
-				JLabel lblMeGusta = new JLabel("Me gusta");
-				lblMeGusta.setFont(new Font("Tahoma", Font.ITALIC, 11));
-				panelInteract.add(lblMeGusta);
-				
-				JLabel lblFotoUsuario = new JLabel("");
-				lblFotoUsuario.setAlignmentY(Component.TOP_ALIGNMENT);
-				lblFotoUsuario.setSize(new Dimension(5, 5));
-				lblFotoUsuario.setBorder(new LineBorder(new Color(0, 0, 0)));
+		System.out.println("Notificaciones: " + notificaciones.size());
+		for (Notificacion notificacion : notificaciones) {
+			Foto foto = (Foto) notificacion.getPublicacion();
+			JPanel panelPublicacion = new JPanel();
+			panelPublicacion.setBackground(Color.WHITE);
+			panelPublicacion.setBorder(new LineBorder(new Color(0, 0, 0)));
+			panelPublicacion.setPreferredSize(new Dimension(555, 80));
+			panelPublicacion.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-				lblFotoUsuario.setIcon(redimensionarImagen(controlador.getUsuarioActual().getFotoPerfil(), 20, 20));
-				panelInteract.add(lblFotoUsuario);
-				
-				JLabel lblNombreUsuario = new JLabel(controlador.getUsuarioActual().getUsuario());
-				panelInteract.add(lblNombreUsuario);
-				
-				panelPublicaciones.add(panelPublicacion);
-			}
+			JPanel panelFoto = new JPanel();
+			panelFoto.setPreferredSize(new Dimension(170, 70));
+			panelPublicacion.add(panelFoto);
+
+			JLabel lblFoto = new JLabel("");
+			lblFoto.setAlignmentY(Component.TOP_ALIGNMENT);
+			lblFoto.setSize(new Dimension(5, 5));
+			lblFoto.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+			lblFoto.setIcon(redimensionarImagen(((Foto) foto).getRuta(), 160, 60));
+			panelFoto.add(lblFoto);
+
+			JPanel panelInteract = new JPanel();
+			panelInteract.setBackground(Color.WHITE);
+			FlowLayout flowLayout = (FlowLayout) panelInteract.getLayout();
+			flowLayout.setVgap(10);
+			flowLayout.setAlignment(FlowLayout.LEFT);
+			panelInteract.setPreferredSize(new Dimension(240, 70));
+			panelPublicacion.add(panelInteract);
+
+			lblLikes = new JLabel(String.valueOf(foto.getLikes()));
+
+			JButton btnLikes = new JButton("Like");
+			panelInteract.add(btnLikes);
+			btnLikes.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					foto.addLike();
+					adaptadorFoto.modificarFoto((Foto) foto);
+					lblLikes.setText(String.valueOf(foto.getLikes()));
+				}
+			});
+
 			
+			JButton btnComentario = new JButton("Comentario");
+			panelInteract.add(btnComentario);
+			btnComentario.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					com = JOptionPane.showInputDialog("Escribe un comentario");
+					Comentario comentario = new Comentario(com, controlador.getUsuarioActual());
+					foto.addComentario(comentario);
+				}
+			});
+
+			panelInteract.add(lblLikes);
+			
+			JLabel lblMeGusta = new JLabel("Me gusta");
+			lblMeGusta.setFont(new Font("Tahoma", Font.ITALIC, 11));
+			panelInteract.add(lblMeGusta);
+
+			JLabel lblFotoUsuario = new JLabel("");
+			lblFotoUsuario.setAlignmentY(Component.TOP_ALIGNMENT);
+			lblFotoUsuario.setSize(new Dimension(5, 5));
+			lblFotoUsuario.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+			lblFotoUsuario.setIcon(redimensionarImagen(notificacion.getUser().getFotoPerfil(), 20, 20));
+			panelInteract.add(lblFotoUsuario);
+
+			JLabel lblNombreUsuario = new JLabel(notificacion.getUser().getUsuario());
+			panelInteract.add(lblNombreUsuario);
+
+			panelPublicaciones.add(panelPublicacion);
 		}
-		
-		
-		
-		
 	}
-	
+
 	private ImageIcon redimensionarImagen(String imagen, int x, int y) {
 		ImageIcon icon = new ImageIcon(imagen);
 		Image img = icon.getImage();

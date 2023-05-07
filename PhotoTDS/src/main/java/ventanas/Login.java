@@ -152,7 +152,7 @@ public class Login {
 		
 		txtNombreDeUsuario = new JTextField();
 		txtNombreDeUsuario.setForeground(Color.BLACK);
-		txtNombreDeUsuario.setText("Nombre de usuario");
+		txtNombreDeUsuario.setText("cr7");
 		txtNombreDeUsuario.setMaximumSize(new Dimension(2147483647, 70));
 		panel_2.add(txtNombreDeUsuario);
 		txtNombreDeUsuario.setColumns(10);
@@ -171,7 +171,7 @@ public class Login {
 		panel_3.add(rigidArea_6);
 		
 		txtPassword = new JPasswordField();
-		txtPassword.setText("Contraseña");
+		txtPassword.setText("123");
 		txtPassword.setForeground(Color.BLACK);
 		txtPassword.setMaximumSize(new Dimension(2147483647, 70));
 		panel_3.add(txtPassword);
