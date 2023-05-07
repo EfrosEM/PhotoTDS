@@ -15,7 +15,7 @@ import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 
-public class AdaptadorComentarioTDS {
+public class AdaptadorComentarioTDS implements IAdaptadorComentarioDAO{
 
 	private static ServicioPersistencia servPersistencia;
 	private static AdaptadorComentarioTDS unicaInstancia;

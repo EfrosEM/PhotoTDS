@@ -12,6 +12,7 @@ import beans.Entidad;
 import beans.Propiedad;
 import dominio.Album;
 import dominio.Foto;
+import dominio.Notificacion;
 import dominio.Publicacion;
 import dominio.Usuario;
 import tds.driver.FactoriaServicioPersistencia;
@@ -64,6 +65,11 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			}
 		}
 		
+		AdaptadorNotificacionTDS adaptadorNotificacion = AdaptadorNotificacionTDS.getUnicaInstancia();
+		for (Notificacion notificacion : u.getNotificaciones()) {
+			adaptadorNotificacion.registrarNotificacion(notificacion);
+		}
+		
 		eUsuario = new Entidad();
 		eUsuario.setNombre("usuario");
 		eUsuario.setPropiedades(
@@ -80,6 +86,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 						new Propiedad("seguidos", String.valueOf(u.getSeguidos())),
 						new Propiedad("seguidores", obtenerCodigosSeguidores(u.getSeguidores())),
 						new Propiedad("publicaciones", obtenerCodigosPublicaciones(u.getPublicaciones())),
+						new Propiedad("notificaciones", obtenerCodigosNotificaciones(u.getNotificaciones())),
 						new Propiedad("codigo", String.valueOf(u.getCodigo()))
 				))
 		);
@@ -136,6 +143,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 			} else if (prop.getNombre().equals("publicaciones")) {
 				prop.setValor(obtenerCodigosPublicaciones(u.getPublicaciones()));
 				
+			} else if (prop.getNombre().equals("notificaciones")) {
+				prop.setValor(obtenerCodigosNotificaciones(u.getNotificaciones()));
+				
 			} else if (prop.getNombre().equals("codigo")) {
 				prop.setValor(String.valueOf(u.getCodigo()));
 				
@@ -164,6 +174,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		int seguidos;
 		List<Usuario> seguidores = null;
 		List<Publicacion> publicaciones = null;
+		List<Notificacion> notificaciones = null;
 		
 		
 		eUsuario = servPersistencia.recuperarEntidad(codigo);
@@ -202,6 +213,12 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		for (Publicacion publicacion : publicaciones) {
 			System.out.println("Publicacion: " + publicacion.getCodigo());
 			u.addPublicacion(publicacion);
+		}
+		
+		notificaciones = obtenerNotificacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "notificaciones"));
+		System.out.println("Numero de notificaciones: " + notificaciones.size());
+		for (Notificacion notificacion : notificaciones) {
+			u.addNotificacion(notificacion);
 		}
 		
 		return u;
@@ -271,6 +288,33 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		return publicaciones;
+	}
+	
+	private String obtenerCodigosNotificaciones(List<Notificacion> notificaciones) {
+		String codigosNotificaciones = "";
+		
+		for (Notificacion notificacion : notificaciones) {
+			codigosNotificaciones += notificacion.getCodigo() + " ";
+		}
+		
+		return codigosNotificaciones.trim();
+	}
+	
+	private List<Notificacion> obtenerNotificacionesDesdeCodigo(String codigoNotificaciones) {
+		List<Notificacion> notificaciones = new ArrayList<>();
+		
+		if (codigoNotificaciones == null || codigoNotificaciones.equals("")) {
+			return notificaciones;
+		}
+		
+		StringTokenizer strTok = new StringTokenizer(codigoNotificaciones, " ");
+		AdaptadorNotificacionTDS adaptadorNotificacion = AdaptadorNotificacionTDS.getUnicaInstancia();
+		
+		while (strTok.hasMoreTokens()) {
+			notificaciones.add(adaptadorNotificacion.recuperarNotificacion(Integer.valueOf((String) strTok.nextElement())));
+		}
+		
+		return notificaciones;
 	}
 	
 }
