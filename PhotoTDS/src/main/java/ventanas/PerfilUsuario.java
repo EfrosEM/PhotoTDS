@@ -194,7 +194,7 @@ public class PerfilUsuario {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				af = new AñadirFoto(editorPane, frmPhototds, usuario, null);
+				af = new AñadirFoto(editorPane, frmPhototds, usuario);
 				af.frmPhototds.setVisible(true);
 				
 			}
@@ -564,7 +564,7 @@ public class PerfilUsuario {
 				if (p instanceof Album) {
 					BufferedImage image = null;
 					try {
-						image = ImageIO.read(new File(((Foto) p).getRuta()));
+						image = ImageIO.read(new File(((Album) p).getFotoAlbum().getRuta()));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

@@ -130,7 +130,7 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		
 		ruta = servPersistencia.recuperarPropiedadEntidad(eFoto, "ruta");
 		descripcion = servPersistencia.recuperarPropiedadEntidad(eFoto, "descripcion");
-		likes = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eFoto, "likes"));
+		likes = Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eFoto, "likes"));
 		
 		try {
 			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eFoto, "fecha"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));

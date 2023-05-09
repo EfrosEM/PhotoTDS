@@ -188,11 +188,17 @@ public class Usuario {
 	}
 	
 	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
-		LocalDate fecha = LocalDate.now();
-		Foto foto = new Foto(ruta, descripcion, user, fecha, hashtags);
+		Foto foto = new Foto(ruta, descripcion, user, fechaSubida, hashtags);
 		publicaciones.add(foto);
 		
 		return foto;
+	}
+	
+	public Album registrarAlbum(String titulo, Foto foto, Usuario user, LocalDate fecha, String...hashtags) {
+		Album album = new Album(titulo, foto, user, fecha, hashtags);
+		publicaciones.add(album);
+		
+		return album;
 	}
 
 	

@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import dominio.Album;
 import dominio.CatalogoFotos;
 import dominio.CatalogoUsuarios;
 import dominio.Foto;
 import dominio.Notificacion;
 import dominio.Usuario;
 import persistencia.FactoriaDAO;
+import persistencia.IAdaptadorAlbumDAO;
 import persistencia.IAdaptadorFotoDAO;
 import persistencia.IAdaptadorNotificacionDAO;
 import persistencia.IAdaptadorUsuarioDAO;
@@ -23,6 +25,7 @@ public class ControladorPhotoTDS {
 	private CatalogoFotos catalogoFotos;
 	private IAdaptadorFotoDAO adaptadorFoto;
 	private IAdaptadorNotificacionDAO adaptadorNotificacion;
+	private IAdaptadorAlbumDAO adaptadorAlbum;
 	
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -92,7 +95,7 @@ public class ControladorPhotoTDS {
 		return true;
 	}
 	
-	public boolean registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
+	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
 		Foto foto = usuarioActual.registrarFoto(ruta, descripcion, fechaSubida, user, hashtags);
 		adaptadorFoto.registrarFoto(foto);
 		catalogoFotos.addFoto(foto);
@@ -109,6 +112,14 @@ public class ControladorPhotoTDS {
 				System.out.println(n.getCodigo());
 			}
 		}
+		return foto;
+	}
+	
+	public boolean registrarAlbum(String titulo, Foto foto, Usuario user, LocalDate fecha, String...hashtags) {
+		Album album = usuarioActual.registrarAlbum(titulo, foto, user, fecha, hashtags);
+		adaptadorAlbum.registrarAlbum(album);
+		adaptadorUsuario.modificarUsuario(user);
+		
 		return true;
 	}
 	
@@ -123,6 +134,7 @@ public class ControladorPhotoTDS {
 		adaptadorUsuario = factoria.getUsuarioDAO();
 		adaptadorFoto = factoria.getFotoDAO();
 		adaptadorNotificacion = factoria.getNotificacionDAO();
+		adaptadorAlbum = factoria.getAlbumDAO();
 	}
 	
 	private void inicializarCatalogos() {

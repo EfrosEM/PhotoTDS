@@ -117,7 +117,7 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 		titulo = servPersistencia.recuperarPropiedadEntidad(eAlbum, "titulo");
 		
 		try {
-			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eAlbum, "fecha"));
+			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eAlbum, "fecha"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

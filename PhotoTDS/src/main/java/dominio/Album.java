@@ -8,9 +8,10 @@ public class Album extends Publicacion{
 
 	private ArrayList<Foto> fotos;
 
-	public Album(String titulo, Usuario user, LocalDate fecha, String...hashtag) {
+	public Album(String titulo, Foto foto, Usuario user, LocalDate fecha, String...hashtag) {
 		super(titulo, user, fecha, hashtag);
 		this.fotos = new ArrayList<Foto>();
+		this.fotos.add(foto);
 	}
 	
 	public Album(String titulo, LocalDate fecha, String...hashtag) {
@@ -30,6 +31,10 @@ public class Album extends Publicacion{
 		for (Foto foto : fotos) {
 			foto.addLike();
 		}
+	}
+	
+	public Foto getFotoAlbum() {
+		return this.fotos.get(0);
 	}
 
 

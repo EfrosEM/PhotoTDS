@@ -281,10 +281,17 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		StringTokenizer strTok = new StringTokenizer(codigoPublicaciones, " ");
-		AdaptadorFotoTDS adaptadorPublicacion = AdaptadorFotoTDS.getUnicaInstancia();
+		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
+		AdaptadorAlbumTDS adaptadorAlbum = AdaptadorAlbumTDS.getUnicaInstancia();
 		
 		while (strTok.hasMoreTokens()) {
-			publicaciones.add(adaptadorPublicacion.recuperarFoto(Integer.valueOf((String) strTok.nextElement())));
+			String token = (String) strTok.nextElement();
+			try {
+				publicaciones.add(adaptadorFoto.recuperarFoto(Integer.valueOf(token)));
+			} catch (NumberFormatException e) {
+				publicaciones.add(adaptadorAlbum.recuperarAlbum(Integer.valueOf(token)));
+			}
+			
 		}
 		
 		return publicaciones;

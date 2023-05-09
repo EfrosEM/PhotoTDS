@@ -23,7 +23,7 @@ public class AñadirFoto {
 	protected JFrame frmPhototds;
 	private JFrame perfil;
 	private Usuario user;
-	private String nombreAlbum;
+	private String nombreAlbum = null;
 
 	/**
 	 * Launch the application.
@@ -33,6 +33,14 @@ public class AñadirFoto {
 	 * Create the frame.
 	 * @param usuario 
 	 */
+	// Constructor para añadir fotos
+	public AñadirFoto(JEditorPane editorPane, JFrame perfil, Usuario usuario) {
+		this.perfil = perfil;
+		this.user = usuario;
+		initialize(editorPane);
+	}
+	
+	// Constructor para añadir la primera foto de un Album
 	public AñadirFoto(JEditorPane editorPane, JFrame perfil, Usuario usuario, String nombreAlbum) {
 		this.perfil = perfil;
 		this.user = usuario;

@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Foto;
 import dominio.Usuario;
 
 public class PublicarFoto {
@@ -36,12 +37,15 @@ public class PublicarFoto {
 	 */
 	/**
 	 * Create the frame.
-	 * @param user 
+	 * 
+	 * @param user
 	 */
+
 	public PublicarFoto(String imagen, JFrame perfil, Usuario user, String nombreAlbum) {
 		this.imagen = imagen;
 		this.perfil = perfil;
 		this.user = user;
+		this.nombreAlbum = nombreAlbum;
 		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
@@ -98,31 +102,31 @@ public class PublicarFoto {
 				String comentario = textArea.getText();
 				System.out.println(comentario);
 
-				ArrayList<String> hastags = new ArrayList<>();
+				ArrayList<String> hashtags = new ArrayList<>();
 				Pattern pattern = Pattern.compile("#\\w+");
 				Matcher matcher = pattern.matcher(comentario);
 
 				while (matcher.find()) {
-					hastags.add(matcher.group());
+					hashtags.add(matcher.group());
 					System.out.println("Hashtag encontrado: " + matcher.group());
 				}
-				
+
+				Foto foto = controlador.registrarFoto(imagen, comentario, LocalDate.now(),
+						controlador.getUsuarioActual(), hashtags.toArray(new String[0]));
+
 				if (nombreAlbum != null) {
-					//TODO
+					controlador.registrarAlbum(nombreAlbum, foto, user, LocalDate.now(),
+							hashtags.toArray(new String[0]));
 				}
-				
-				boolean isAñadida = controlador.registrarFoto(imagen, comentario, LocalDate.now(),
-						controlador.getUsuarioActual(), hastags.toArray(new String[0]));
 
-				if (isAñadida) {
-					publicarFoto.dispose();
+				publicarFoto.dispose();
 
-					if (perfil != null && user.getUsuario().equals(controlador.getUsuarioActual().getUsuario())) {
-						perfil.dispose();
-						PerfilUsuario pu = new PerfilUsuario(controlador.getUsuarioActual());
-						pu.frmPhototds.setVisible(true);
-					}
+				if (perfil != null && user.getUsuario().equals(controlador.getUsuarioActual().getUsuario())) {
+					perfil.dispose();
+					PerfilUsuario pu = new PerfilUsuario(controlador.getUsuarioActual());
+					pu.frmPhototds.setVisible(true);
 				}
+
 			}
 		});
 		panel_1.add(btnNewButton);
