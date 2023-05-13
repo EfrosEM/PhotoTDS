@@ -59,7 +59,7 @@ public abstract class Publicacion {
 	}
 	
 	// Constructor para FOTO
-	public Publicacion(String titulo, Usuario user, LocalDate fecha, String...hashtag) {
+	public Publicacion(String titulo, Usuario user, LocalDate fecha, String...hashtags) {
 		this.titulo = titulo;
 		this.user = user;
 		this.fecha = fecha;

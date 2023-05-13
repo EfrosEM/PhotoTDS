@@ -6,8 +6,8 @@ public class Foto extends Publicacion{
 
 	private String ruta;
 	
-	public Foto(String ruta, String descripcion, Usuario user, LocalDate fechaSubida, String...hashtag) {
-		super(descripcion, user, fechaSubida, hashtag);
+	public Foto(String ruta, String descripcion, Usuario user, LocalDate fechaSubida, String...hashtags) {
+		super(descripcion, user, fechaSubida, hashtags);
 		this.ruta = ruta;	
 	}
 

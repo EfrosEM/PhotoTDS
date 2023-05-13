@@ -6,7 +6,7 @@ import java.util.*;
 public class Usuario {
 
 	private int codigo;
-	
+
 	private String nombre;
 	private String apellidos;
 	private String usuario;
@@ -20,8 +20,9 @@ public class Usuario {
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	private ArrayList<Notificacion> notificaciones;
-	
-	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento, String descripcion, String fotoPerfil) {
+
+	public Usuario(String nombre, String usuario, String apellidos, String email, String password, Date nacimiento,
+			String descripcion, String fotoPerfil) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.usuario = usuario;
@@ -32,33 +33,33 @@ public class Usuario {
 		this.fotoPerfil = fotoPerfil;
 		this.codigo = 0;
 		this.seguidos = 0;
-		
+
 		premium = false;
 		seguidores = new ArrayList<Usuario>();
 		publicaciones = new ArrayList<Publicacion>();
 		notificaciones = new ArrayList<Notificacion>();
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public String getApellidos() {
 		return apellidos;
 	}
-	
+
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-	
+
 	public String getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(String user) {
 		this.usuario = user;
 	}
@@ -66,23 +67,23 @@ public class Usuario {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Date getNacimiento() {
 		return nacimiento;
 	}
-	
+
 	public void setNacimiento(Date fecha) {
 		this.nacimiento = fecha;
 	}
@@ -90,7 +91,7 @@ public class Usuario {
 	public String getDescripcion() {
 		return descripcion;
 	}
-	
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
@@ -98,15 +99,15 @@ public class Usuario {
 	public String getFotoPerfil() {
 		return fotoPerfil;
 	}
-	
+
 	public void setFotoPerfil(String foto) {
 		this.fotoPerfil = foto;
 	}
-	
+
 	public List<Usuario> getSeguidores() {
 		return new ArrayList<Usuario>(seguidores);
 	}
-	
+
 	public List<Publicacion> getPublicaciones() {
 		return new ArrayList<Publicacion>(publicaciones);
 	}
@@ -114,31 +115,31 @@ public class Usuario {
 	public Boolean isPremium() {
 		return premium;
 	}
-	
+
 	public int getCodigo() {
 		return codigo;
 	}
-	
+
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	
+
 	public void setPremium(Boolean prem) {
 		this.premium = prem;
 	}
-	
+
 	public void setSeguidos(int seguidos) {
 		this.seguidos = seguidos;
 	}
-	
+
 	public List<Notificacion> getNotificaciones() {
 		return new ArrayList<Notificacion>(notificaciones);
 	}
-	
+
 	public void addSeguidor(Usuario seguidor) {
 		seguidores.add(seguidor);
 	}
-	
+
 	public void removeSeguidor(Usuario seguidor) {
 		seguidores.remove(seguidor);
 	}
@@ -146,37 +147,37 @@ public class Usuario {
 	public void addPublicacion(Publicacion p) {
 		publicaciones.add(p);
 	}
-	
-	public void addNotificacion (Notificacion notificacion) {
+
+	public void addNotificacion(Notificacion notificacion) {
 		notificaciones.add(notificacion);
 	}
 
 	public boolean esSeguidor(String user) {
-		
-		for (Usuario seguidor: seguidores) {
+
+		for (Usuario seguidor : seguidores) {
 			if (seguidor.getUsuario().equals(user)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public void addSeguidos() {
 		seguidos++;
 	}
-	
+
 	public void removeSeguidos() {
-		if(seguidos>0)
+		if (seguidos > 0)
 			seguidos--;
 	}
 
 	public int getSeguidos() {
 		return seguidos;
 	}
-	
+
 	public boolean existsAlbum(String nombre) {
-		
+
 		for (Publicacion publicacion : publicaciones) {
 			if (publicacion instanceof Album) {
 				if (publicacion.getTitulo().equals(nombre)) {
@@ -186,21 +187,42 @@ public class Usuario {
 		}
 		return false;
 	}
-	
-	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
+
+	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user,
+			String... hashtags) {
 		Foto foto = new Foto(ruta, descripcion, user, fechaSubida, hashtags);
 		publicaciones.add(foto);
-		
+
 		return foto;
 	}
-	
-	public Album registrarAlbum(String titulo, Foto foto, Usuario user, LocalDate fecha, String...hashtags) {
+
+	public Album registrarAlbum(String titulo, Foto foto, Usuario user, LocalDate fecha, String... hashtags) {
 		Album album = new Album(titulo, foto, user, fecha, hashtags);
 		publicaciones.add(album);
-		
+
 		return album;
 	}
 
-	
+	public List<Foto> getFotos() {
+		ArrayList<Foto> fotos = new ArrayList<Foto>();
+		for (Publicacion p : getPublicaciones()) {
+			if (p instanceof Foto) {
+				fotos.add((Foto) p);
+			}
+		}
+
+		return fotos;
+	}
+
+	public List<Album> getAlbumes() {
+		ArrayList<Album> albumes = new ArrayList<Album>();
+		for (Publicacion p : getPublicaciones()) {
+			if (p instanceof Album) {
+				albumes.add((Album) p);
+			}
+		}
+		
+		return albumes;
+	}
 
 }

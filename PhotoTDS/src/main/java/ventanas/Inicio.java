@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -160,8 +161,23 @@ public class Inicio {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BusquedaUsuarios bu = new BusquedaUsuarios(textField.getText(), frmPhototds);
-				bu.busquedaUsuarios.setVisible(true);
+				String busqueda = textField.getText();
+				
+				if (busqueda.contains("#")) {
+					String[] busqHashtag = busqueda.split(" ");
+					ArrayList<String> hashtags = new ArrayList<String>();
+					
+					for (String hashtag : busqHashtag) {
+						System.out.println("Hashtag: " + hashtag);
+						hashtags.add(hashtag);
+					}
+					BusquedaHashtags bH = new BusquedaHashtags(hashtags, frmPhototds);
+					bH.busquedaHashtags.setVisible(true);
+				} else {
+					BusquedaUsuarios bu = new BusquedaUsuarios(busqueda, frmPhototds);
+					bu.busquedaUsuarios.setVisible(true);
+				}
+				
 			}
 		});
 
@@ -231,7 +247,6 @@ public class Inicio {
 		scrollPane.setViewportView(panelPublicaciones);
 		panelPublicaciones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		// Prueba con fotos solo del usuario, hay que cambiarlo
 		List<Notificacion> notificaciones = controlador.getUsuarioActual().getNotificaciones();
 		Collections.reverse(notificaciones);
 

@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -37,12 +39,10 @@ import javax.swing.border.TitledBorder;
 import controlador.ControladorPhotoTDS;
 import dominio.Album;
 import dominio.Foto;
-import dominio.Publicacion;
 import dominio.Usuario;
 
 import java.awt.CardLayout;
 import javax.swing.ScrollPaneConstants;
-import java.awt.GridBagLayout;
 
 public class PerfilUsuario {
 
@@ -477,25 +477,11 @@ public class PerfilUsuario {
 	}
 
 	private int getNumFotos() {
-		int numFotos = 0;
-		for (Publicacion p : usuario.getPublicaciones()) {
-			if (p instanceof Foto) {
-				numFotos++;
-			}
-		}
-
-		return numFotos;
+		return usuario.getFotos().size();
 	}
 
 	private int getNumAlbumes() {
-		int numAlbumes = 0;
-		for (Publicacion p : usuario.getPublicaciones()) {
-			if (p instanceof Album) {
-				numAlbumes++;
-			}
-		}
-
-		return numAlbumes;
+		return usuario.getAlbumes().size();
 	}
 
 	private void cargarFotos() {
@@ -513,24 +499,25 @@ public class PerfilUsuario {
 		scrollPane_Fotos.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(filas, 3, 1, 1));
 
+		List<Foto> fotos = usuario.getFotos();
+		Collections.reverse(fotos);
+		
 		System.out.println("Fotos: " + numFotos);
 		if (numFotos > 0) {
-			for (Publicacion p : usuario.getPublicaciones()) {
-				if (p instanceof Foto) {
-					BufferedImage image = null;
-					try {
-						image = ImageIO.read(new File(((Foto) p).getRuta()));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
-					ImageIcon icon = new ImageIcon(scaledImage);
-					JLabel label = new JLabel(icon);
-					panelFotos.add(label);
-
-					label.addMouseListener(new PopMenuFotoListener());
+			for (Foto f : fotos) {
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(new File(f.getRuta()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+				Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+				ImageIcon icon = new ImageIcon(scaledImage);
+				JLabel label = new JLabel(icon);
+				panelFotos.add(label);
+
+				label.addMouseListener(new PopMenuFotoListener());
 			}
 		}
 
@@ -555,45 +542,44 @@ public class PerfilUsuario {
 		scrollPane_Albumes.setViewportView(panelAlbumes);
 		panelAlbumes.setLayout(new GridLayout(0, 4, 0, 0));
 
+		List<Album> albumes = usuario.getAlbumes();
+		Collections.reverse(albumes);
 		System.out.println("Albumes: " + numAlbumes);
 		if (numAlbumes > 0) {
-			for (Publicacion p : usuario.getPublicaciones()) {
-				if (p instanceof Album) {
-					BufferedImage image = null;
-					try {
-						image = ImageIO.read(new File(((Album) p).getFotoAlbum().getRuta()));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
-					ImageIcon icon = new ImageIcon(scaledImage);
-					JButton botonAlbum = new JButton();
-					botonAlbum.setSize(170, 170);
-					botonAlbum.setContentAreaFilled(false);
-					botonAlbum.setOpaque(false);
-					botonAlbum.setBorder(null);
-					botonAlbum.setBorderPainted(false);
-					botonAlbum.setIcon(icon);
-					botonAlbum.addActionListener(new ActionListener() {
-
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							//frmPhototds.dispose();
-							MostrarFotosAlbum album = new MostrarFotosAlbum((Album)p);
-							album.albumTDS.setVisible(true);
-						}
-					});
-					GridBagConstraints gbc = new GridBagConstraints();
-					gbc.gridx = 0;
-					gbc.gridy = 0;
-					gbc.fill = GridBagConstraints.BOTH;
-					gbc.weightx = 1.0;
-					gbc.weighty = 1.0;
-					panelAlbumes.add(botonAlbum, gbc
-							);
-					// label.addMouseListener(new PopMenuFotoListener());
+			for (Album a : albumes) {
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(new File(a.getFotoAlbum().getRuta()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+				Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+				ImageIcon icon = new ImageIcon(scaledImage);
+				JButton botonAlbum = new JButton();
+				botonAlbum.setSize(170, 170);
+				botonAlbum.setContentAreaFilled(false);
+				botonAlbum.setOpaque(false);
+				botonAlbum.setBorder(null);
+				botonAlbum.setBorderPainted(false);
+				botonAlbum.setIcon(icon);
+				botonAlbum.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// frmPhototds.dispose();
+						MostrarFotosAlbum album = new MostrarFotosAlbum(a);
+						album.albumTDS.setVisible(true);
+					}
+				});
+				GridBagConstraints gbc = new GridBagConstraints();
+				gbc.gridx = 0;
+				gbc.gridy = 0;
+				gbc.fill = GridBagConstraints.BOTH;
+				gbc.weightx = 1.0;
+				gbc.weighty = 1.0;
+				panelAlbumes.add(botonAlbum, gbc);
+				// label.addMouseListener(new PopMenuFotoListener());
 			}
 		}
 
