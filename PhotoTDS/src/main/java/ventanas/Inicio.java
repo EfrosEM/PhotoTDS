@@ -25,14 +25,11 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import controlador.ControladorPhotoTDS;
-import dominio.Publicacion;
 import persistencia.AdaptadorFotoTDS;
-import dominio.CatalogoFotos;
 import dominio.Comentario;
 import dominio.Foto;
 import dominio.Notificacion;
 
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
