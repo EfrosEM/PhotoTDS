@@ -84,8 +84,8 @@ public class CrearAlbum extends JDialog {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						String nombreAlbum = textField_1.getText();
-						Boolean valido = controlador.getUsuarioActual().comprobarNombreAlbum(nombreAlbum);
-						if (valido){
+						Boolean exists = controlador.getUsuarioActual().existsAlbum(nombreAlbum);
+						if (!exists){
 							JEditorPane editorPane = new JEditorPane();
 							AñadirFoto af = new AñadirFoto(editorPane, perfil, usuario, nombreAlbum);
 							af.frmPhototds.setVisible(true);

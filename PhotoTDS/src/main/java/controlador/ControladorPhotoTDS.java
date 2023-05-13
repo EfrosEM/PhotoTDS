@@ -9,6 +9,7 @@ import dominio.CatalogoFotos;
 import dominio.CatalogoUsuarios;
 import dominio.Foto;
 import dominio.Notificacion;
+import dominio.Publicacion;
 import dominio.Usuario;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorAlbumDAO;
@@ -144,6 +145,23 @@ public class ControladorPhotoTDS {
 
 	public Usuario getUsuarioActual() {
 		return adaptadorUsuario.recuperarUsuario(usuarioActual.getCodigo());
+	}
+	
+	public Album getAlbum(Usuario user, String nombreAlbum) {
+		for (Publicacion p : user.getPublicaciones()) {
+			if (p instanceof Album) {
+				if (p.getTitulo().equals(nombreAlbum)) {
+					return (Album)p;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public void addPhotoToAlbum(Foto foto, Album album) {
+		album.addFoto(foto);
+		adaptadorAlbum.modificarAlbum(album);
 	}
 
 }

@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controlador.ControladorPhotoTDS;
+import dominio.Album;
 import dominio.Foto;
 import dominio.Usuario;
 
@@ -111,12 +112,18 @@ public class PublicarFoto {
 					System.out.println("Hashtag encontrado: " + matcher.group());
 				}
 
-				Foto foto = controlador.registrarFoto(imagen, comentario, LocalDate.now(),
-						controlador.getUsuarioActual(), hashtags.toArray(new String[0]));
+				Foto foto = controlador.registrarFoto(imagen, comentario, LocalDate.now(), user,
+						hashtags.toArray(new String[0]));
 
 				if (nombreAlbum != null) {
-					controlador.registrarAlbum(nombreAlbum, foto, user, LocalDate.now(),
-							hashtags.toArray(new String[0]));
+					if (user.existsAlbum(nombreAlbum)) {
+						Album album = controlador.getAlbum(user, nombreAlbum);
+						controlador.addPhotoToAlbum(foto, album);
+					} else {
+						controlador.registrarAlbum(nombreAlbum, foto, user, LocalDate.now(),
+								hashtags.toArray(new String[0]));
+					}
+
 				}
 
 				publicarFoto.dispose();

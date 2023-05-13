@@ -175,16 +175,16 @@ public class Usuario {
 		return seguidos;
 	}
 	
-	public boolean comprobarNombreAlbum(String nombre) {
+	public boolean existsAlbum(String nombre) {
 		
 		for (Publicacion publicacion : publicaciones) {
 			if (publicacion instanceof Album) {
 				if (publicacion.getTitulo().equals(nombre)) {
-					return false;
+					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public Foto registrarFoto(String ruta, String descripcion, LocalDate fechaSubida, Usuario user, String...hashtags) {
