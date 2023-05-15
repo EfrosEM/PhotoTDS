@@ -551,7 +551,6 @@ public class PerfilUsuario {
 				try {
 					image = ImageIO.read(new File(a.getFotoAlbum().getRuta()));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);

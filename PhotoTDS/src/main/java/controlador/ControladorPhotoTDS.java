@@ -164,4 +164,12 @@ public class ControladorPhotoTDS {
 		adaptadorAlbum.modificarAlbum(album);
 	}
 
+	public void eliminarAlbum(Album album) {
+		for (Foto foto : album.getFotos()) {
+			adaptadorFoto.borrarFoto(foto);
+		}
+		adaptadorAlbum.borrarAlbum(album);
+		
+	}
+
 }

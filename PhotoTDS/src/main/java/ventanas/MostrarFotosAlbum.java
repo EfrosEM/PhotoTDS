@@ -22,6 +22,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 
 public class MostrarFotosAlbum {
@@ -29,6 +30,7 @@ public class MostrarFotosAlbum {
 	protected JFrame albumTDS;
 	private Album album;
 	private JPanel panelFotos;
+	
 
 	/**
 	 * Create the application.
@@ -74,8 +76,17 @@ public class MostrarFotosAlbum {
 			}
 		});
 
-		JButton btnDeletePhoto = new JButton("Delete");
+		JButton btnDeletePhoto = new JButton("Eliminar");
 		albumTDS.getContentPane().add(btnDeletePhoto);
+		btnDeletePhoto.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EliminarAlbum dialog = new EliminarAlbum(album, albumTDS);
+				dialog.setVisible(true);
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			}
+		});
 		
 		cargarFotos();
 
