@@ -47,7 +47,6 @@ public class Inicio {
 	private ControladorPhotoTDS controlador;
 	private AdaptadorFotoTDS adaptadorFoto;
 	private String com;
-	private JLabel lblLikes;
 
 	/**
 	 * Create the application.
@@ -279,10 +278,16 @@ public class Inicio {
 			panelInteract.setPreferredSize(new Dimension(240, 70));
 			panelPublicacion.add(panelInteract);
 
-			lblLikes = new JLabel(String.valueOf(foto.getLikes()));
+			JLabel lblLikes = new JLabel(String.valueOf(foto.getLikes()));
 
 			JButton btnLikes = new JButton("Like");
 			panelInteract.add(btnLikes);
+			
+			JButton btnquitarLikes = new JButton("Like");
+			panelInteract.add(btnquitarLikes);
+			btnquitarLikes.setBackground(new Color(51, 153, 255));
+			btnquitarLikes.setVisible(false);
+			
 			btnLikes.addActionListener(new ActionListener() {
 
 				@Override
@@ -290,6 +295,24 @@ public class Inicio {
 					foto.addLike();
 					adaptadorFoto.modificarFoto((Foto) foto);
 					lblLikes.setText(String.valueOf(foto.getLikes()));
+					
+					btnLikes.setVisible(false);
+					btnquitarLikes.setVisible(true);
+				}
+			});
+			
+			
+			
+			btnquitarLikes.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					foto.removeLike();
+					adaptadorFoto.modificarFoto((Foto) foto);
+					lblLikes.setText(String.valueOf(foto.getLikes()));
+					
+					btnLikes.setVisible(true);
+					btnquitarLikes.setVisible(false);
 				}
 			});
 

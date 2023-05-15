@@ -124,6 +124,10 @@ public abstract class Publicacion {
 		likes++;
 	}
 	
+	public void removeLike() {
+		likes--;
+	}
+	
 	public void addHastag(String hashtag) {
 		hashtags.add(hashtag);
 	}

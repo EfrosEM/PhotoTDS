@@ -43,12 +43,12 @@ public class MostrarFotosAlbum {
 	 */
 	private void initialize() {
 		albumTDS = new JFrame();
-		albumTDS.setTitle("PhotoTDS");
+		albumTDS.setTitle(album.getTitulo());
 		albumTDS.setResizable(false);
 		albumTDS.setIconImage(
 				Toolkit.getDefaultToolkit().getImage(PerfilUsuario.class.getResource("/recursos/image.png")));
 		albumTDS.setBounds(100, 100, 458, 357);
-		//albumTDS.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		albumTDS.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		albumTDS.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -98,7 +98,6 @@ public class MostrarFotosAlbum {
 				try {
 					image = ImageIO.read(new File(((Foto) f).getRuta()));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Image scaledImage = image.getScaledInstance(142, 142, Image.SCALE_SMOOTH);

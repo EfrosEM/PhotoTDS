@@ -89,6 +89,7 @@ public class CrearAlbum extends JDialog {
 							JEditorPane editorPane = new JEditorPane();
 							AñadirFoto af = new AñadirFoto(editorPane, perfil, usuario, nombreAlbum);
 							af.frmPhototds.setVisible(true);
+							volver();
 						}
 					}
 
