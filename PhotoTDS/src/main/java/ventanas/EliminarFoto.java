@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ControladorPhotoTDS;
-import dominio.Album;
+import dominio.Foto;
 
-public class EliminarAlbum extends JDialog {
+public class EliminarFoto extends JDialog {
 
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class EliminarAlbum extends JDialog {
 	 * @param ventanaAlbum 
 	 * @param album2 
 	 */
-	public EliminarAlbum(Album album, JFrame ventanaAlbum) {
+	public EliminarFoto(Foto foto, JFrame ventanaFoto) {
 		
 		ControladorPhotoTDS controlador = ControladorPhotoTDS.getUnicaInstancia();
 		
@@ -40,7 +40,7 @@ public class EliminarAlbum extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
-			JLabel lblNewLabel = new JLabel("Estás a punto de eliminar el album y todas sus fotos.");
+			JLabel lblNewLabel = new JLabel("Estás a punto de eliminar la foto.");
 			lblNewLabel.setForeground(new Color(255, 0, 0));
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 			contentPanel.add(lblNewLabel);
@@ -62,9 +62,9 @@ public class EliminarAlbum extends JDialog {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						controlador.eliminarAlbum(album);
+						controlador.eliminarFoto(foto);
 						salir();
-						ventanaAlbum.dispose();
+						ventanaFoto.dispose();
 					}
 				});
 				

@@ -165,11 +165,16 @@ public class ControladorPhotoTDS {
 	}
 
 	public void eliminarAlbum(Album album) {
-		for (Foto foto : album.getFotos()) {
-			adaptadorFoto.borrarFoto(foto);
-		}
-		adaptadorAlbum.borrarAlbum(album);
+		/*
+		 * for (Foto foto : album.getFotos()) { adaptadorFoto.borrarFoto(foto); }
+		 * adaptadorAlbum.borrarAlbum(album); modificarUsuario(usuarioActual);
+		 */
 		
+	}
+	
+	public void eliminarFoto(Foto foto) {
+		//adaptadorFoto.borrarFoto(foto);
+		//modificarUsuario(usuarioActual);
 	}
 
 }

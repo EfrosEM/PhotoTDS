@@ -509,15 +509,29 @@ public class PerfilUsuario {
 				try {
 					image = ImageIO.read(new File(f.getRuta()));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				Image scaledImage = image.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
 				ImageIcon icon = new ImageIcon(scaledImage);
-				JLabel label = new JLabel(icon);
-				panelFotos.add(label);
+				JButton boton = new JButton();
+				boton.setSize(170, 170);
+				boton.setContentAreaFilled(false);
+				boton.setOpaque(false);
+				boton.setBorder(null);
+				boton.setBorderPainted(false);
+				boton.setIcon(icon);
+				boton.addActionListener(new ActionListener() {
 
-				label.addMouseListener(new PopMenuFotoListener());
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// frmPhototds.dispose();
+						MostrarFoto foto = new MostrarFoto(f);
+						foto.frame.setVisible(true);
+					}
+				});
+				panelFotos.add(boton);
+
+				//boton.addMouseListener(new PopMenuFotoListener());
 			}
 		}
 
