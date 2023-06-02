@@ -2,6 +2,7 @@ package dominio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Album extends Publicacion{
@@ -35,6 +36,16 @@ public class Album extends Publicacion{
 	
 	public Foto getFotoAlbum() {
 		return this.fotos.get(0);
+	}
+	
+	public void eliminarFoto(Foto foto) {
+		Iterator<Foto> iterator = fotos.iterator();
+		while (iterator.hasNext()) {
+		    Foto f = iterator.next();
+		    if (f.getCodigo() == foto.getCodigo()) {
+		        iterator.remove(); // Eliminar el elemento de forma segura
+		    }
+		}
 	}
 
 

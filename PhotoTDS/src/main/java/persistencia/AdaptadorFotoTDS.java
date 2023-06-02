@@ -77,6 +77,7 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		Entidad eFoto;
 		
 		eFoto = servPersistencia.recuperarEntidad(f.getCodigo());
+		System.out.println("Codigo de la fotoa a ser borrada: " + f.getCodigo());
 		servPersistencia.borrarEntidad(eFoto);
 	}
 	

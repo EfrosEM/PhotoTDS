@@ -224,5 +224,27 @@ public class Usuario {
 		
 		return albumes;
 	}
-
+	
+	public void deletePublicacion(Publicacion p) {
+		Iterator<Publicacion> iterator = publicaciones.iterator();
+		while (iterator.hasNext()) {
+		    Publicacion publicacion = iterator.next();
+		    if (publicacion.getCodigo() == p.getCodigo()) {
+		        iterator.remove(); // Eliminar el elemento de forma segura
+		    }
+		}
+	}
+	
+	public Notificacion deleteNotificacion(Publicacion p) {
+		Iterator<Notificacion> iterator = notificaciones.iterator();
+		while (iterator.hasNext()) {
+		    Notificacion notificacion = iterator.next();
+		    if (notificacion.getPublicacion().getCodigo() == p.getCodigo()) {
+		        iterator.remove(); // Eliminar el elemento de forma segura
+		        return notificacion;
+		    }
+		}
+		
+		return null;
+	}
 }

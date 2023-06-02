@@ -71,6 +71,11 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 	public void borrarAlbum(Album a) {
 		Entidad eAlbum;
 		
+		// Cuando se borra un album se borran las fotos asociadas a dicho album
+		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
+		for (Foto foto: a.getFotos()) {
+			adaptadorFoto.borrarFoto(foto);
+		}
 		eAlbum = servPersistencia.recuperarEntidad(a.getCodigo());
 		servPersistencia.borrarEntidad(eAlbum);
 	}
