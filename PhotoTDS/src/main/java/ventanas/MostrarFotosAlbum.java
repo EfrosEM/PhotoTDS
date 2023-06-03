@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -9,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import dominio.Album;
 import dominio.Foto;
@@ -16,9 +18,13 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+
+import controlador.ControladorPhotoTDS;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,7 +37,9 @@ public class MostrarFotosAlbum {
 	private Album album;
 	private JFrame perfil;
 	private JPanel panelFotos;
-	
+	private ControladorPhotoTDS controlador;
+
+	private final static int MAX_FOTOS = 16;
 
 	/**
 	 * Create the application.
@@ -39,6 +47,7 @@ public class MostrarFotosAlbum {
 	public MostrarFotosAlbum(Album album, JFrame perfil) {
 		this.album = album;
 		this.perfil = perfil;
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -66,31 +75,75 @@ public class MostrarFotosAlbum {
 		scrollPane.setViewportView(panelFotos);
 		panelFotos.setLayout(new GridLayout(0, 3, 1, 1));
 
-		JButton btnAddPhoto = new JButton("+");
-		albumTDS.getContentPane().add(btnAddPhoto);
-		btnAddPhoto.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JEditorPane editorPane = new JEditorPane();
-				AñadirFoto af = new AñadirFoto(editorPane, perfil, album.getUser(), album.getTitulo());
-				af.frmPhototds.setVisible(true);
-				albumTDS.dispose();
-			}
-		});
+		if (album.getUser().equals(controlador.getUsuarioActual())) {
+			JButton btnAddPhoto = new JButton("+");
+			albumTDS.getContentPane().add(btnAddPhoto);
+			btnAddPhoto.addActionListener(new ActionListener() {
 
-		JButton btnDeletePhoto = new JButton("Eliminar");
-		albumTDS.getContentPane().add(btnDeletePhoto);
-		btnDeletePhoto.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
+					if (album.getFotos().size() < MAX_FOTOS) {
+						JEditorPane editorPane = new JEditorPane();
+						AñadirFoto af = new AñadirFoto(editorPane, perfil, album.getUser(), album.getTitulo());
+						af.frmPhototds.setVisible(true);
+						albumTDS.dispose();
+					} else {
+						JOptionPane.showMessageDialog(albumTDS, "No se pueden añadir más de 16 fotos a un album.",
+								"Error", JOptionPane.ERROR_MESSAGE);
+
+					}
+				}
+			});
+
+			JButton btnDeletePhoto = new JButton("Eliminar");
+			albumTDS.getContentPane().add(btnDeletePhoto);
+			btnDeletePhoto.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					EliminarAlbum dialog = new EliminarAlbum(album, albumTDS, perfil);
+					dialog.setVisible(true);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				}
+			});
+		}
+		else {
+			JButton btnLike = new JButton("Me gusta");
+			albumTDS.getContentPane().add(btnLike);
+
+			JButton btnquitarLikes = new JButton("Me gusta");
+			albumTDS.getContentPane().add(btnquitarLikes);
+			btnquitarLikes.setBackground(new Color(51, 153, 255));
+			btnquitarLikes.setVisible(false);
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				EliminarAlbum dialog = new EliminarAlbum(album, albumTDS, perfil);
-				dialog.setVisible(true);
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			}
-		});
-		
+			btnLike.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					//TODO: dar like a todas las fotos del album
+					controlador.addLikeAlbum(album);
+					
+					btnLike.setVisible(false);
+					btnquitarLikes.setVisible(true);
+				}
+			});
+			
+			
+			
+			btnquitarLikes.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					//TODO: quitar like a todas las fotos del album
+					controlador.removeLikeAlbum(album);
+					
+					btnLike.setVisible(true);
+					btnquitarLikes.setVisible(false);
+				}
+			});
+		}
+
 		cargarFotos();
 
 	}
@@ -133,10 +186,10 @@ public class MostrarFotosAlbum {
 					}
 				});
 				panelFotos.add(boton);
-				//JLabel label = new JLabel(icon);
-				//panelFotos.add(label);
+				// JLabel label = new JLabel(icon);
+				// panelFotos.add(label);
 
-				//label.addMouseListener(new PopMenuFotoListener());
+				// label.addMouseListener(new PopMenuFotoListener());
 			}
 		}
 

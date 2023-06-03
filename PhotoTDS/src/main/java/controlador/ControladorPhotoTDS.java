@@ -203,4 +203,18 @@ public class ControladorPhotoTDS {
 		modificarUsuario(usuarioActual);
 	}
 
+	public void addLikeAlbum(Album album) {
+		for(Foto foto : album.getFotos()) {
+			foto.addLike();
+			adaptadorFoto.modificarFoto(foto);
+		}
+	}
+
+	public void removeLikeAlbum(Album album) {
+		for(Foto foto : album.getFotos()) {
+			foto.removeLike();
+			adaptadorFoto.modificarFoto(foto);
+		}
+	}
+
 }
