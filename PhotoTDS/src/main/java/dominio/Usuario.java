@@ -235,16 +235,16 @@ public class Usuario {
 		}
 	}
 	
-	public Notificacion deleteNotificacion(Publicacion p) {
+	public Optional<Notificacion> deleteNotificacion(Publicacion p) {
 		Iterator<Notificacion> iterator = notificaciones.iterator();
 		while (iterator.hasNext()) {
 		    Notificacion notificacion = iterator.next();
 		    if (notificacion.getPublicacion().getCodigo() == p.getCodigo()) {
 		        iterator.remove(); // Eliminar el elemento de forma segura
-		        return notificacion;
+		        return Optional.of(notificacion);
 		    }
 		}
 		
-		return null;
+		return Optional.empty();
 	}
 }

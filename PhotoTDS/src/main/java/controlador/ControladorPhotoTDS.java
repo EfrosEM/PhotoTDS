@@ -3,6 +3,7 @@ package controlador;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import dominio.Album;
 import dominio.CatalogoFotos;
@@ -171,9 +172,9 @@ public class ControladorPhotoTDS {
 		for (Foto f : album.getFotos()) {
 			usuarioActual.deletePublicacion(f);
 			for (Usuario u : usuarioActual.getSeguidores()) {
-				Notificacion n = u.deleteNotificacion(f);
-				if (n != null) {
-					adaptadorNotificacion.borrarNotificacion(n);
+				Optional<Notificacion> n = u.deleteNotificacion(f);
+				if (n.isPresent()) {
+					adaptadorNotificacion.borrarNotificacion(n.get());
 					modificarUsuario(u);
 				}
 			}
@@ -192,9 +193,9 @@ public class ControladorPhotoTDS {
 			}
 		}
 		for (Usuario u : usuarioActual.getSeguidores()) {
-			Notificacion n = u.deleteNotificacion(foto);
-			if (n != null) {
-				adaptadorNotificacion.borrarNotificacion(n);
+			Optional<Notificacion> n = u.deleteNotificacion(foto);
+			if (n.isPresent()) {
+				adaptadorNotificacion.borrarNotificacion(n.get());
 				modificarUsuario(u);
 			}
 		}
