@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+
+import controlador.ControladorPhotoTDS;
+
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,14 +23,18 @@ import java.awt.Toolkit;
 
 public class MostrarFoto {
 
+	private ControladorPhotoTDS controlador;
 	protected JFrame frame;
+	private JFrame perfil;
 	private Foto foto;
 
 	/**
 	 * Create the application.
 	 */
-	public MostrarFoto(Foto foto) {
+	public MostrarFoto(Foto foto, JFrame perfil) {
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		this.foto = foto;
+		this.perfil = perfil;
 		initialize();
 	}
 
@@ -67,10 +74,16 @@ public class MostrarFoto {
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Eliminar");
+		btnNewButton_1.setVisible(false);
 		panel.add(btnNewButton_1);
+		
+		if (controlador.getUsuarioActual().equals(foto.getUser())) {
+			btnNewButton_1.setVisible(true);
+		}
+		
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EliminarFoto dialog = new EliminarFoto(foto, frame);
+				EliminarFoto dialog = new EliminarFoto(foto, frame, perfil);
 				dialog.setVisible(true);
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				

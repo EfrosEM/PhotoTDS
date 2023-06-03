@@ -29,14 +29,16 @@ public class MostrarFotosAlbum {
 
 	protected JFrame albumTDS;
 	private Album album;
+	private JFrame perfil;
 	private JPanel panelFotos;
 	
 
 	/**
 	 * Create the application.
 	 */
-	public MostrarFotosAlbum(Album album) {
+	public MostrarFotosAlbum(Album album, JFrame perfil) {
 		this.album = album;
+		this.perfil = perfil;
 		initialize();
 	}
 
@@ -71,8 +73,9 @@ public class MostrarFotosAlbum {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JEditorPane editorPane = new JEditorPane();
-				AñadirFoto af = new AñadirFoto(editorPane, albumTDS, album.getUser(), album.getTitulo());
+				AñadirFoto af = new AñadirFoto(editorPane, perfil, album.getUser(), album.getTitulo());
 				af.frmPhototds.setVisible(true);
+				albumTDS.dispose();
 			}
 		});
 
@@ -82,7 +85,7 @@ public class MostrarFotosAlbum {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EliminarAlbum dialog = new EliminarAlbum(album, albumTDS);
+				EliminarAlbum dialog = new EliminarAlbum(album, albumTDS, perfil);
 				dialog.setVisible(true);
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			}
@@ -113,10 +116,27 @@ public class MostrarFotosAlbum {
 				}
 				Image scaledImage = image.getScaledInstance(142, 142, Image.SCALE_SMOOTH);
 				ImageIcon icon = new ImageIcon(scaledImage);
-				JLabel label = new JLabel(icon);
-				panelFotos.add(label);
+				JButton boton = new JButton();
+				boton.setSize(142, 142);
+				boton.setContentAreaFilled(false);
+				boton.setOpaque(false);
+				boton.setBorder(null);
+				boton.setBorderPainted(false);
+				boton.setIcon(icon);
+				boton.addActionListener(new ActionListener() {
 
-				label.addMouseListener(new PopMenuFotoListener());
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// frmPhototds.dispose();
+						MostrarFoto foto = new MostrarFoto(f, perfil);
+						foto.frame.setVisible(true);
+					}
+				});
+				panelFotos.add(boton);
+				//JLabel label = new JLabel(icon);
+				//panelFotos.add(label);
+
+				//label.addMouseListener(new PopMenuFotoListener());
 			}
 		}
 

@@ -525,8 +525,9 @@ public class PerfilUsuario {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// frmPhototds.dispose();
-						MostrarFoto foto = new MostrarFoto(f);
+						MostrarFoto foto = new MostrarFoto(f, frmPhototds);
 						foto.frame.setVisible(true);
+						frmPhototds.repaint();
 					}
 				});
 				panelFotos.add(boton);
@@ -581,7 +582,7 @@ public class PerfilUsuario {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// frmPhototds.dispose();
-						MostrarFotosAlbum album = new MostrarFotosAlbum(a);
+						MostrarFotosAlbum album = new MostrarFotosAlbum(a, frmPhototds);
 						album.albumTDS.setVisible(true);
 					}
 				});

@@ -30,7 +30,7 @@ public class EliminarFoto extends JDialog {
 	 * @param ventanaAlbum 
 	 * @param album2 
 	 */
-	public EliminarFoto(Foto foto, JFrame ventanaFoto) {
+	public EliminarFoto(Foto foto, JFrame ventanaFoto, JFrame perfil) {
 		
 		ControladorPhotoTDS controlador = ControladorPhotoTDS.getUnicaInstancia();
 		
@@ -65,6 +65,9 @@ public class EliminarFoto extends JDialog {
 						controlador.eliminarFoto(foto);
 						salir();
 						ventanaFoto.dispose();
+						perfil.dispose();
+						PerfilUsuario pu = new PerfilUsuario(controlador.getUsuarioActual());
+						pu.frmPhototds.setVisible(true);
 					}
 				});
 				
