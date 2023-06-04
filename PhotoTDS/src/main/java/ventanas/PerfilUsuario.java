@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -248,10 +249,42 @@ public class PerfilUsuario {
 		rigidArea_5_1.setMinimumSize(new Dimension(10, 10));
 		rigidArea_5_1.setMaximumSize(new Dimension(10, 10));
 		panelNorte.add(rigidArea_5_1);
+		
+		JButton lupa = new JButton("");
+		lupa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		lupa.setBackground(new Color(255, 255, 255));
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(PerfilUsuario.class.getResource("/recursos/lupa.png")));
-		panelNorte.add(lblNewLabel_1);
+		ImageIcon icon = new ImageIcon(Inicio.class.getResource("/recursos/lupa.png"));
+		Image img = icon.getImage();
+		Image otraimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon = new ImageIcon(otraimg);
+		lupa.setIcon(otroicon);
+		
+		lupa.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String busqueda = textField.getText();
+				
+				if (busqueda.contains("#")) {
+					String[] busqHashtag = busqueda.split(" ");
+					ArrayList<String> hashtags = new ArrayList<String>();
+					
+					for (String hashtag : busqHashtag) {
+						System.out.println("Hashtag: " + hashtag);
+						hashtags.add(hashtag);
+					}
+					BusquedaHashtags bH = new BusquedaHashtags(hashtags, frmPhototds);
+					bH.busquedaHashtags.setVisible(true);
+				} else {
+					BusquedaUsuarios bu = new BusquedaUsuarios(busqueda, frmPhototds);
+					bu.busquedaUsuarios.setVisible(true);
+				}
+				
+			}
+		});
+		
+		panelNorte.add(lupa);
 
 		Component rigidArea_1 = Box.createRigidArea(new Dimension(50, 30));
 		rigidArea_1.setPreferredSize(new Dimension(50, 40));
