@@ -109,6 +109,8 @@ public class ControladorPhotoTDS {
 		List<Usuario> seguidores = usuarioActual.getSeguidores();
 		Notificacion notificacion = new Notificacion(user, foto);
 		adaptadorNotificacion.registrarNotificacion(notificacion);
+		user.addNotificacion(notificacion);
+		adaptadorUsuario.modificarUsuario(user);
 		for (Usuario seguidor : seguidores) {
 			seguidor.addNotificacion(notificacion);
 			adaptadorUsuario.modificarUsuario(seguidor);
