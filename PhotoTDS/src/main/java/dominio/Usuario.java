@@ -17,6 +17,7 @@ public class Usuario {
 	private String fotoPerfil;
 	private Boolean premium;
 	private int seguidos;
+	private Descuento descuento;
 	private ArrayList<Usuario> seguidores;
 	private ArrayList<Publicacion> publicaciones;
 	private ArrayList<Notificacion> notificaciones;
@@ -35,6 +36,7 @@ public class Usuario {
 		this.seguidos = 0;
 
 		premium = false;
+		descuento = null;
 		seguidores = new ArrayList<Usuario>();
 		publicaciones = new ArrayList<Publicacion>();
 		notificaciones = new ArrayList<Notificacion>();
@@ -134,6 +136,10 @@ public class Usuario {
 
 	public List<Notificacion> getNotificaciones() {
 		return new ArrayList<Notificacion>(notificaciones);
+	}
+	
+	public void setDescuento(Descuento descuento) {
+		this.descuento = descuento;
 	}
 
 	public void addSeguidor(Usuario seguidor) {
@@ -246,5 +252,35 @@ public class Usuario {
 		}
 		
 		return Optional.empty();
+	}
+	
+	public int getEdad(Date fechaNacimiento) {
+		Calendar fechaActual = Calendar.getInstance();
+        Calendar fechaNac = Calendar.getInstance();
+        fechaNac.setTime(fechaNacimiento);
+
+        int edad = fechaActual.get(Calendar.YEAR) - fechaNac.get(Calendar.YEAR);
+
+        if (fechaActual.get(Calendar.MONTH) < fechaNac.get(Calendar.MONTH)) {
+            edad--;
+        } else if (fechaActual.get(Calendar.MONTH) == fechaNac.get(Calendar.MONTH)
+                && fechaActual.get(Calendar.DAY_OF_MONTH) < fechaNac.get(Calendar.DAY_OF_MONTH)) {
+            edad--;
+        }
+
+        return edad;
+	}
+	
+	public int getTotalLikes() {
+		int likes = 0;
+		for (Foto foto : getFotos()) {
+			likes += foto.getLikes();
+		}
+		
+		return likes;
+	}
+	
+	public double calcularDescuento(double precio) {
+		return descuento.aplicarDescuento(this, precio);
 	}
 }
