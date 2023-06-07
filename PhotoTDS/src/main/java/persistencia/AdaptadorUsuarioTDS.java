@@ -98,6 +98,24 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 	public void borrarUsuario(Usuario u) {
 		Entidad eUsuario;
 		
+		// Borrar las fotos asociadas a dicho usuario
+		AdaptadorFotoTDS adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
+		for (Foto foto : u.getFotos()) {
+			adaptadorFoto.borrarFoto(foto);
+		}
+		
+		// Borrar los albumes asociados a dicho usuario
+		AdaptadorAlbumTDS adaptadorAlbum = AdaptadorAlbumTDS.getUnicaInstancia();
+		for (Album album : u.getAlbumes()) {
+			adaptadorAlbum.borrarAlbum(album);
+		}
+		
+		// Boorar las notificaciones asociadas a dicho usuario
+		AdaptadorNotificacionTDS adaptadorNotificacion = AdaptadorNotificacionTDS.getUnicaInstancia();
+		for (Notificacion notificacion : u.getNotificaciones()) {
+			adaptadorNotificacion.borrarNotificacion(notificacion);
+		}
+		
 		eUsuario = servPersistencia.recuperarEntidad(u.getCodigo());
 		servPersistencia.borrarEntidad(eUsuario);
 	}

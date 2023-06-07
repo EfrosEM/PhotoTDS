@@ -76,6 +76,12 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 	public void borrarFoto(Foto f) {
 		Entidad eFoto;
 		
+		// Borrar los comentarios asociados a dicha foto
+		AdaptadorComentarioTDS adaptadorComentario = AdaptadorComentarioTDS.getUnicaInstancia();
+		for (Comentario comentario : f.getComentarios()) {
+			adaptadorComentario.borrarComentario(comentario);
+		}
+		
 		eFoto = servPersistencia.recuperarEntidad(f.getCodigo());
 		System.out.println("Codigo de la fotoa a ser borrada: " + f.getCodigo());
 		servPersistencia.borrarEntidad(eFoto);
