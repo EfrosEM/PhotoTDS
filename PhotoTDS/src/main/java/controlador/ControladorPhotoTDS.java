@@ -12,6 +12,9 @@ import dominio.Foto;
 import dominio.Notificacion;
 import dominio.Publicacion;
 import dominio.Usuario;
+import dominio.Descuento;
+import dominio.DescuentoEdad;
+import dominio.DescuentoPopularidad;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorAlbumDAO;
 import persistencia.IAdaptadorFotoDAO;
@@ -218,5 +221,38 @@ public class ControladorPhotoTDS {
 			adaptadorFoto.modificarFoto(foto);
 		}
 	}
+	
+	public double calcularDescuento(Usuario usuario, double precio, String descuento) {
+		double precioDescuento = 0.0;
+		if (descuento.equals("Descuento por edad")) {
+			Descuento desc = new DescuentoEdad();
+			usuario.setDescuento(desc);
+			precioDescuento = usuario.calcularDescuento(precio);
+		} else if (descuento.equals("Descuento Popularidad")) {
+			Descuento desc = new DescuentoPopularidad();
+			usuario.setDescuento(desc);
+			precioDescuento = usuario.calcularDescuento(precio);
+		}
+		
+		return precioDescuento;
+	}
+	
+	public void makeUserPremium(Usuario usuario) {
+		usuario.makePremium();
+		modificarUsuario(usuario);
+	}
 
+	public void cancelSuscription(Usuario usuario) {
+		usuario.cancelPremium();
+		modificarUsuario(usuario);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -15,7 +15,7 @@ public class DescuentoEdad implements Descuento {
 			descuento = precio - precio * DESCUENTO_MENOR_EDAD;
 		} else if (edadUsuario >= 18 && edadUsuario < 60) {
 			descuento = precio - precio * DESCUENTO_MAYOR_EDAD;
-		} else if (edadUsuario >= 60) {
+		} else if (edadUsuario >= 65) {
 			descuento = precio - precio * DESCUENTO_JUBILADO;
 		}
 

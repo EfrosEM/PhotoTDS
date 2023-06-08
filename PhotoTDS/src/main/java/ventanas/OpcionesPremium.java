@@ -47,19 +47,21 @@ public class OpcionesPremium extends JDialog {
 		contentPanel.add(panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JButton btnNewButton = new JButton("Premium");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setMargin(new Insets(0, 0, 0, 0));
-		btnNewButton.setPreferredSize(new Dimension(105, 23));
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setOpaque(false);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnPremium = new JButton("Premium");
+		btnPremium.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPremium.setMargin(new Insets(0, 0, 0, 0));
+		btnPremium.setPreferredSize(new Dimension(105, 23));
+		btnPremium.setBackground(Color.WHITE);
+		btnPremium.setOpaque(false);
+		btnPremium.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnPremium.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		btnPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ObtenerPremium frmPremium = new ObtenerPremium();
+				frmPremium.obtenerPremium.setVisible(true);
 			}
 		});
-		panel.add(btnNewButton);
+		panel.add(btnPremium);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);

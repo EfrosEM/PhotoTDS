@@ -1,8 +1,8 @@
 package dominio;
 
-public class DescuentoPopularidad {
+public class DescuentoPopularidad implements Descuento{
 
-	private static final double SIN_DESCUENTO = 1.0;
+	private static final double SIN_DESCUENTO = 0.0;
 	private static final double DESCUENTO_POPULAR = 0.20;
 	private static final double DESCUENTO_INFLUENCER = 0.50;
 	

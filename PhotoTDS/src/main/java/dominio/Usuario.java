@@ -283,4 +283,17 @@ public class Usuario {
 	public double calcularDescuento(double precio) {
 		return descuento.aplicarDescuento(this, precio);
 	}
+	
+	public void makePremium() {
+		this.setPremium(true);
+	}
+	
+	public void cancelPremium() {
+		this.setPremium(false);
+	}
 }
+
+
+
+
+
