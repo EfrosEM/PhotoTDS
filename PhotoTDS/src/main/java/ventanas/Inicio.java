@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,11 +162,11 @@ public class Inicio {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String busqueda = textField.getText();
-				
+
 				if (busqueda.contains("#")) {
 					String[] busqHashtag = busqueda.split(" ");
 					ArrayList<String> hashtags = new ArrayList<String>();
-					
+
 					for (String hashtag : busqHashtag) {
 						System.out.println("Hashtag: " + hashtag);
 						hashtags.add(hashtag);
@@ -176,7 +177,7 @@ public class Inicio {
 					BusquedaUsuarios bu = new BusquedaUsuarios(busqueda, frmPhototds);
 					bu.busquedaUsuarios.setVisible(true);
 				}
-				
+
 			}
 		});
 
@@ -289,7 +290,7 @@ public class Inicio {
 			ImageIcon otroicon2 = new ImageIcon(otraimg2);
 			btnLikes.setIcon(otroicon2);
 			panelInteract.add(btnLikes);
-			
+
 			JButton btnquitarLikes = new JButton();
 			btnquitarLikes.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			ImageIcon icon3 = new ImageIcon(Inicio.class.getResource("/recursos/like.png"));
@@ -300,7 +301,7 @@ public class Inicio {
 			panelInteract.add(btnquitarLikes);
 			btnquitarLikes.setBackground(new Color(51, 153, 255));
 			btnquitarLikes.setVisible(false);
-			
+
 			btnLikes.addActionListener(new ActionListener() {
 
 				@Override
@@ -308,14 +309,12 @@ public class Inicio {
 					foto.addLike();
 					adaptadorFoto.modificarFoto((Foto) foto);
 					lblLikes.setText(String.valueOf(foto.getLikes()));
-					
+
 					btnLikes.setVisible(false);
 					btnquitarLikes.setVisible(true);
 				}
 			});
-			
-			
-			
+
 			btnquitarLikes.addActionListener(new ActionListener() {
 
 				@Override
@@ -323,22 +322,21 @@ public class Inicio {
 					foto.removeLike();
 					adaptadorFoto.modificarFoto((Foto) foto);
 					lblLikes.setText(String.valueOf(foto.getLikes()));
-					
+
 					btnLikes.setVisible(true);
 					btnquitarLikes.setVisible(false);
 				}
 			});
 
-			
 			JButton btnComentario = new JButton();
-			
+
 			btnComentario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			ImageIcon icon4 = new ImageIcon(Inicio.class.getResource("/recursos/comentario.png"));
 			Image img4 = icon4.getImage();
 			Image otraimg4 = img4.getScaledInstance(25, 25, java.awt.Image.SCALE_DEFAULT);
 			ImageIcon otroicon4 = new ImageIcon(otraimg4);
 			btnComentario.setIcon(otroicon4);
-			
+
 			panelInteract.add(btnComentario);
 			btnComentario.addActionListener(new ActionListener() {
 
@@ -346,33 +344,29 @@ public class Inicio {
 				public void actionPerformed(ActionEvent e) {
 					com = JOptionPane.showInputDialog("Escribe un comentario");
 					Comentario comentario = new Comentario(com, controlador.getUsuarioActual());
-					
+
 					controlador.addComentario(foto, comentario);
 					lblCom.setText(String.valueOf(foto.getComentarios().size()));
 				}
 			});
-			
-			
-			Component rigidArea_6= Box.createRigidArea(new Dimension(5, 5));
+
+			Component rigidArea_6 = Box.createRigidArea(new Dimension(5, 5));
 			panelInteract.add(rigidArea_6);
 
 			panelInteract.add(lblLikes);
-			
-			
+
 			JLabel lblMeGusta = new JLabel("Me gusta");
 			lblMeGusta.setFont(new Font("Tahoma", Font.ITALIC, 11));
 			panelInteract.add(lblMeGusta);
-			
-			
-			Component rigidArea_7= Box.createRigidArea(new Dimension(5, 5));
+
+			Component rigidArea_7 = Box.createRigidArea(new Dimension(5, 5));
 			panelInteract.add(rigidArea_7);
-			
+
 			panelInteract.add(lblCom);
-			
+
 			JLabel lblComentario = new JLabel("Comentarios");
 			lblComentario.setFont(new Font("Tahoma", Font.ITALIC, 11));
 			panelInteract.add(lblComentario);
-			
 
 			JLabel lblFotoUsuario = new JLabel("");
 			lblFotoUsuario.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -385,7 +379,30 @@ public class Inicio {
 			JLabel lblNombreUsuario = new JLabel(notificacion.getUser().getUsuario());
 			panelInteract.add(lblNombreUsuario);
 
+			Component rigidArea_8 = Box.createRigidArea(new Dimension(15, 10));
+			panelInteract.add(rigidArea_8);
+
+			JButton verComentarios = new JButton("Ver Comentarios");
+			verComentarios.setContentAreaFilled(false);
+			verComentarios.setBorder(null);
+			verComentarios.setMargin(new Insets(2, 5, 2, 5));
+			verComentarios.setBorderPainted(false);
+			verComentarios.setOpaque(false);
+			verComentarios.setForeground(Color.BLUE);
+
+			verComentarios.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					VerComentarios comen = new VerComentarios(foto);
+					comen.setVisible(true);
+				}
+			});
+
+			panelInteract.add(verComentarios);
+
 			panelPublicaciones.add(panelPublicacion);
+
 		}
 	}
 
