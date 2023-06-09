@@ -121,7 +121,6 @@ public class MostrarFotosAlbum {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//TODO: dar like a todas las fotos del album
 					controlador.addLikeAlbum(album);
 					
 					btnLike.setVisible(false);
@@ -135,7 +134,6 @@ public class MostrarFotosAlbum {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//TODO: quitar like a todas las fotos del album
 					controlador.removeLikeAlbum(album);
 					
 					btnLike.setVisible(true);

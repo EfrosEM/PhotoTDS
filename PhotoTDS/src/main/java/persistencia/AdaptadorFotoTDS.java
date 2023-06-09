@@ -232,5 +232,6 @@ public class AdaptadorFotoTDS implements IAdaptadorFotoDAO{
 		
 		return comentarios;
 	}
+
 }
 

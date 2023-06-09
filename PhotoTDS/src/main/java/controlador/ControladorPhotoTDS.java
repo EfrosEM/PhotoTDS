@@ -8,6 +8,7 @@ import java.util.Optional;
 import dominio.Album;
 import dominio.CatalogoFotos;
 import dominio.CatalogoUsuarios;
+import dominio.Comentario;
 import dominio.Foto;
 import dominio.Notificacion;
 import dominio.Publicacion;
@@ -17,6 +18,7 @@ import dominio.DescuentoEdad;
 import dominio.DescuentoPopularidad;
 import persistencia.FactoriaDAO;
 import persistencia.IAdaptadorAlbumDAO;
+import persistencia.IAdaptadorComentarioDAO;
 import persistencia.IAdaptadorFotoDAO;
 import persistencia.IAdaptadorNotificacionDAO;
 import persistencia.IAdaptadorUsuarioDAO;
@@ -31,6 +33,7 @@ public class ControladorPhotoTDS {
 	private IAdaptadorFotoDAO adaptadorFoto;
 	private IAdaptadorNotificacionDAO adaptadorNotificacion;
 	private IAdaptadorAlbumDAO adaptadorAlbum;
+	private IAdaptadorComentarioDAO adaptadorComentario;
 
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -145,6 +148,7 @@ public class ControladorPhotoTDS {
 		adaptadorFoto = factoria.getFotoDAO();
 		adaptadorNotificacion = factoria.getNotificacionDAO();
 		adaptadorAlbum = factoria.getAlbumDAO();
+		adaptadorComentario = factoria.getComentarioDAO();
 	}
 
 	private void inicializarCatalogos() {
@@ -209,19 +213,19 @@ public class ControladorPhotoTDS {
 	}
 
 	public void addLikeAlbum(Album album) {
-		for(Foto foto : album.getFotos()) {
+		for (Foto foto : album.getFotos()) {
 			foto.addLike();
 			adaptadorFoto.modificarFoto(foto);
 		}
 	}
 
 	public void removeLikeAlbum(Album album) {
-		for(Foto foto : album.getFotos()) {
+		for (Foto foto : album.getFotos()) {
 			foto.removeLike();
 			adaptadorFoto.modificarFoto(foto);
 		}
 	}
-	
+
 	public double calcularDescuento(Usuario usuario, double precio, String descuento) {
 		double precioDescuento = 0.0;
 		if (descuento.equals("Descuento por edad")) {
@@ -233,10 +237,10 @@ public class ControladorPhotoTDS {
 			usuario.setDescuento(desc);
 			precioDescuento = usuario.calcularDescuento(precio);
 		}
-		
+
 		return precioDescuento;
 	}
-	
+
 	public void makeUserPremium(Usuario usuario) {
 		usuario.makePremium();
 		modificarUsuario(usuario);
@@ -246,13 +250,13 @@ public class ControladorPhotoTDS {
 		usuario.cancelPremium();
 		modificarUsuario(usuario);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void addComentario(Foto foto, Comentario comentario) {
+
+		foto.addComentario(comentario);
+		adaptadorComentario.registrarComentario(comentario);
+		adaptadorFoto.modificarFoto(foto);
+
+	}
+
 }

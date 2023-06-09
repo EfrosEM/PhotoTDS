@@ -350,6 +350,19 @@ public class PerfilUsuario {
 		JLabel lblNewLabel_5 = new JLabel(usuario.getUsuario());
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_3.add(lblNewLabel_5);
+		
+		JLabel premium = new JLabel("");
+		panel_3.add(premium);
+		ImageIcon premiumIcon = new ImageIcon(Inicio.class.getResource("/recursos/premium.png"));
+		Image img2 = premiumIcon.getImage();
+		Image otraimg2 = img2.getScaledInstance(37, 20, java.awt.Image.SCALE_DEFAULT);
+		ImageIcon otroicon2 = new ImageIcon(otraimg2);
+		premium.setIcon(otroicon2);
+		
+		if(usuario.isPremium())
+			premium.setVisible(true);
+		else 
+			premium.setVisible(false);
 
 		Component rigidArea_9 = Box.createRigidArea(new Dimension(20, 20));
 		panel_3.add(rigidArea_9);

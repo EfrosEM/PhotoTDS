@@ -279,11 +279,24 @@ public class Inicio {
 			panelPublicacion.add(panelInteract);
 
 			JLabel lblLikes = new JLabel(String.valueOf(foto.getLikes()));
+			JLabel lblCom = new JLabel(String.valueOf(foto.getComentarios().size()));
 
-			JButton btnLikes = new JButton("Like");
+			JButton btnLikes = new JButton();
+			btnLikes.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			ImageIcon icon2 = new ImageIcon(Inicio.class.getResource("/recursos/like.png"));
+			Image img2 = icon2.getImage();
+			Image otraimg2 = img2.getScaledInstance(25, 25, java.awt.Image.SCALE_DEFAULT);
+			ImageIcon otroicon2 = new ImageIcon(otraimg2);
+			btnLikes.setIcon(otroicon2);
 			panelInteract.add(btnLikes);
 			
-			JButton btnquitarLikes = new JButton("Like");
+			JButton btnquitarLikes = new JButton();
+			btnquitarLikes.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			ImageIcon icon3 = new ImageIcon(Inicio.class.getResource("/recursos/like.png"));
+			Image img3 = icon3.getImage();
+			Image otraimg3 = img3.getScaledInstance(25, 25, java.awt.Image.SCALE_DEFAULT);
+			ImageIcon otroicon3 = new ImageIcon(otraimg3);
+			btnquitarLikes.setIcon(otroicon3);
 			panelInteract.add(btnquitarLikes);
 			btnquitarLikes.setBackground(new Color(51, 153, 255));
 			btnquitarLikes.setVisible(false);
@@ -317,7 +330,15 @@ public class Inicio {
 			});
 
 			
-			JButton btnComentario = new JButton("Comentario");
+			JButton btnComentario = new JButton();
+			
+			btnComentario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			ImageIcon icon4 = new ImageIcon(Inicio.class.getResource("/recursos/comentario.png"));
+			Image img4 = icon4.getImage();
+			Image otraimg4 = img4.getScaledInstance(25, 25, java.awt.Image.SCALE_DEFAULT);
+			ImageIcon otroicon4 = new ImageIcon(otraimg4);
+			btnComentario.setIcon(otroicon4);
+			
 			panelInteract.add(btnComentario);
 			btnComentario.addActionListener(new ActionListener() {
 
@@ -325,15 +346,33 @@ public class Inicio {
 				public void actionPerformed(ActionEvent e) {
 					com = JOptionPane.showInputDialog("Escribe un comentario");
 					Comentario comentario = new Comentario(com, controlador.getUsuarioActual());
-					foto.addComentario(comentario);
+					
+					controlador.addComentario(foto, comentario);
+					lblCom.setText(String.valueOf(foto.getComentarios().size()));
 				}
 			});
+			
+			
+			Component rigidArea_6= Box.createRigidArea(new Dimension(5, 5));
+			panelInteract.add(rigidArea_6);
 
 			panelInteract.add(lblLikes);
+			
 			
 			JLabel lblMeGusta = new JLabel("Me gusta");
 			lblMeGusta.setFont(new Font("Tahoma", Font.ITALIC, 11));
 			panelInteract.add(lblMeGusta);
+			
+			
+			Component rigidArea_7= Box.createRigidArea(new Dimension(5, 5));
+			panelInteract.add(rigidArea_7);
+			
+			panelInteract.add(lblCom);
+			
+			JLabel lblComentario = new JLabel("Comentarios");
+			lblComentario.setFont(new Font("Tahoma", Font.ITALIC, 11));
+			panelInteract.add(lblComentario);
+			
 
 			JLabel lblFotoUsuario = new JLabel("");
 			lblFotoUsuario.setAlignmentY(Component.TOP_ALIGNMENT);

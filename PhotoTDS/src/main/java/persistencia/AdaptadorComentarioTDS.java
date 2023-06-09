@@ -102,7 +102,8 @@ public class AdaptadorComentarioTDS implements IAdaptadorComentarioDAO{
 		texto = servPersistencia.recuperarPropiedadEntidad(eComentario, "texto");
 		
 		try {
-			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eComentario, "fecha"));
+			//fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eComentario, "fecha"));
+			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eComentario, "fecha"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

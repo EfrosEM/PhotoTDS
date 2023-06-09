@@ -21,4 +21,9 @@ public class TDSFactoriaDAO extends FactoriaDAO{
 	public IAdaptadorAlbumDAO getAlbumDAO() {
 		return AdaptadorAlbumTDS.getUnicaInstancia();
 	}
+	
+	@Override
+	public IAdaptadorComentarioDAO getComentarioDAO() {
+		return AdaptadorComentarioTDS.getUnicaInstancia();
+	}
 }
