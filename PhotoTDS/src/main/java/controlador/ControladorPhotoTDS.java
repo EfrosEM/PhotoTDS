@@ -23,6 +23,8 @@ import persistencia.IAdaptadorFotoDAO;
 import persistencia.IAdaptadorNotificacionDAO;
 import persistencia.IAdaptadorUsuarioDAO;
 
+import utils.GeneradorArchivos;
+
 public class ControladorPhotoTDS {
 
 	private CatalogoUsuarios catalogoUsuarios;
@@ -257,6 +259,22 @@ public class ControladorPhotoTDS {
 		adaptadorComentario.registrarComentario(comentario);
 		adaptadorFoto.modificarFoto(foto);
 
+	}
+
+	public void generarExcel() {
+		try {
+			GeneradorArchivos.generarExcel(usuarioActual);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void generarPDF() {
+		try {
+			GeneradorArchivos.generarPDF(usuarioActual);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

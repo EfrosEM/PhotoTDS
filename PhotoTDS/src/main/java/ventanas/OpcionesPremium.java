@@ -11,9 +11,13 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import controlador.ControladorPhotoTDS;
+
 import java.awt.Insets;
 import javax.swing.SwingConstants;
 
@@ -24,6 +28,7 @@ public class OpcionesPremium extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private ControladorPhotoTDS controlador;
 
 	/**
 	 * Launch the application.
@@ -33,6 +38,7 @@ public class OpcionesPremium extends JDialog {
 	 * Create the dialog.
 	 */
 	public OpcionesPremium() {
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		setResizable(false);
 		
 		setBounds(100, 100, 145, 173);
@@ -77,6 +83,15 @@ public class OpcionesPremium extends JDialog {
 		btnNewButton_1.setOpaque(false);
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				controlador.generarPDF();
+
+				JOptionPane.showMessageDialog(panel, "Se ha generado un PDF con tu lista de seguidores.",
+						"Generar PDF", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		panel_1.add(btnNewButton_1);
 		
 		JPanel panel_2 = new JPanel();
@@ -93,6 +108,16 @@ public class OpcionesPremium extends JDialog {
 		btnNewButton_2.setOpaque(false);
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton_2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				controlador.generarExcel();
+
+				JOptionPane.showMessageDialog(panel, "Se ha generado un excel con tu lista de seguidores.",
+						"Generar Excel", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		panel_2.add(btnNewButton_2);
 		
 		JPanel panel_3 = new JPanel();
