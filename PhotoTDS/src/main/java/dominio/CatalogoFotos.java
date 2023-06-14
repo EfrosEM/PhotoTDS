@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,14 @@ public class CatalogoFotos {
 	
 	public void addFoto(Foto f) {
 		fotos.put(f.getRuta(), f);
+	}
+	
+	public List<Foto> getFotos(){
+		return new ArrayList<Foto>(fotos.values());
+	}
+	
+	public Foto getFoto(String ruta) {
+		return fotos.get(ruta);
 	}
 	
 	private void cargarCatalogo() throws DAOException {

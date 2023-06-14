@@ -10,8 +10,10 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.Box;
@@ -20,11 +22,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.ControladorPhotoTDS;
 import persistencia.AdaptadorFotoTDS;
@@ -37,6 +41,9 @@ import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
+
+import pulsador.IEncendidoListener;
+import pulsador.Luz;
 
 public class Inicio {
 
@@ -143,11 +150,6 @@ public class Inicio {
 		rigidArea_5_1.setMaximumSize(new Dimension(10, 10));
 		panelNorte.add(rigidArea_5_1);
 
-		// JLabel lblNewLabel_1 = new JLabel("");
-		// lblNewLabel_1.setIcon(new
-		// ImageIcon(PerfilUsuario.class.getResource("/recursos/lupa.png")));
-		// panelNorte.add(lblNewLabel_1);
-
 		JButton lupa = new JButton("");
 		lupa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lupa.setBackground(new Color(255, 255, 255));
@@ -231,6 +233,17 @@ public class Inicio {
 
 		Component rigidArea_3_1 = Box.createRigidArea(new Dimension(10, 10));
 		panelNorte.add(rigidArea_3_1);
+		
+		Luz luz = new Luz();
+		panelNorte.add(luz);
+		luz.addEncendidoListener(new IEncendidoListener() {
+			
+			@Override
+			public void enteradoCambioEncendido(EventObject arg0) {
+					cargarXMLFotos();
+				}				
+		});
+		luz.setColor(Color.GREEN);
 
 		JPanel panelCentro = new JPanel();
 		frmPhototds.getContentPane().add(panelCentro, BorderLayout.CENTER);
@@ -413,6 +426,21 @@ public class Inicio {
 		ImageIcon otroicon = new ImageIcon(otraimg);
 
 		return otroicon;
+	}
+	
+	public void cargarXMLFotos() {
+
+		JFileChooser jfc = new JFileChooser();
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos xml (.xml)", "xml");
+		jfc.setFileFilter(filtro);
+		if (jfc.showOpenDialog(this.frmPhototds) == JFileChooser.APPROVE_OPTION) {
+
+			File fileXML = jfc.getSelectedFile();
+			ControladorPhotoTDS.getUnicaInstancia().cargarFotos(fileXML);
+			//cambiarPanelPrincipalActual(new PanelExplorar());
+			//JOptionPane.showMessageDialog(MainWindow.getUnicaInstancia(), "Archivo XML cargado correctamente.");
+		}
 	}
 
 }

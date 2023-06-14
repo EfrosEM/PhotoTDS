@@ -1,7 +1,10 @@
 package controlador;
 
+import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +25,13 @@ import persistencia.IAdaptadorComentarioDAO;
 import persistencia.IAdaptadorFotoDAO;
 import persistencia.IAdaptadorNotificacionDAO;
 import persistencia.IAdaptadorUsuarioDAO;
+import umu.tds.fotos.CargadorFotos;
+import umu.tds.fotos.FotosEvent;
+import umu.tds.fotos.FotosListener;
 
 import utils.GeneradorArchivos;
 
-public class ControladorPhotoTDS {
+public class ControladorPhotoTDS implements FotosListener{
 
 	private CatalogoUsuarios catalogoUsuarios;
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
@@ -36,6 +42,7 @@ public class ControladorPhotoTDS {
 	private IAdaptadorNotificacionDAO adaptadorNotificacion;
 	private IAdaptadorAlbumDAO adaptadorAlbum;
 	private IAdaptadorComentarioDAO adaptadorComentario;
+	private CargadorFotos cargadorFotos;
 
 	public static ControladorPhotoTDS getUnicaInstancia() {
 		if (unicaInstancia == null) {
@@ -48,6 +55,9 @@ public class ControladorPhotoTDS {
 	private ControladorPhotoTDS() {
 		inicializarAdaptadores();
 		inicializarCatalogos();
+		
+		cargadorFotos = new CargadorFotos();
+		cargadorFotos.addFotosListener(this);
 	}
 
 	public boolean registrarUsuario(String nombre, String apellidos, String email, String usuario, String password,
@@ -274,6 +284,32 @@ public class ControladorPhotoTDS {
 			GeneradorArchivos.generarPDF(usuarioActual);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public Foto getFoto(String ruta) {
+		return catalogoFotos.getFoto(ruta);
+	}
+	
+	public void cargarFotos(File fileXML) {
+		cargadorFotos.cargarFotos(fileXML);
+	}
+	
+	@Override
+	public void nuevasFotos(EventObject arg0) {
+		if (arg0 instanceof FotosEvent) {
+			for (umu.tds.fotos.Foto foto: cargadorFotos.getFotos().getFoto()) {
+				if (getFoto(foto.getTitulo()) == null) {
+					ArrayList<String> hashtagsFoto = new ArrayList<>();
+					for (umu.tds.fotos.HashTag hashtags : foto.getHashTags()) {
+						for (String hashtag : hashtags.getHashTag()) {
+							hashtagsFoto.add(hashtag);
+						}
+					}
+					this.registrarFoto(foto.getPath(), foto.getDescripcion(), LocalDate.now(), usuarioActual, hashtagsFoto.toArray(new String[foto.getHashTags().size()]));
+				}
+				
+			}
 		}
 	}
 
