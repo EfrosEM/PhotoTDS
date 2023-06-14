@@ -213,6 +213,12 @@ public class ControladorPhotoTDS implements FotosListener{
 				eliminarAlbum(a);
 			}
 		}
+		
+		Optional<Notificacion> not = usuarioActual.deleteNotificacion(foto);
+		if (not.isPresent()) {
+			adaptadorNotificacion.borrarNotificacion(not.get());
+			modificarUsuario(usuarioActual);
+		}
 		for (Usuario u : usuarioActual.getSeguidores()) {
 			Optional<Notificacion> n = u.deleteNotificacion(foto);
 			if (n.isPresent()) {
@@ -296,7 +302,7 @@ public class ControladorPhotoTDS implements FotosListener{
 	}
 	
 	@Override
-	public void nuevasFotos(EventObject arg0) {
+	public void enteradoNuevasFotos(EventObject arg0) {
 		if (arg0 instanceof FotosEvent) {
 			for (umu.tds.fotos.Foto foto: cargadorFotos.getFotos().getFoto()) {
 				if (getFoto(foto.getTitulo()) == null) {
