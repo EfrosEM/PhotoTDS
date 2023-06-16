@@ -424,10 +424,8 @@ public class PerfilUsuario {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				usuario.addSeguidor(controlador.getUsuarioActual());
-				controlador.getUsuarioActual().addSeguidos();
-				controlador.modificarUsuario(usuario);
-				controlador.modificarUsuario(controlador.getUsuarioActual());
+				controlador.addSeguidor(usuario);
+				
 				seguidores.setText(String.valueOf(usuario.getSeguidores().size()));
 				btnNewButton_3_1.setVisible(false);
 				btnNewButton_3_2.setVisible(true);
@@ -438,10 +436,8 @@ public class PerfilUsuario {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				usuario.removeSeguidor(controlador.getUsuarioActual());
-				controlador.getUsuarioActual().removeSeguidos();
-				controlador.modificarUsuario(usuario);
-				controlador.modificarUsuario(controlador.getUsuarioActual());
+				controlador.removeSeguidor(usuario);
+				
 				seguidores.setText(String.valueOf(usuario.getSeguidores().size()));
 				btnNewButton_3_1.setVisible(true);
 				btnNewButton_3_2.setVisible(false);

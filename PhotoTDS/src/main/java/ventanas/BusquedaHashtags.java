@@ -13,13 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import controlador.ControladorPhotoTDS;
 import dominio.Foto;
-import persistencia.AdaptadorFotoTDS;
 
 public class BusquedaHashtags {
 
 	protected JFrame busquedaHashtags;
-	private AdaptadorFotoTDS adaptadorFotoTDS;
+	private ControladorPhotoTDS controlador;
 	private List<String> tokens;
 	private BusquedaHashtagsRenderer renderer;
 	private JFrame inicio;
@@ -27,7 +27,7 @@ public class BusquedaHashtags {
 	public BusquedaHashtags(List<String> tokens, JFrame inicio) {
 		this.tokens = new ArrayList<String>(tokens);
 		this.inicio = inicio;
-		adaptadorFotoTDS = AdaptadorFotoTDS.getUnicaInstancia();
+		controlador = ControladorPhotoTDS.getUnicaInstancia();
 		renderer = new BusquedaHashtagsRenderer(this);
 		initialize();
 	}
@@ -55,7 +55,7 @@ public class BusquedaHashtags {
 	private DefaultListModel<String> getListaHashtags() {
 		DefaultListModel<String> lista = new DefaultListModel<>();
 
-		for (Foto f : adaptadorFotoTDS.recuperarTodasFotos()) {
+		for (Foto f : controlador.recuperarTodasFotos()) {
 			for (String token : tokens) {
 				Pattern patron = Pattern.compile(token);
 				System.out.println("Foto con ID: " + f.getCodigo() + " tiene " + f.getHashtags().size() + " hashtags");

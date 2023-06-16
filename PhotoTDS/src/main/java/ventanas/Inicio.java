@@ -31,7 +31,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controlador.ControladorPhotoTDS;
-import persistencia.AdaptadorFotoTDS;
 import dominio.Comentario;
 import dominio.Foto;
 import dominio.Notificacion;
@@ -53,7 +52,6 @@ public class Inicio {
 	protected JFrame frmPhototds;
 	private JTextField textField;
 	private ControladorPhotoTDS controlador;
-	private AdaptadorFotoTDS adaptadorFoto;
 	private String com;
 
 	/**
@@ -61,7 +59,6 @@ public class Inicio {
 	 */
 	public Inicio() {
 		controlador = ControladorPhotoTDS.getUnicaInstancia();
-		adaptadorFoto = AdaptadorFotoTDS.getUnicaInstancia();
 		initialize();
 	}
 
@@ -319,8 +316,7 @@ public class Inicio {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					foto.addLike();
-					adaptadorFoto.modificarFoto((Foto) foto);
+					controlador.addLike(foto);
 					lblLikes.setText(String.valueOf(foto.getLikes()));
 
 					btnLikes.setVisible(false);
@@ -332,8 +328,7 @@ public class Inicio {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					foto.removeLike();
-					adaptadorFoto.modificarFoto((Foto) foto);
+					controlador.removeLike(foto);
 					lblLikes.setText(String.valueOf(foto.getLikes()));
 
 					btnLikes.setVisible(true);

@@ -319,4 +319,36 @@ public class ControladorPhotoTDS implements FotosListener{
 		}
 	}
 
+	public List<Foto> recuperarTodasFotos() {	
+		return adaptadorFoto.recuperarTodasFotos();
+	}
+
+	public List<Usuario> recuperarTodosUsuarios() {
+		return adaptadorUsuario.recuperarTodosUsuarios();
+	}
+
+	public void addLike(Foto foto) {
+		foto.addLike();
+		adaptadorFoto.modificarFoto(foto);
+	}
+	
+	public void removeLike(Foto foto) {
+		foto.removeLike();
+		adaptadorFoto.modificarFoto(foto);
+	}
+
+	public void addSeguidor(Usuario usuario) {
+		usuario.addSeguidor(getUsuarioActual());
+		getUsuarioActual().addSeguidos();
+		modificarUsuario(usuario);
+		modificarUsuario(getUsuarioActual());
+	}
+
+	public void removeSeguidor(Usuario usuario) {
+		usuario.removeSeguidor(getUsuarioActual());
+		getUsuarioActual().removeSeguidos();
+		modificarUsuario(usuario);
+		modificarUsuario(getUsuarioActual());
+	}
+
 }

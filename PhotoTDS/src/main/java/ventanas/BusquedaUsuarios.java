@@ -13,15 +13,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-
-
+import controlador.ControladorPhotoTDS;
 import dominio.Usuario;
-import persistencia.AdaptadorUsuarioTDS;
 
 public class BusquedaUsuarios {
 
 	protected JFrame busquedaUsuarios;
-	private AdaptadorUsuarioTDS adaptadorUsuarioTDS;
+	private ControladorPhotoTDS controladorPhotoTDS;
 	private String token;
 	private BusquedaUsuariosRenderer renderer;
 	private JFrame inicio;
@@ -32,7 +30,7 @@ public class BusquedaUsuarios {
 	public BusquedaUsuarios(String token, JFrame inicio) {
 		this.token = token;
 		this.inicio = inicio;
-		adaptadorUsuarioTDS = AdaptadorUsuarioTDS.getUnicaInstancia();
+		controladorPhotoTDS = ControladorPhotoTDS.getUnicaInstancia();
 		renderer = new BusquedaUsuariosRenderer(this);
 		initialize();
 	}
@@ -60,7 +58,7 @@ public class BusquedaUsuarios {
 		DefaultListModel<Usuario> lista = new DefaultListModel<>();
 		
 		Pattern patron = Pattern.compile(token);
-		for (Usuario u : adaptadorUsuarioTDS.recuperarTodosUsuarios()) {
+		for (Usuario u : controladorPhotoTDS.recuperarTodosUsuarios()) {
 			Matcher matcher = patron.matcher(u.getNombre() + u.getApellidos());
 			if (matcher.find()) {
 				lista.addElement(u);
