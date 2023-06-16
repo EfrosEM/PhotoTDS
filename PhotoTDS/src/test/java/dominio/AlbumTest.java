@@ -17,7 +17,7 @@ public class AlbumTest {
 	private Notificacion notificacion;
 
 	@Before
-	public void testAlbum() {
+	public void setup() {
 		
 		u1 = new Usuario("user", "user1", "1", "user1@um.es", "test", null, "Usuario 1 test", "rutaFotoPerfil");
 		u2 = new Usuario("user", "user2", "2", "user2@um.es", "test", null, "Usuario 2 test", "rutaFotoPerfil");
