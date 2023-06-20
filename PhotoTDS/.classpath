@@ -23,7 +23,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/alex_/Downloads/Luz.jar"/>
-	<classpathentry kind="lib" path="C:/Users/alex_/Downloads/ProyectoComponenteFotos/target/ProyectoComponenteFotos-0.1.jar"/>
+	<classpathentry kind="lib" path="javabean/Luz.jar"/>
+	<classpathentry kind="lib" path="javabean/ProyectoComponenteFotos-0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
