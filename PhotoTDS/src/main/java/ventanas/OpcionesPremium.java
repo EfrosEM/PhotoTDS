@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Point;
+//import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -126,16 +126,16 @@ public class OpcionesPremium extends JDialog {
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		contentPanel.add(panel_3);
 		
-		JButton btnNewButton_3 = new JButton("Top Me gusta");
-		btnNewButton_3.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton_3.setPreferredSize(new Dimension(105, 23));
-		btnNewButton_3.setMargin(new Insets(0, 0, 0, 0));
-		btnNewButton_3.setBackground(Color.WHITE);
-		btnNewButton_3.setOpaque(false);
-		btnNewButton_3.setLocation(new Point(200, 200));
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton_3.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		panel_3.add(btnNewButton_3);
+		/*
+		 * JButton btnNewButton_3 = new JButton("Top Me gusta");
+		 * btnNewButton_3.setHorizontalAlignment(SwingConstants.LEFT);
+		 * btnNewButton_3.setPreferredSize(new Dimension(105, 23));
+		 * btnNewButton_3.setMargin(new Insets(0, 0, 0, 0));
+		 * btnNewButton_3.setBackground(Color.WHITE); btnNewButton_3.setOpaque(false);
+		 * btnNewButton_3.setLocation(new Point(200, 200)); btnNewButton_3.setFont(new
+		 * Font("Tahoma", Font.BOLD, 15)); btnNewButton_3.setBorder(new MatteBorder(0,
+		 * 0, 1, 0, (Color) new Color(0, 0, 0))); panel_3.add(btnNewButton_3);
+		 */
 	}
 
 }
