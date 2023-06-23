@@ -271,7 +271,6 @@ public class PerfilUsuario {
 					ArrayList<String> hashtags = new ArrayList<String>();
 					
 					for (String hashtag : busqHashtag) {
-						System.out.println("Hashtag: " + hashtag);
 						hashtags.add(hashtag);
 					}
 					BusquedaHashtags bH = new BusquedaHashtags(hashtags, frmPhototds);
@@ -544,7 +543,6 @@ public class PerfilUsuario {
 		List<Foto> fotos = usuario.getFotos();
 		Collections.reverse(fotos);
 		
-		System.out.println("Fotos: " + numFotos);
 		if (numFotos > 0) {
 			for (Foto f : fotos) {
 				BufferedImage image = null;
@@ -601,7 +599,7 @@ public class PerfilUsuario {
 
 		List<Album> albumes = usuario.getAlbumes();
 		Collections.reverse(albumes);
-		System.out.println("Albumes: " + numAlbumes);
+		
 		if (numAlbumes > 0) {
 			for (Album a : albumes) {
 				BufferedImage image = null;

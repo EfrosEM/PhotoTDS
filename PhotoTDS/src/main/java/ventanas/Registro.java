@@ -381,7 +381,6 @@ public class Registro {
 				if (seleccion == JFileChooser.APPROVE_OPTION) {
 					File fichero = fileChooser.getSelectedFile();
 					fotoPerfil = fichero.getAbsolutePath();
-					System.out.println(fotoPerfil);
 				}
 			}
 		});
@@ -391,7 +390,6 @@ public class Registro {
 		separator_4_3_1.setForeground(Color.WHITE);
 		panel_10.add(separator_4_3_1);
 		panel_10.add(btnFileChooser);
-//		panel_10.add(fileChooser);
 		
 		JPanel panelAddPresent = new JPanel();
 		FlowLayout fl_panelAddPresent = (FlowLayout) panelAddPresent.getLayout();
@@ -429,7 +427,6 @@ public class Registro {
 				}
 				switch (JOptionPane.showConfirmDialog(null, sp, "Descripcion", 1)) {
 				    case JOptionPane.OK_OPTION:
-				        System.out.println(ta.getText().length());
 				        descripcion = ta.getText();
 				        break;
 				}

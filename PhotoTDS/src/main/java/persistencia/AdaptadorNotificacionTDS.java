@@ -103,8 +103,7 @@ public class AdaptadorNotificacionTDS implements IAdaptadorNotificacionDAO {
 
 		try {
 			fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eNotificacion, "fecha"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		} catch (Exception e) {
-			System.out.println("No se ha podido recuperar la fecha de la notificacion");
+		} catch (Exception e) { 
 			fecha = null;
 		}
 
@@ -132,8 +131,6 @@ public class AdaptadorNotificacionTDS implements IAdaptadorNotificacionDAO {
 
 		for (Entidad eNotificacion : eNotificaciones) {
 			notificaciones.add(recuperarNotificacion(eNotificacion.getId()));
-			System.out.println("notificacion: " + recuperarNotificacion(eNotificacion.getId())
-					+ " con codigo: " + recuperarNotificacion(eNotificacion.getId()).getCodigo());
 		}
 
 		return notificaciones;

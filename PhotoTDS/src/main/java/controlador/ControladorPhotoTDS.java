@@ -198,10 +198,6 @@ public class ControladorPhotoTDS implements FotosListener{
 		for (Usuario seguidor : seguidores) {
 			seguidor.addNotificacion(notificacion);
 			adaptadorUsuario.modificarUsuario(seguidor);
-			System.out.println("Usuario: " + seguidor.getUsuario() + "actualizado con las notificaciones:");
-			for (Notificacion n : seguidor.getNotificaciones()) {
-				System.out.println(n.getCodigo());
-			}
 		}
 		return foto;
 	}

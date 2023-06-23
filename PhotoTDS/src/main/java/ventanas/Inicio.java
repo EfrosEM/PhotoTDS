@@ -167,7 +167,6 @@ public class Inicio {
 					ArrayList<String> hashtags = new ArrayList<String>();
 
 					for (String hashtag : busqHashtag) {
-						System.out.println("Hashtag: " + hashtag);
 						hashtags.add(hashtag);
 					}
 					BusquedaHashtags bH = new BusquedaHashtags(hashtags, frmPhototds);
@@ -260,7 +259,6 @@ public class Inicio {
 		List<Notificacion> notificaciones = controlador.getUsuarioActual().getNotificaciones();
 		Collections.reverse(notificaciones);
 
-		System.out.println("Notificaciones: " + notificaciones.size());
 		for (Notificacion notificacion : notificaciones) {
 			Foto foto = (Foto) notificacion.getPublicacion();
 			JPanel panelPublicacion = new JPanel();

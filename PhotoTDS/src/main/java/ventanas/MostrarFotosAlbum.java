@@ -156,7 +156,6 @@ public class MostrarFotosAlbum {
 			filas = numFotos / 3 + 1;
 		}
 
-		System.out.println("Fotos: " + numFotos);
 		if (numFotos > 0) {
 			for (Foto f : album.getFotos()) {
 				BufferedImage image = null;

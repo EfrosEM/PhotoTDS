@@ -58,11 +58,10 @@ public class BusquedaHashtags {
 		for (Foto f : controlador.recuperarTodasFotos()) {
 			for (String token : tokens) {
 				Pattern patron = Pattern.compile(token);
-				System.out.println("Foto con ID: " + f.getCodigo() + " tiene " + f.getHashtags().size() + " hashtags");
+				
 				for (String hashtag : f.getHashtags()) {
 					Matcher matcher = patron.matcher(hashtag);
 					if (matcher.find()) {
-						System.out.println("Hashtag encontrado -> " + hashtag);
 						lista.addElement(" " + hashtag + " -> " + String.valueOf(f.getUser().getSeguidores().size()));
 					}
 

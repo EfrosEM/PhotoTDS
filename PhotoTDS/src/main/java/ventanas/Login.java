@@ -186,7 +186,6 @@ public class Login {
 				boolean isLogged = controlador.loginUsuario(usuario, password);
 
 				if (isLogged) {
-					System.out.println("Login correcto");
 					abrirInicio();
 				} else {
 					JOptionPane.showMessageDialog(frmPhototds, "Nombre de usuario o contraseña incorrectos", "Error",

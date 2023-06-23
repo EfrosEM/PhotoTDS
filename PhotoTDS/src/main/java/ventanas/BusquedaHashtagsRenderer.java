@@ -27,8 +27,7 @@ public class BusquedaHashtagsRenderer extends JLabel implements ListCellRenderer
 		if (isSelected) {
 			setBackground(list.getSelectionBackground());
 			setForeground(list.getSelectionForeground());
-			// bu.setVisible(false);
-			System.out.println("Hashtag elegido: " + hashtag);
+			
 			this.hashtag = hashtag;
 
 		} else {

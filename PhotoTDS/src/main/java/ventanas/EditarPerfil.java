@@ -349,7 +349,7 @@ public class EditarPerfil {
 				}
 				switch (JOptionPane.showConfirmDialog(null, sp, "Descripcion", 1)) {
 				case JOptionPane.OK_OPTION:
-					System.out.println(ta.getText().length());
+					
 					descripcion = ta.getText();
 					break;
 				}

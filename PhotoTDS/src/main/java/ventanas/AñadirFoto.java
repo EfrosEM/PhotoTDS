@@ -72,7 +72,6 @@ public class AñadirFoto {
 							.getTransferData(DataFlavor.javaFileListFlavor);
 					for (File file : droppedFiles) {
 						String ruta = file.getPath();
-						System.out.println(file.getPath());
 						frmPhototds.dispose();
 
 						PublicarFoto pb = new PublicarFoto(ruta, perfil, user, nombreAlbum);

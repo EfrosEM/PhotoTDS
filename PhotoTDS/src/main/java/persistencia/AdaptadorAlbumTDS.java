@@ -157,7 +157,6 @@ public class AdaptadorAlbumTDS implements IAdaptadorAlbumDAO{
 		
 		for (Entidad eAlbum : eAlbumes) {
 			albumes.add(recuperarAlbum(eAlbum.getId()));
-			System.out.println("album: " + recuperarAlbum(eAlbum.getId()).getTitulo() + " con codigo: " +  recuperarAlbum(eAlbum.getId()).getCodigo());
 		}
 		
 		return albumes;

@@ -40,8 +40,7 @@ public class BusquedaUsuariosRenderer extends JLabel implements ListCellRenderer
 		if (isSelected) {
 			setBackground(list.getSelectionBackground());
 			setForeground(list.getSelectionForeground());
-			// bu.setVisible(false);
-			System.out.println("Usuario elegido: " + usuario.getUsuario());
+			
 			this.usuario = usuario.getUsuario();
 
 			bu.cerrar();

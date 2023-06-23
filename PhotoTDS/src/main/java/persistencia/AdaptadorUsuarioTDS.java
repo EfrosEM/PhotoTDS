@@ -227,14 +227,13 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		}
 		
 		publicaciones = obtenerPublicacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "publicaciones"));
-		System.out.println("Numero de publicaiones: " + publicaciones.size());
+		
 		for (Publicacion publicacion : publicaciones) {
-			System.out.println("Publicacion: " + publicacion.getCodigo());
 			u.addPublicacion(publicacion);
 		}
 		
 		notificaciones = obtenerNotificacionesDesdeCodigo(servPersistencia.recuperarPropiedadEntidad(eUsuario, "notificaciones"));
-		System.out.println("Numero de notificaciones: " + notificaciones.size());
+		
 		for (Notificacion notificacion : notificaciones) {
 			u.addNotificacion(notificacion);
 		}
@@ -248,7 +247,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO{
 		
 		for (Entidad eUsuario : eUsuarios) {
 			usuarios.add(recuperarUsuario(eUsuario.getId()));
-			System.out.println("usuario: " + recuperarUsuario(eUsuario.getId()).getUsuario() + " con codigo: " + recuperarUsuario(eUsuario.getId()).getCodigo() + " con publicaciones: " + recuperarUsuario(eUsuario.getId()).getPublicaciones().size());
 		}
 		
 		return usuarios;

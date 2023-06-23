@@ -101,7 +101,6 @@ public class PublicarFoto {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String comentario = textArea.getText();
-				System.out.println(comentario);
 
 				ArrayList<String> hashtags = new ArrayList<>();
 				Pattern pattern = Pattern.compile("#\\w+");
@@ -109,7 +108,6 @@ public class PublicarFoto {
 
 				while (matcher.find()) {
 					hashtags.add(matcher.group());
-					System.out.println("Hashtag encontrado: " + matcher.group());
 				}
 
 				Foto foto = controlador.registrarFoto(imagen, comentario, LocalDate.now(), user,
