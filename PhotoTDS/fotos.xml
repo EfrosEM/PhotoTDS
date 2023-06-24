@@ -3,29 +3,29 @@
 	xs:schemaLocation="http://www.tds.es/fotos fotos.xsd">
 	
 	<foto titulo="Imagen1">
-		<Path><![CDATA[C:\Users\alex_\git\Photo_TDS\PhotoTDS\src\main\java\recursos\cr7.jpg]]></Path>
+		<Path><![CDATA[.\src\main\java\recursos\cr7.jpg]]></Path>
 		<Descripcion>Prueba de Imagen1</Descripcion>
 		<HashTags>
-			<HashTag>TDS</HashTag>
-			<HashTag>Cargador</HashTag>
+			<HashTag>#TDS</HashTag>
+			<HashTag>#Cargador</HashTag>
 		</HashTags>
 	</foto>
 
 	<foto titulo="Imagen2">
-		<Path><![CDATA[C:\Users\alex_\git\Photo_TDS\PhotoTDS\src\main\java\recursos\paisaje.jpg]]></Path>
+		<Path><![CDATA[.\src\main\java\recursos\paisaje.jpg]]></Path>
 		<Descripcion>Prueba de Imagen2</Descripcion>
 		<HashTags>
-			<HashTag>Pruebas</HashTag>
-			<HashTag>Cargador</HashTag>
+			<HashTag>#Pruebas</HashTag>
+			<HashTag>#Cargador</HashTag>
 		</HashTags>
 	</foto>
 
 	<foto titulo="Imagen3">
-		<Path><![CDATA[C:\Users\alex_\git\Photo_TDS\PhotoTDS\src\main\java\recursos\comida.jpg]]></Path>
+		<Path><![CDATA[.\src\main\java\recursos\comida.jpg]]></Path>
 		<Descripcion>Prueba de Imagen3</Descripcion>
 		<HashTags>
-			<HashTag>TDS</HashTag>
-			<HashTag>Pruebas</HashTag>
+			<HashTag>#TDS</HashTag>
+			<HashTag>#Pruebas</HashTag>
 		</HashTags>
 	</foto>
 
