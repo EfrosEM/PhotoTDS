@@ -14,4 +14,4 @@ Grupo 3.3
 
  - Los ficheros JAR de los componenetes utilizados (incluido CargadorFotos) se encuentran en la carpeta javabean del proyecto PhotoTDS.
 
- - Los archivos PDF y Excel de la funcionalidad Premium se generan en el directorioraiz del proyecto PhotoTDS con el nombre "seguidores".
+ - Los archivos PDF y Excel de la funcionalidad Premium se generan en el directorio raiz del proyecto PhotoTDS con el nombre "seguidores".
